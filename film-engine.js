@@ -71,7 +71,15 @@ const FigFilm = (() => {
       '<path fill="none" stroke="' + C.hairDark + '" stroke-width="1.3" opacity=".8" d="M-12,-14 C-6,-22 6,-24 14,-18 M-14,0 C-12,-8 -8,-12 -2,-14"/>' +
       '<ellipse cx="-2" cy="2" rx="3.5" ry="5" fill="' + C.skinDark + '" opacity=".5"/>';
   }
-  function headFront(back) {
+  function headFront(back, turn) {
+    if (turn && !back) { // hovedet drejet: ansigtet flyttes mod den side, man kigger til (−1 … 1)
+      const tx = turn * 11, e = turn * 2.5;
+      return '<ellipse cx="0" cy="1" rx="' + f1(16 - Math.abs(turn) * 1.5) + '" ry="20" fill="' + C.skin + '"/>' +
+        '<ellipse cx="' + f1(-turn * 15) + '" cy="3" rx="' + f1(2 + Math.abs(turn) * 2.5) + '" ry="5" fill="' + C.skinDark + '" opacity=".55"/>' +
+        '<path fill="' + C.hair + '" d="M-20,10 C-25,-12 -13,-27 0,-27 C13,-27 25,-12 20,10 C18,4 17,-4 15,-9 C8,-14 -2,-15 -10,-11 C-14,-6 -17,2 -20,10 Z" transform="translate(' + f1(-turn * 3) + ',0)"/>' +
+        '<circle cx="' + f1(-6 + tx - e) + '" cy="0" r="1.5" fill="#3b3f45"/><circle cx="' + f1(6 + tx + e * 0.3) + '" cy="0" r="1.5" fill="#3b3f45"/>' +
+        '<path fill="none" stroke="' + C.skinDark + '" stroke-width="1.3" stroke-linecap="round" d="M' + f1(-4 + tx) + ',10 q4,2.5 8,0 M' + f1(tx) + ',2 L' + f1(tx + turn * 4 - 1.5) + ',6.5 L' + f1(tx + 1) + ',6.8"/>';
+    }
     if (back) return '<ellipse cx="0" cy="0" rx="17" ry="21" fill="' + C.skin + '"/><path fill="' + C.hair + '" d="M-20,8 C-24,-14 -12,-27 0,-27 C12,-27 24,-14 20,8 C16,14 10,16 0,16 C-10,16 -16,14 -20,8 Z"/>' +
       '<path fill="none" stroke="' + C.hairDark + '" stroke-width="1.3" opacity=".7" d="M-10,-20 C-6,-8 -8,4 -12,12 M8,-21 C6,-8 9,4 12,12 M0,-26 L0,14"/>';
     return '<ellipse cx="0" cy="1" rx="16" ry="20" fill="' + C.skin + '"/>' +
@@ -85,21 +93,26 @@ const FigFilm = (() => {
   function sideJoints(P) {
     const H = P.hip, a = P.trunkTo ? deg(Math.atan2(P.trunkTo[0] - H[0], -(P.trunkTo[1] - H[1]))) : (P.trunk || 0);
     const u = [Math.sin(rad(a)), -Math.cos(rad(a))], n = [Math.cos(rad(a)), Math.sin(rad(a))];
-    const W = (x, y) => add(H, add(mul(n, x), mul(u, y)));
-    const S = W(1, L.trunk);
+    const cv = P.curve || 0; // + = rund ryg (bue bagud), − = svaj/stræk (bue fremad); hofte og skuldre ligger fast
+    const W = (x, y) => add(H, add(mul(n, x - cv * Math.sin(Math.PI * Math.max(0, Math.min(1, y / L.trunk)))), mul(u, y)));
+    const sh = P.shrug || [0, 0];
+    const S = add(W(1, L.trunk), add(mul(n, sh[0]), mul(u, sh[1])));
     const J = { H, a, u, n, W, S, legs: {}, arms: {} };
     for (const k of ['F', 'N']) {
       const s = P['leg' + k] || {};
       let knee, ank, fa;
       const Hk = P['hipOff' + k] ? add(H, P['hipOff' + k]) : H;
-      if (s.ank) { ank = s.ank; knee = ik(Hk, ank, L.thigh, L.shank, s.kneeBack ? -1 : 1); fa = s.fa || 0; }
+      if (s.knee && s.ank) { knee = s.knee; ank = s.ank; fa = s.fa || 0; }
+      else if (s.ank) { ank = s.ank; knee = ik(Hk, ank, L.thigh, L.shank, s.kneeBack ? -1 : 1); fa = s.fa || 0; }
       else { const th = s.th || 0, kn = s.kn || 0; knee = add(Hk, mul(dirA(th), L.thigh)); ank = add(knee, mul(dirA(th - kn), L.shank)); fa = (s.pf || 0) - (th - kn); if (s.fa != null) fa = s.fa; }
       J.legs[k] = { hip: Hk, knee, ank, fa, toe: s.toe || 0, lift: s };
     }
     for (const k of ['F', 'N']) {
       const s = P['arm' + k] || {};
       let el, hd;
-      if (s.hand) { hd = s.hand; el = ik(S, hd, L.up, L.fore, s.elbowFwd ? 1 : -1); }
+      if (s.hand && s.el) { hd = s.hand; el = s.el; }
+      else if (s.hand && s.straight) { hd = s.hand; el = lerp(S, hd, L.up / (L.up + L.fore)); }
+      else if (s.hand) { hd = s.hand; el = ik(S, hd, L.up, L.fore, s.elbowFwd ? 1 : -1); }
       else { const sa = (s.sa != null ? s.sa : 4) + (s.rel ? a : 0), ef = s.ef != null ? s.ef : 8; el = add(S, mul(dirA(sa), L.up)); hd = add(el, mul(dirA(sa + ef), L.fore)); }
       J.arms[k] = { el, hd };
     }
@@ -138,9 +151,11 @@ const FigFilm = (() => {
     s += leg('N', false);
     if (o.overLegs) s += o.overLegs(J);
     // hals + hoved
-    const neck0 = W(2, L.trunk - 4), neck1 = W(3, L.trunk + 12);
+    const ch = P.chin || 0, hu = P.headUp || 0; // hagen trukket tilbage (px) / hovedet løftet (px)
+    const neck0 = W(2, L.trunk - 4), neck1 = add(W(3 - ch * 0.7, L.trunk + 12), mul(J.u, hu * 0.5));
     s += limb(neck0, neck1, 13, 12, C.skin);
-    s += tg(W(5, L.trunk + 32), J.a + (P.nod || 0), headSide());
+    J.head = add(W(5 - ch, L.trunk + 32), mul(J.u, hu)); J.headA = J.a + (P.nod || 0);
+    s += tg(J.head, J.headA, headSide());
     s += arm('N', false);
     if (o.front) s += o.front(J);
     return { svg: s, J };
@@ -154,6 +169,7 @@ const FigFilm = (() => {
     // R = personens højre ben (til venstre i billedet set forfra), L = venstre
     for (const k of ['R', 'L']) {
       const sx = (k === 'R' ? -1 : 1) * (P.back ? -1 : 1), hj = W(sx * 13, -4), s = P['leg' + k] || {};
+      if (s.knee) { J.legs[k] = { hj, knee: s.knee, ank: s.ank || s.knee, sx, kneeOnly: !s.ank, foot: s.foot }; continue; }
       let ank = s.ank;
       if (!ank) { const ab = (s.ab || 0) * sx; ank = add(hj, mul(dirA(ab + a), L.thigh + L.shank)); }
       const d = sub(ank, hj), D = len(d), full = L.thigh + L.shank;
@@ -165,7 +181,8 @@ const FigFilm = (() => {
     for (const k of ['R', 'L']) {
       const sx = (k === 'R' ? -1 : 1) * (P.back ? -1 : 1), S = W(sx * 21, L.trunk - 6), s = P['arm' + k] || {};
       let el, hd;
-      if (s.hand) { hd = s.hand; const e0 = ik(S, hd, L.up, L.fore, s.side || (sx > 0 ? 1 : -1)), base = lerp(S, hd, L.up / (L.up + L.fore)); el = add(base, mul(sub(e0, base), s.flat != null ? s.flat : 0.3)); } // albuen bøjer bagud (i dybden) – vises forkortet
+      if (s.hand && s.el) { hd = s.hand; el = s.el; }
+      else if (s.hand) { hd = s.hand; const e0 = ik(S, hd, L.up, L.fore, s.side || (sx > 0 ? 1 : -1)), base = lerp(S, hd, L.up / (L.up + L.fore)); el = add(base, mul(sub(e0, base), s.flat != null ? s.flat : 0.3)); } // albuen bøjer bagud (i dybden) – vises forkortet
       else { const ab = (s.ab != null ? s.ab : 8) * sx; el = add(S, mul(dirA(ab + a), L.up)); hd = add(el, mul(dirA(ab * 0.6 + a), L.fore)); }
       J.arms[k] = { S, el, hd };
     }
@@ -178,6 +195,7 @@ const FigFilm = (() => {
     const leg = k => {
       const g = J.legs[k];
       let r = '';
+      if (g.kneeOnly) return limb(g.hj, g.knee, 30, 25, C.pants) + '<circle cx="' + f1(g.knee[0]) + '" cy="' + f1(g.knee[1]) + '" r="12.5" fill="' + C.pantsDark + '"/>';
       const cuff = lerp(g.knee, g.ank, 0.9);
       r += tg(g.ank, 0, shoeFront(back, o.bare));
       r += limb(g.hj, g.knee, 30, 23, C.pants) + limb(g.knee, cuff, 23, 18, C.pants) + band(lerp(g.knee, g.ank, 0.85), cuff, 19, C.cuff);
@@ -190,11 +208,15 @@ const FigFilm = (() => {
     s += leg('R') + leg('L');
     if (o.overLegs) s += o.overLegs(J);
     s += '<path fill="' + C.pants + '" d="M' + P2(W(-24, 20)) + ' L' + P2(W(24, 20)) + ' C' + P2(W(27, 6)) + ' ' + P2(W(27, -6)) + ' ' + P2(W(24, -12)) + ' L' + P2(W(3, -12)) + ' L' + P2(W(0, -6)) + ' L' + P2(W(-3, -12)) + ' L' + P2(W(-24, -12)) + ' C' + P2(W(-27, -6)) + ' ' + P2(W(-27, 6)) + ' ' + P2(W(-24, 20)) + ' Z"/>';
-    s += '<path fill="' + C.teal + '" d="M' + P2(W(-24, 14)) + ' C' + P2(W(-22, 40)) + ' ' + P2(W(-25, 70)) + ' ' + P2(W(-27, 92)) + ' C' + P2(W(-24, 103)) + ' ' + P2(W(-12, 105)) + ' ' + P2(W(0, 105)) +
-      ' C' + P2(W(12, 105)) + ' ' + P2(W(24, 103)) + ' ' + P2(W(27, 92)) + ' C' + P2(W(25, 70)) + ' ' + P2(W(22, 40)) + ' ' + P2(W(24, 14)) + ' Z"/>';
+    const bw = 1 + (P.breath || 0) * 0.1, Wb = (x, y) => W(x * (y > 25 && y < 95 ? 1 + (bw - 1) * Math.sin(Math.PI * (y - 25) / 70) : 1), y); // vejrtrækning: ribbenene udvider sig
+    s += '<path fill="' + C.teal + '" d="M' + P2(W(-24, 14)) + ' C' + P2(Wb(-22, 40)) + ' ' + P2(Wb(-25, 70)) + ' ' + P2(W(-27, 92)) + ' C' + P2(W(-24, 103)) + ' ' + P2(W(-12, 105)) + ' ' + P2(W(0, 105)) +
+      ' C' + P2(W(12, 105)) + ' ' + P2(W(24, 103)) + ' ' + P2(W(27, 92)) + ' C' + P2(Wb(25, 70)) + ' ' + P2(Wb(22, 40)) + ' ' + P2(W(24, 14)) + ' Z"/>';
+    if (o.blades) s += o.blades(J);
     if (!back) s += '<path fill="' + C.skin + '" d="M' + P2(W(-8, 104)) + ' Q' + P2(W(0, 94)) + ' ' + P2(W(8, 104)) + ' Z"/>';
-    s += limb(W(0, L.trunk - 2), W(0, L.trunk + 12), 13, 12, C.skin);
-    s += tg(W(0, L.trunk + 32), J.a, headFront(back));
+    const ht = (P.headTilt || 0) * (back ? -1 : 1), nb = W(0, L.trunk - 2), hA = J.a + ht; // hovedet vippes om nakkens rod
+    J.head = add(nb, rot([0, -34], hA)); J.headA = hA;
+    s += limb(nb, add(nb, rot([0, -14], hA)), 13, 12, C.skin);
+    s += tg(J.head, hA, headFront(back, P.headTurn || 0));
     s += arm('R') + arm('L');
     if (o.front) s += o.front(J);
     return { svg: s, J };
@@ -325,11 +347,13 @@ function figFilmHtml(e) {
   if (typeof HAEL_TRIN_FILM !== 'undefined' && HAEL_TRIN_FILM[e.id]) return '';
   const F = FigFilm.FILMS[e.id];
   const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  return '<div class="card ht-film ff-film' + (F.W > F.H ? ' ff-land' : '') + '" data-ex="' + e.id + '"><h3>🎬 Tempo-film</h3>' +
-    '<p class="muted small" style="margin:0 0 8px">' + F.tempo + '</p>' +
+  const vb = typeof Voice !== 'undefined' ? Voice.btnHtml() : '';
+  return '<div class="card ht-film ff-film' + (F.W > F.H ? ' ff-land' : '') + '" data-ex="' + e.id + '" data-name="' + String(e.name || '').replace(/"/g, '&quot;') + '"><h3>🎬 Tempo-film</h3>' +
     '<div class="ht-stage ff-stage">' + FigFilm.svg(e.id, null) + '</div>' +
     (still ? '<p class="hint">Stillbillede (reduceret bevægelse er slået til). Den lyse figur viser startstillingen.</p>'
-      : '<div class="ht-row"><button type="button" class="btn secondary ht-play" aria-pressed="false">▶ Afspil i tempo</button><span class="ht-phase" aria-live="off"></span><span class="ff-rep" aria-live="off"></span></div>') + '</div>';
+      : '<div class="ht-row"><button type="button" class="btn ht-play" aria-pressed="false">▶ Afspil filmen</button><span class="ht-phase" aria-live="off"></span><span class="ff-rep" aria-live="off"></span></div>' +
+        '<p class="ff-say" hidden></p><div class="ff-tools">' + vb + '</div>') +
+    '<p class="muted small ff-tempo">' + F.tempo + '</p></div>';
 }
 function initFigFilm(root) {
   const box = root.querySelector('.ff-film'); if (!box) return;
@@ -337,17 +361,24 @@ function initFigFilm(root) {
   const id = box.dataset.ex, stage = box.querySelector('.ht-stage'), ph = box.querySelector('.ht-phase'), rep = box.querySelector('.ff-rep');
   let raf = 0, t0 = 0, acc = 0, last = 0;
   const frame = now => {
-    if (!box.isConnected) { cancelAnimationFrame(raf); return; }
+    if (!box.isConnected) { cancelAnimationFrame(raf); if (typeof Voice !== 'undefined') Voice.cancel(); return; }
     const sec = acc + (now - t0) / 1000, st = FigFilm.state(id, sec);
     if (now - last > 33) { stage.innerHTML = FigFilm.svg(id, sec); last = now; }
-    if (ph.textContent !== st.label) { ph.textContent = st.label; ph.dataset.key = st.key; }
+    if (ph.textContent !== st.label) { ph.textContent = st.label; ph.dataset.key = st.key; if (typeof Voice !== 'undefined') Voice.cue(box, st.label, st.key); }
     if (rep.textContent !== st.repText) rep.textContent = st.repText;
     raf = requestAnimationFrame(frame);
   };
+  let introDone = false;
+  if (typeof Voice !== 'undefined') Voice.bind(box);
   btn.onclick = () => {
     const on = btn.getAttribute('aria-pressed') !== 'true';
-    btn.setAttribute('aria-pressed', on); btn.textContent = on ? '⏸ Pause' : '▶ Afspil i tempo';
-    if (on) { t0 = performance.now(); raf = requestAnimationFrame(frame); }
-    else { cancelAnimationFrame(raf); acc += (performance.now() - t0) / 1000; }
+    btn.setAttribute('aria-pressed', on); btn.textContent = on ? '⏸ Pause' : '▶ Afspil filmen';
+    if (on) {
+      const go = () => { if (btn.getAttribute('aria-pressed') !== 'true' || !box.isConnected) return; t0 = performance.now(); raf = requestAnimationFrame(frame); };
+      if (!introDone && typeof Voice !== 'undefined' && Voice.enabled() && Voice.available()) { // kort introduktion, før tempoet starter
+        introDone = true; ph.textContent = 'Lyt …';
+        Voice.say((box.dataset.name ? box.dataset.name + '. ' : '') + FigFilm.FILMS[id].tempo.replace(/\s*\((Set [^)]*)\)/g, ''), box, { flush: true, intro: true, onend: go });
+      } else { introDone = true; go(); }
+    } else { cancelAnimationFrame(raf); acc += t0 ? (performance.now() - t0) / 1000 : 0; t0 = 0; if (typeof Voice !== 'undefined') Voice.reset(box); }
   };
 }

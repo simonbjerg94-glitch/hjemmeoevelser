@@ -49,7 +49,7 @@ function slug(s) {
 /* ---------- Lager ---------- */
 const KEY_STD_SEEN = 'hjo_std_flettet_v1';
 /* Alle standardøvelser: artrose/balance (data.js) + hælspore (data-haelspore.js). */
-function allDefaults() { return typeof HAEL_EXERCISES !== 'undefined' ? DEFAULT_EXERCISES.concat(HAEL_EXERCISES) : DEFAULT_EXERCISES; }
+function allDefaults() { return DEFAULT_EXERCISES.concat(typeof HAEL_EXERCISES !== 'undefined' ? HAEL_EXERCISES : [], typeof RYG_EXERCISES !== 'undefined' ? RYG_EXERCISES : []); }
 /* Gemte lister flettes med nye standardøvelser (fx hælsporet), uden at slettede eller rettede øvelser kommer tilbage. */
 function loadExercises() {
   let arr = null;
@@ -87,9 +87,10 @@ function safeUrl(u) {
 /* Dagens øvelser i et program: niveau (artrose/balance) eller fase (hælspore). */
 function programExercises(cid) {
   if (cid === 'haelspore' && typeof haelPhaseExercises === 'function') return haelPhaseExercises();
+  if (typeof isRyg === 'function' && isRyg(cid)) return rygExercises(cid);
   const lv = getLevel(cid); return exercises.filter(e => e.category === cid && (Number(e.level) || 1) === lv);
 }
-function programLevelLabel(cid) { return cid === 'haelspore' && typeof haelPhase === 'function' ? 'Fase ' + haelPhase() : 'Niveau ' + getLevel(cid); }
+function programLevelLabel(cid) { if (typeof isRyg === 'function' && isRyg(cid)) return rygLabel(cid); return cid === 'haelspore' && typeof haelPhase === 'function' ? 'Fase ' + haelPhase() : 'Niveau ' + getLevel(cid); }
 let levels = loadLevels();
 let exercises = loadExercises();
 let log = loadLog();
@@ -431,7 +432,10 @@ function savePain(prog, fields) {
   if (!r) { r = { dato: dateKey(), program: prog }; a.push(r); }
   Object.assign(r, fields); writeJson(KEY_PAIN, a.slice(-400)); return r;
 }
-function painTexts(prog) { return prog === 'haelspore' && typeof HAEL_PAIN_CHECK !== 'undefined' ? Object.assign({}, PAIN_CHECK, HAEL_PAIN_CHECK) : PAIN_CHECK; }
+function painTexts(prog) {
+  if (typeof RYG_PAIN_CHECK !== 'undefined' && RYG_PAIN_CHECK[prog]) return Object.assign({}, PAIN_CHECK, RYG_PAIN_CHECK[prog]);
+  return prog === 'haelspore' && typeof HAEL_PAIN_CHECK !== 'undefined' ? Object.assign({}, PAIN_CHECK, HAEL_PAIN_CHECK) : PAIN_CHECK;
+}
 function painTone(v, prog) { const fb = painTexts(prog).feedback; return (fb.find(f => v <= f.max) || fb[fb.length - 1]); }
 function beforeAsked(prog) { const r = painToday(prog); return !!r && 'foer' in r; }
 function needsAfter(prog) { const r = painToday(prog); return !!r && 'foer' in r && !r.afsluttet; }
@@ -493,8 +497,11 @@ function setHeader(title, back) {
   b.hidden = !back;
   b.onclick = () => { location.hash = back; };
 }
+const TAB_OF = { smerte: 'uge', maerker: 'uge', raad: 'mere' };
 function setTab(tab) {
-  document.querySelectorAll('.tabbar a').forEach(a => a.classList.toggle('active', a.dataset.tab === tab));
+  tab = TAB_OF[tab] || tab;
+  if (tab) document.body.classList.remove('onboarding');
+  document.querySelectorAll('.tabbar a').forEach(a => { const on = a.dataset.tab === tab; a.classList.toggle('active', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
 }
 
 function ring(done, total) {
@@ -504,90 +511,128 @@ function ring(done, total) {
     '<text x="37" y="44" text-anchor="middle">' + done + '</text></svg>';
 }
 
+/* ---------- Visning: "Stor og enkel" / "Fuld oversigt" + tekststørrelse (gemmes lokalt) ---------- */
+const KEY_MODE = 'hjo_visning_v1', KEY_TEXT = 'hjo_tekst_v1', KEY_GUIDE = 'hjo_guide_v1';
+function uiMode() { const m = localStorage.getItem(KEY_MODE); return m === 'enkel' || m === 'fuld' ? m : null; }
+function isSimple() { return uiMode() === 'enkel'; }
+function textSize() { const t = localStorage.getItem(KEY_TEXT); return ['normal', 'stor', 'xl'].includes(t) ? t : (isSimple() ? 'stor' : 'normal'); }
+function applyDisplay() {
+  const r = document.documentElement;
+  r.classList.toggle('mode-enkel', isSimple()); r.classList.toggle('mode-fuld', !isSimple());
+  ['normal', 'stor', 'xl'].forEach(x => r.classList.toggle('ts-' + x, textSize() === x));
+}
+function setMode(m) { localStorage.setItem(KEY_MODE, m); applyDisplay(); }
+const MODE_INFO = {
+  enkel: { name: 'Stor og enkel', text: 'Store bogstaver og knapper. Få valg på hver side. Appen viser dig én øvelse ad gangen, og stemmen læser op.' },
+  fuld: { name: 'Fuld oversigt', text: 'Normal tekststørrelse. Mere overblik og flere oplysninger på hver side – fx statistik, mærker og genveje. Stemmen læser også op.' }
+};
+function modePreview(m) { // lille tegnet forhåndsvisning af hver visning
+  return m === 'enkel'
+    ? '<span class="pv pv-enkel" aria-hidden="true"><i class="pv-h">God dag!</i><i class="pv-big">▶ Start</i><i class="pv-l"></i><i class="pv-tabs"><b></b><b></b><b></b><b></b></i></span>'
+    : '<span class="pv pv-fuld" aria-hidden="true"><i class="pv-h">God dag!</i><i class="pv-btn">▶ Start dagens træning</i><i class="pv-row"><b></b><b></b></i><i class="pv-li"></i><i class="pv-li"></i><i class="pv-li"></i><i class="pv-tabs"><b></b><b></b><b></b><b></b></i></span>';
+}
+function viewOnboarding(then) {
+  setHeader('Velkommen'); document.body.classList.add('onboarding'); setTab('');
+  let h = '<h2 class="ob-h">Velkommen til Hjemmeøvelser</h2><p class="lead">Hvordan vil du helst have appen? Tryk på det, der passer dig bedst.</p>';
+  ['enkel', 'fuld'].forEach(m => {
+    h += '<button type="button" class="card ob-card" data-mode="' + m + '">' + modePreview(m) + '<span class="ob-txt"><b>' + MODE_INFO[m].name + '</b><span>' + MODE_INFO[m].text + '</span></span></button>';
+  });
+  h += '<p class="hint" style="text-align:center">Du kan altid skifte senere under <b>☰ Mere</b>. Alt gemmes kun på denne telefon.</p>';
+  $app.innerHTML = h;
+  $app.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => {
+    setMode(b.dataset.mode); document.body.classList.remove('onboarding');
+    toast(MODE_INFO[b.dataset.mode].name + ' er valgt.');
+    if (location.hash && location.hash !== '#/' && location.hash !== '#/velkommen') route(); else { location.hash = '#/'; route(); }
+  });
+}
+
+/* ---------- I dag (forside): én stor knap + "Hvad skal jeg gøre nu?" ---------- */
+function programName(cid) { const c = CATEGORIES.find(x => x.id === cid); if (!c) return ''; return c.area === 'ryg' ? 'Ryg og nakke: ' + c.name : (c.id === 'haelspore' ? 'Hælspore' : c.name); }
+function startTraining(cid) {
+  localStorage.setItem(KEY_LASTCAT, cid);
+  const go = () => {
+    const list = programExercises(cid), next = list.find(e => !doneToday(e.id));
+    if (isSimple() && next) { sessionStorage.setItem(KEY_GUIDE, cid); location.hash = '#/oevelse/' + encodeURIComponent(next.id); }
+    else location.hash = '#/kategori/' + cid;
+  };
+  if (!beforeAsked(cid)) painBefore(cid, go); else go();
+}
 function viewHome() {
   setHeader('Hjemmeøvelser'); setTab('home');
-  const now = new Date();
-  const cat = CATEGORIES.find(c => c.id === lastCategory());
-  const todays = programExercises(cat.id);
-  const doneN = todays.filter(e => doneToday(e.id)).length;
-  const allDone = todays.length > 0 && doneN === todays.length;
-  const streak = currentStreak(), best = bestStreak(), trainedToday = countDone(dateKey()) > 0;
-  const goal = getGoal(), week = daysInWeek(mondayOf(now)), weekPct = Math.min(100, Math.round(week / goal * 100));
-  const rPct = advicePct(), nextR = nextUnreadAdvice();
-  const store = earnedBadges() || {}; const BL = allBadges(); const nEarned = BL.filter(b => store[b.id]).length;
-
-  let html = '<section class="hello"><p class="date">' + WEEKDAYS[now.getDay()].replace(/^./, c => c.toUpperCase()) + ' ' + now.getDate() + '. ' + MONTHS_LONG[now.getMonth()] + '</p>' +
-    '<h2>' + greeting() + '! 👋</h2>' +
-    '<p class="hello-sub">' + (allDone ? 'Dagens øvelser er lavet. Rigtig flot!' : trainedToday ? 'Godt i gang – du har allerede trænet i dag.' : 'Klar til lidt træning i dag?') + '</p></section>';
-  html += remindBannerHtml();
-  if (HAEL_ON && haelUsed() && now.getHours() < 11 && !haelRoutineDoneToday()) html += '<button type="button" class="btn routine-btn" id="homeRoutine">🌅 Morgenrutine – 2 min <small>(hælspore)</small></button>';
-
-  html += '<a class="btn start' + (allDone ? ' done' : '') + '" id="startBtn" href="#/kategori/' + cat.id + '">' +
-    '<span class="start-main">' + (allDone ? '✓ Dagens træning er lavet' : '▶ Start dagens træning') + '</span>' +
-    '<span class="start-sub">' + esc(cat.name) + ' · ' + programLevelLabel(cat.id) + ' · ' + doneN + ' af ' + todays.length + ' øvelser</span></a>';
-
-  html += '<div class="stats">' +
-    '<div class="stat streak"><div class="stat-icon" aria-hidden="true">' + (streak > 0 ? '🔥' : '🌱') + '</div>' +
-    '<div class="stat-num">' + streak + '</div><div class="stat-lbl">' + (streak === 1 ? 'dag i træk' : 'dage i træk') + '</div>' +
-    '<div class="stat-sub">' + (streak > 0 && !trainedToday ? 'Træn i dag for at holde den' : 'Bedste: ' + best + ' ' + (best === 1 ? 'dag' : 'dage')) + '</div></div>' +
-    '<div class="stat goal">' + bigRing(weekPct, week + '/' + goal, week >= goal ? 'mål nået ✓' : 'dage') +
-    '<div class="stat-lbl">Ugemål: ' + weekPct + ' %</div><button type="button" class="linkbtn" id="goalEdit">Ret ugemål</button></div></div>';
-  html += '<div id="goalBox" class="card goalbox" hidden><p style="margin:0 0 8px"><b>Hvor mange dage vil du træne om ugen?</b></p>' +
-    '<div class="stepper"><button type="button" class="btn small secondary" id="gMinus" aria-label="Færre dage">−</button><span id="gVal">' + goal + '</span>' +
-    '<button type="button" class="btn small secondary" id="gPlus" aria-label="Flere dage">+</button></div>' +
-    '<p class="hint">Anbefalingen er 2–3 træninger om ugen. Lette dage og gåture kan komme oveni.</p>' +
-    '<button type="button" class="btn" id="gSave">Gem ugemål</button></div>';
-
-  html += '<a class="card raad-card" href="' + (nextR ? '#/raad/' + nextR.id : '#/raad') + '">' +
-    '<div class="row-between"><b>📖 Du har læst ' + rPct + ' % af de gode råd</b></div>' +
-    '<div class="bar"><span style="width:' + rPct + '%"></span></div>' +
-    '<span class="raad-next">' + (nextR ? 'Næste råd: ' + esc(nextR.title) + ' ›' : '🎉 Du har læst alle råd – flot!') + '</span></a>';
-
-  html += '<a class="card badges-card" href="#/maerker"><div class="row-between"><b>🏅 Dine mærker</b><span class="muted small">' + nEarned + ' af ' + BL.length + ' ›</span></div>' +
-    '<div class="badge-row">' + BL.map(b => '<span class="bdot' + (store[b.id] ? ' got' : '') + '" title="' + esc(b.name) + '" aria-label="' + esc(b.name) + (store[b.id] ? ' (opnået)' : ' (låst)') + '">' + (store[b.id] ? b.icon : '🔒') + '</span>').join('') + '</div></a>';
-
-  const lastPain = painLog().filter(x => typeof x.efter === 'number').slice(-1)[0];
-  html += '<a class="card pain-card" href="#/smerte"><div class="row-between"><b>📈 Min smerte</b><span class="muted small">Se grafen ›</span></div>' +
-    '<span class="small">' + (lastPain ? 'Seneste træning: ' + (typeof lastPain.foer === 'number' ? 'før ' + lastPain.foer + ', ' : '') + 'efter ' + lastPain.efter + ' (0–10)' : 'Følg din smerte før og efter træning uge for uge.') + '</span></a>';
-  html += '<div class="card tip"><p class="tip-h">💬 Dagens tanke</p><p class="tip-t">' + esc(dailyMessage()) + '</p></div>';
-
-  html += '<h2>Dine programmer</h2><div class="grid">';
-  CATEGORIES.forEach(c => {
-    const l = getLevel(c.id);
-    const list = programExercises(c.id);
-    const d = list.filter(e => doneToday(e.id)).length;
-    if (c.id === 'haelspore') {
-      const f = haelPhase();
-      html += '<a class="cat" href="#/kategori/' + c.id + '">' + catThumb(c) + '<span class="cat-txt"><strong>' + esc(c.name) + '</strong>' +
-        haelPhaseSteps(f, true) + '<span class="count">Fase ' + f + ' af 4' + (d ? ' · ' + d + ' ✓' : '') + '</span></span></a>';
-      return;
-    }
-    html += '<a class="cat' + (c.small ? ' wide' : '') + '" href="#/kategori/' + c.id + '">' + catThumb(c) +
-      '<span class="cat-txt"><strong>' + esc(c.name) + '</strong>' +
-      '<span class="lvsteps" aria-label="Niveau ' + l + ' af 3">' + [1, 2, 3].map(n => '<i class="' + (n <= l ? 'on' : '') + '"></i>').join('') + '</span>' +
-      '<span class="count">' + (l < 3 ? 'Niveau ' + l + ' → ' + (l + 1) : 'Niveau 3 · topniveau') + (d ? ' · ' + d + ' ✓' : '') + '</span></span></a>';
-  });
-  html += '</div>';
-  html += '<a class="card remind-link" href="#/paamindelser"><b>🔔 Påmindelser</b><span class="muted small">' + (remindSettings().on ? 'Slået til · ' + remindSettings().days.length + ' dage kl. ' + remindSettings().time : 'Slået fra') + ' ›</span></a>';
-  html += '<a class="footer-link" href="#/rediger">⚙️ Til fysioterapeuten: ret øvelser</a>';
-  $app.innerHTML = html;
-
-  let g = goal;
+  const now = new Date(), cid = lastCategory(), todays = programExercises(cid);
+  const doneN = todays.filter(e => doneToday(e.id)).length, allDone = todays.length > 0 && doneN === todays.length;
+  const next = todays.find(e => !doneToday(e.id));
+  let h = '<section class="hello"><p class="date">' + WEEKDAYS[now.getDay()].replace(/^./, c => c.toUpperCase()) + ' ' + now.getDate() + '. ' + MONTHS_LONG[now.getMonth()] + '</p>' +
+    '<h2>' + greeting() + '! 👋</h2></section>';
+  h += remindBannerHtml();
+  h += '<div class="card now-card"><p class="now-q">Hvad skal jeg gøre nu?</p>' +
+    '<a class="btn start' + (allDone ? ' done' : '') + '" id="startBtn" href="#/kategori/' + cid + '">' +
+    '<span class="start-main">' + (allDone ? '✓ Dagens træning er lavet' : (doneN ? '▶ Fortsæt dagens træning' : '▶ Start dagens træning')) + '</span>' +
+    '<span class="start-sub">' + esc(programName(cid)) + ' · ' + programLevelLabel(cid) + ' · ' + doneN + ' af ' + todays.length + ' øvelser</span></a>' +
+    (allDone ? '<p class="now-next">Godt gået! Hvil dig, og træn igen i morgen eller i overmorgen.</p>' : next ? '<p class="now-next">Næste øvelse: <b>' + esc(next.name) + '</b></p>' : '') + '</div>';
+  if (HAEL_ON && haelUsed() && now.getHours() < 11 && !haelRoutineDoneToday()) h += '<button type="button" class="btn routine-btn" id="homeRoutine">🌅 Morgenrutine – 2 min <small>(hælspore)</small></button>';
+  h += '<a class="btn secondary" id="changeProg" href="#/programmer">🔄 Skift program</a>';
+  if (!isSimple()) {
+    const streak = currentStreak(), goal = getGoal(), week = daysInWeek(mondayOf(now));
+    h += '<a class="card status-strip" href="#/uge"><span>' + (streak > 0 ? '🔥' : '🌱') + ' <b>' + streak + '</b> ' + (streak === 1 ? 'dag' : 'dage') + ' i træk</span><span>📅 <b>' + week + ' af ' + goal + '</b> dage denne uge</span><span class="chev" aria-hidden="true">›</span></a>';
+    h += '<div class="card tip"><p class="tip-h">💬 Dagens tanke</p><p class="tip-t">' + esc(dailyMessage()) + '</p></div>';
+  }
+  $app.innerHTML = h;
   hydrateMedia($app); bindRemindBanner();
   const hr = document.getElementById('homeRoutine'); if (hr) hr.onclick = haelOpenRoutine;
   if (HAEL_ON) setTimeout(() => { if (location.hash === '' || location.hash === '#/' || location.hash === '#') haelMaybeAskMorning(); }, 350);
-  document.getElementById('startBtn').onclick = ev => { if (!beforeAsked(cat.id)) { ev.preventDefault(); localStorage.setItem(KEY_LASTCAT, cat.id); painBefore(cat.id, () => { location.hash = '#/kategori/' + cat.id; }); } };
-  document.getElementById('goalEdit').onclick = () => { const b = document.getElementById('goalBox'); b.hidden = !b.hidden; if (!b.hidden) b.scrollIntoView({ block: 'nearest' }); };
-  document.getElementById('gMinus').onclick = () => { g = Math.max(1, g - 1); document.getElementById('gVal').textContent = g; };
-  document.getElementById('gPlus').onclick = () => { g = Math.min(7, g + 1); document.getElementById('gVal').textContent = g; };
-  document.getElementById('gSave').onclick = () => { setGoal(g); toast('Ugemål gemt: ' + g + ' dage om ugen.'); viewHome(); checkBadges(); };
+  document.getElementById('startBtn').onclick = ev => { ev.preventDefault(); if (allDone) { location.hash = '#/kategori/' + cid; return; } startTraining(cid); };
+}
+
+/* ---------- Øvelser: vælg program ---------- */
+function progCard(c) {
+  const cur = lastCategory() === c.id, list = programExercises(c.id), d = list.filter(e => doneToday(e.id)).length;
+  return '<a class="prog-card' + (cur ? ' cur' : '') + '" href="#/kategori/' + c.id + '" data-prog="' + c.id + '">' + catThumb(c) +
+    '<span class="cat-txt"><strong>' + esc(c.name) + '</strong><span class="count">' + esc(programLevelLabel(c.id)) + (d ? ' · ' + d + ' ✓' : '') + '</span>' +
+    (cur ? '<span class="cur-tag">Dit program nu</span>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>';
+}
+function viewPrograms() {
+  setHeader('Øvelser'); setTab('prog');
+  let h = '<p class="lead">Vælg det program, du vil træne.</p>';
+  h += '<h2>Knæ, hofte og balance</h2>' + CATEGORIES.filter(c => !c.area && c.id !== 'haelspore').map(progCard).join('');
+  if (HAEL_ON) h += '<h2>Fødder</h2>' + CATEGORIES.filter(c => c.id === 'haelspore').map(progCard).join('');
+  if (typeof RYG_ON !== 'undefined' && RYG_ON) h += '<h2>Ryg og nakke</h2><p class="muted small" style="margin:-4px 0 10px">' + esc(RYG_AREA.intro) + '</p>' + CATEGORIES.filter(c => c.area === 'ryg').map(progCard).join('');
+  $app.innerHTML = h;
+  hydrateMedia($app);
+  $app.querySelectorAll('[data-prog]').forEach(a => a.addEventListener('click', () => localStorage.setItem(KEY_LASTCAT, a.dataset.prog)));
+}
+
+/* ---------- Mere: indstillinger og alt det, man ikke bruger hver dag ---------- */
+function viewMore() {
+  setHeader('Mere'); setTab('mere');
+  const row = (href, icon, title, sub, id) => '<a class="card more-row" href="' + href + '"' + (id ? ' id="' + id + '"' : '') + '><span class="mi" aria-hidden="true">' + icon + '</span><span><b>' + title + '</b>' + (sub ? '<small>' + sub + '</small>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>';
+  const rs = typeof remindSettings === 'function' ? remindSettings() : { on: false };
+  let h = '<h2>Visning</h2><div class="seg" role="radiogroup" aria-label="Visning">' + ['enkel', 'fuld'].map(m =>
+    '<button type="button" role="radio" class="seg-b' + ((isSimple() ? 'enkel' : 'fuld') === m ? ' sel' : '') + '" aria-checked="' + ((isSimple() ? 'enkel' : 'fuld') === m) + '" data-mode="' + m + '"><b>' + MODE_INFO[m].name + '</b></button>').join('') + '</div>';
+  h += '<h2>Tekststørrelse</h2><div class="seg three" role="radiogroup" aria-label="Tekststørrelse">' + [['normal', 'Normal'], ['stor', 'Stor'], ['xl', 'Meget stor']].map(([k, n]) =>
+    '<button type="button" role="radio" class="seg-b ts-b-' + k + (textSize() === k ? ' sel' : '') + '" aria-checked="' + (textSize() === k) + '" data-ts="' + k + '"><b>' + n + '</b></button>').join('') + '</div>';
+  h += '<h2>Stemme</h2><div class="card voice-card"><p style="margin:0 0 10px">En stemme forklarer øvelsen og siger tempoet: "Op … og ned", "Hold … 3, 2, 1".</p>' + (typeof Voice !== 'undefined' ? Voice.btnHtml() + (Voice.note() ? '<p class="hint">' + Voice.note() + '</p>' : '') : '') + '</div>';
+  h += '<h2>Mere i appen</h2>' +
+    row('#/raad', '📖', 'Gode råd', 'Om artrose, hælspore og træning') +
+    row('#/smerte', '📈', 'Min smerte', 'Graf over din smerte uge for uge') +
+    row('#/maerker', '🏅', 'Mine mærker', 'Små belønninger for at holde fast') +
+    row('#/paamindelser', '🔔', 'Påmindelser', rs.on ? 'Slået til · ' + rs.days.length + ' dage kl. ' + rs.time : 'Slået fra') +
+    (typeof RYG_ON !== 'undefined' && RYG_ON ? row('#/ryg/laege', '⚠️', 'Hvornår skal du til læge?', 'Ryg og nakke') : '');
+  if (HAEL_ON) h += '<h2>Hælspore</h2>' + row('#/hael/plan', '📅', '12-ugers planen') + row('#/hael/trafiklys', '🚦', 'Hvor meget må jeg gå?') + row('#/hael/skotjek', '👟', 'Skotjek') + row('#/hael/myter', '💬', 'Myter og fakta') + row('#/hael/hjaelpemidler', '🩹', 'Hjælpemidler');
+  h += '<h2>Til fysioterapeuten</h2>' + row('#/rediger', '⚙️', 'Ret øvelser', 'Tilpas, tilføj, eksportér og importér');
+  h += '<p class="hint" style="margin-top:18px">Alt, du skriver i appen, gemmes kun på denne telefon.</p>';
+  $app.innerHTML = h;
+  if (typeof Voice !== 'undefined') Voice.bind($app);
+  $app.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => { setMode(b.dataset.mode); toast(MODE_INFO[b.dataset.mode].name + ' er valgt.'); viewMore(); });
+  $app.querySelectorAll('[data-ts]').forEach(b => b.onclick = () => { localStorage.setItem(KEY_TEXT, b.dataset.ts); applyDisplay(); viewMore(); });
 }
 
 function viewCategory(id) {
   const cat = CATEGORIES.find(c => c.id === id);
   if (!cat) return viewHome();
   if (id === 'haelspore' && HAEL_ON) return viewHael();
-  setHeader(cat.name, '#/'); setTab('home');
+  if (typeof isRyg === 'function' && isRyg(id)) return viewRyg(id);
+  setHeader(cat.name, '#/programmer'); setTab('prog');
   localStorage.setItem(KEY_LASTCAT, id);
   const lv = getLevel(id);
   const all = exercises.filter(e => e.category === id);
@@ -619,31 +664,46 @@ function viewCategory(id) {
 }
 function shortDose(s) { return String(s || '').split('.')[0]; }
 
+/* Hvor er øvelsen i dagens program? (til "Øvelse 2 af 5" og "Næste øvelse") */
+function programNav(e) {
+  const list = programExercises(e.category), i = list.findIndex(x => x.id === e.id);
+  if (i < 0) return null;
+  const next = list.slice(i + 1).find(x => !doneToday(x.id)) || list.find(x => x.id !== e.id && !doneToday(x.id));
+  return { i: i + 1, n: list.length, next, allDone: list.every(x => doneToday(x.id)) };
+}
 function viewExercise(id) {
   const e = exercises.find(x => x.id === id);
   if (!e) { location.hash = '#/'; return; }
   const cat = CATEGORIES.find(c => c.id === e.category);
-  setHeader(cat ? cat.name : 'Øvelse', '#/kategori/' + e.category); setTab('home');
-  const d = doneToday(e.id);
-  const lv = Number(e.level) || 1;
-  const L = LEVELS.find(x => x.n === lv) || LEVELS[0];
-  const isHael = e.category === 'haelspore' && HAEL_ON;
-  let html = isHael
+  setHeader(cat ? cat.name : 'Øvelse', '#/kategori/' + e.category); setTab('prog');
+  const d = doneToday(e.id), lv = Number(e.level) || 1, L = LEVELS.find(x => x.n === lv) || LEVELS[0];
+  const isHael = e.category === 'haelspore' && HAEL_ON, ryg = typeof isRyg === 'function' && isRyg(e.category);
+  const nav = programNav(e), simple = isSimple();
+  let html = '<div class="ex-head">' + (isHael
     ? '<span class="badge phase" style="--pc:' + (HAEL_PHASES[Math.min(lv, 4) - 1] || HAEL_PHASES[0]).color + '">' + (Array.isArray(e.phases) && e.phases.length ? 'Fase ' + e.phases.join(', ') : 'Fase ' + lv) + '</span>'
-    : '<span class="badge lv' + lv + '">' + L.name + ' · ' + L.sub + '</span>';
-  html += '<h2 style="margin-top:8px">' + esc(e.name) + '</h2>';
-  html += galleryHtml(e);
+    : ryg ? '<span class="badge lv' + lv + '">' + (e.track === 'hold' ? 'Hold – de første dage' : 'Forebyg · Fase ' + (Array.isArray(e.phases) ? e.phases.join(', ') : lv)) + '</span>'
+    : '<span class="badge lv' + lv + '">' + L.name + ' · ' + L.sub + '</span>') +
+    (nav ? '<span class="ex-pos">Øvelse ' + nav.i + ' af ' + nav.n + '</span>' : '') + '</div>';
+  html += '<h2 class="ex-title">' + esc(e.name) + '</h2>';
+  const hasFilm = (typeof FigFilm !== 'undefined' && FigFilm.has(e.id)) || (typeof HAEL_TRIN_FILM !== 'undefined' && !!HAEL_TRIN_FILM[e.id]);
+  if (!hasFilm && !imagesFor(e).length && !(e.photos && e.photos.length)) html += galleryHtml(e); // pladsholder
   if (typeof haelTrinFilmHtml === 'function') html += haelTrinFilmHtml(e);
   if (typeof figFilmHtml === 'function') html += figFilmHtml(e);
-  if (e.equipment) html += '<p class="equip"><span aria-hidden="true">🧰</span> <b>Udstyr:</b> ' + esc(e.equipment) + '</p>';
   html += videoHtml(e);
   html += '<div class="dose"><span aria-hidden="true">🔁</span><span>' + esc(e.dose) + '</span></div>';
   html += '<button id="doneBtn" class="btn ' + (d ? 'done' : '') + '" type="button">' + (d ? '✓ Lavet i dag – tryk for at fortryde' : 'Markér som lavet i dag') + '</button>';
-  if (needsAfter(e.category) && d) html += '<button type="button" class="btn secondary" id="finishBtn">' + esc(PAIN_CHECK.finishButton) + '</button>';
-  html += '<div class="card"><h3>Sådan gør du</h3><ol class="steps">' + (e.steps || []).map(s => '<li>' + esc(s) + '</li>').join('') + '</ol></div>';
-  if (e.tips && e.tips.length) html += '<div class="card"><h3>Kvalitet – gør det rigtigt</h3><ul class="tips">' + e.tips.map(s => '<li>' + esc(s) + '</li>').join('') + '</ul></div>';
-  if (e.progression) html += '<div class="card prog"><h3>↕️ Lettere eller sværere</h3><p style="margin:0">' + esc(e.progression) + '</p></div>';
-  if (e.stop) html += '<div class="card stop"><h3>⚠️ Smerteregel – hvornår skal du skrue ned?</h3><p>' + esc(e.stop) + '</p></div>';
+  if (d && nav && nav.next) html += '<a class="btn next-btn" id="nextBtn" href="#/oevelse/' + encodeURIComponent(nav.next.id) + '">Næste øvelse: ' + esc(nav.next.name) + ' ›</a>';
+  if (needsAfter(e.category) && d && !nav) html += '<button type="button" class="btn secondary" id="finishBtn">' + esc(PAIN_CHECK.finishButton) + '</button>';
+  const steps = e.steps || [], first = steps.slice(0, 3), rest = steps.slice(3);
+  html += '<div class="card"><h3>Sådan gør du</h3><ol class="steps">' + first.map(s => '<li>' + esc(s) + '</li>').join('') + '</ol>' +
+    (rest.length ? '<details class="more-steps"><summary>Vis ' + (rest.length === 1 ? 'det sidste trin' : 'de sidste ' + rest.length + ' trin') + '</summary><ol class="steps" start="4">' + rest.map(s => '<li>' + esc(s) + '</li>').join('') + '</ol></details>' : '') + '</div>';
+  if (e.equipment) html += '<p class="equip"><span aria-hidden="true">🧰</span> <b>Udstyr:</b> ' + esc(e.equipment) + '</p>';
+  if (ryg) html += rygDoctorLink(e.category);
+  const fold = (cls, title, body, open) => '<details class="card fold ' + cls + '"' + (open ? ' open' : '') + '><summary>' + title + '</summary>' + body + '</details>';
+  if (imagesFor(e).length || (e.photos && e.photos.length)) html += fold('gal-fold', '🖼️ Billeder', galleryHtml(e), !simple);
+  if (e.tips && e.tips.length) html += fold('', '✅ Gør det rigtigt', '<ul class="tips">' + e.tips.map(s => '<li>' + esc(s) + '</li>').join('') + '</ul>', !simple);
+  if (e.progression) html += fold('prog', '↕️ Lettere eller sværere', '<p style="margin:0">' + esc(e.progression) + '</p>', !simple);
+  if (e.stop) html += fold('stop', '⚠️ Smerteregel – hvornår skal du skrue ned?', '<p>' + esc(e.stop) + '</p>', false);
   $app.innerHTML = html;
   hydrateMedia($app); initGallery($app, e); initVideo($app);
   if (typeof initHaelTrinFilm === 'function') initHaelTrinFilm($app);
@@ -653,16 +713,18 @@ function viewExercise(id) {
     const nowDone = toggleDone(e.id);
     toast(nowDone ? 'Godt gået! Øvelsen er krydset af.' : 'Afkrydsning fjernet.');
     const y = window.scrollY; viewExercise(id); window.scrollTo(0, y);
+    if (nowDone) { const nb = document.getElementById('nextBtn'); if (nb) nb.scrollIntoView({ block: 'nearest' }); }
     if (!nowDone) return;
     const prog = programExercises(e.category);
-    if (needsAfter(e.category) && prog.some(x => x.id === e.id) && prog.every(x => doneToday(x.id))) painAfter(e.category, () => checkBadges());
+    if (needsAfter(e.category) && prog.some(x => x.id === e.id) && prog.every(x => doneToday(x.id))) painAfter(e.category, () => { checkBadges(); if (sessionStorage.getItem(KEY_GUIDE)) { sessionStorage.removeItem(KEY_GUIDE); location.hash = '#/'; } });
     else checkBadges();
   };
-  if (!d && !beforeAsked(e.category)) painBefore(e.category);
+  // Stor og enkel: smerte spørges kun én gang – når man trykker "Start dagens træning" (samme før-måling som i Fuld oversigt)
+  if (!d && !beforeAsked(e.category) && !isSimple()) painBefore(e.category);
 }
 
 function viewWeek() {
-  setHeader('Min uge'); setTab('uge');
+  setHeader('Fremgang'); setTab('uge');
   const now = new Date();
   const mon = mondayOf(now);
   const todayK = dateKey(now);
@@ -676,7 +738,20 @@ function viewWeek() {
       '<div class="dn">' + DAYS[i] + '</div><div class="dd">' + d.getDate() + '/' + (d.getMonth() + 1) + '</div>' +
       '<div class="mark" aria-label="' + n + ' øvelser">' + (n ? n : '') + '</div></div>';
   }
-  let html = '<div class="card"><p class="muted small" style="margin-bottom:6px">Uge ' + weekNumber(now) + ' · ' + mon.getDate() + '. ' + MONTHS[mon.getMonth()] + ' – ' + addDays(mon, 6).getDate() + '. ' + MONTHS[addDays(mon, 6).getMonth()] + '</p>' +
+  const streak = currentStreak(), best = bestStreak(), trainedToday = countDone(dateKey()) > 0;
+  const goal = getGoal(), weekN = daysInWeek(mon), weekPct = Math.min(100, Math.round(weekN / goal * 100));
+  let html = '<div class="stats">' +
+    '<div class="stat streak"><div class="stat-icon" aria-hidden="true">' + (streak > 0 ? '🔥' : '🌱') + '</div>' +
+    '<div class="stat-num">' + streak + '</div><div class="stat-lbl">' + (streak === 1 ? 'dag i træk' : 'dage i træk') + '</div>' +
+    '<div class="stat-sub">' + (streak > 0 && !trainedToday ? 'Træn i dag for at holde den' : 'Bedste: ' + best + ' ' + (best === 1 ? 'dag' : 'dage')) + '</div></div>' +
+    '<div class="stat goal">' + bigRing(weekPct, weekN + '/' + goal, weekN >= goal ? 'mål nået ✓' : 'dage') +
+    '<div class="stat-lbl">Ugemål: ' + weekPct + ' %</div><button type="button" class="linkbtn" id="goalEdit">Ret ugemål</button></div></div>';
+  html += '<div id="goalBox" class="card goalbox" hidden><p style="margin:0 0 8px"><b>Hvor mange dage vil du træne om ugen?</b></p>' +
+    '<div class="stepper"><button type="button" class="btn small secondary" id="gMinus" aria-label="Færre dage">−</button><span id="gVal">' + goal + '</span>' +
+    '<button type="button" class="btn small secondary" id="gPlus" aria-label="Flere dage">+</button></div>' +
+    '<p class="hint">Anbefalingen er 2–3 træninger om ugen. Lette dage og gåture kan komme oveni.</p>' +
+    '<button type="button" class="btn" id="gSave">Gem ugemål</button></div>';
+  html += '<div class="card"><p class="muted small" style="margin-bottom:6px">Uge ' + weekNumber(now) + ' · ' + mon.getDate() + '. ' + MONTHS[mon.getMonth()] + ' – ' + addDays(mon, 6).getDate() + '. ' + MONTHS[addDays(mon, 6).getMonth()] + '</p>' +
     '<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:14px"><span class="big-number">' + days + '</span><span>af 7 dage med øvelser</span></div>' +
     '<div class="week">' + cells + '</div>' +
     '<p class="muted small" style="margin:12px 0 0">Tallet i cirklen er antal øvelser lavet den dag. I alt ' + total + ' øvelser denne uge.</p></div>';
@@ -691,7 +766,15 @@ function viewWeek() {
       '<span class="bar"><span style="width:' + Math.round(c / 7 * 100) + '%"></span></span><span class="n">' + c + ' dage</span></div>';
   }
   html += '</div>';
+  const store = earnedBadges() || {}, BL = allBadges();
+  html += '<a class="card more-row" href="#/smerte"><span class="mi" aria-hidden="true">📈</span><span><b>Min smerte</b><small>Graf og ugesammenligning</small></span><span class="chev" aria-hidden="true">›</span></a>';
+  html += '<a class="card more-row" href="#/maerker"><span class="mi" aria-hidden="true">🏅</span><span><b>Mine mærker</b><small>' + BL.filter(b => store[b.id]).length + ' af ' + BL.length + '</small></span><span class="chev" aria-hidden="true">›</span></a>';
   $app.innerHTML = html;
+  let g = goal;
+  document.getElementById('goalEdit').onclick = () => { const b = document.getElementById('goalBox'); b.hidden = !b.hidden; if (!b.hidden) b.scrollIntoView({ block: 'nearest' }); };
+  document.getElementById('gMinus').onclick = () => { g = Math.max(1, g - 1); document.getElementById('gVal').textContent = g; };
+  document.getElementById('gPlus').onclick = () => { g = Math.min(7, g + 1); document.getElementById('gVal').textContent = g; };
+  document.getElementById('gSave').onclick = () => { setGoal(g); toast('Ugemål gemt: ' + g + ' dage om ugen.'); viewWeek(); checkBadges(); };
 }
 /* ---------- Min smerte: statistik (kun egne lokale tal fra hjo_smerte_v1, inline SVG) ---------- */
 const KEY_STATS_PERIOD = 'hjo_smerte_periode_v1';
@@ -782,7 +865,7 @@ function statsProgPicker() {
 }
 function bindStatsProg() { const sp = document.getElementById('statProg'); if (sp) sp.onchange = () => { writeJson(KEY_STATS_PROG, sp.value); viewStats(); }; }
 function viewStats() {
-  setHeader('Min smerte'); setTab('smerte');
+  setHeader('Min smerte', '#/uge'); setTab('smerte');
   const weeks = painWeeks();
   if (!weeks.length && statsProg() !== 'alle' && painLog().length) { writeJson(KEY_STATS_PROG, 'alle'); return viewStats(); }
   if (!weeks.length) {
@@ -830,7 +913,7 @@ function encouragement(days) {
 }
 
 function viewAdvice(focusId) {
-  setHeader('Gode råd'); setTab('raad');
+  setHeader('Gode råd', '#/mere'); setTab('raad');
   const read = new Set(readAdvice()); const pct = advicePct();
   let html = (typeof adviceTabs === 'function' ? adviceTabs('artrose') : '') + '<div class="card raad-top"><b>' + (pct === 100 ? '🎉 Du har læst alle de gode råd!' : 'Du har læst ' + read.size + ' af ' + GENERAL_ADVICE.length + ' råd (' + pct + ' %)') + '</b>' +
     '<div class="bar"><span style="width:' + pct + '%"></span></div>' +
@@ -860,7 +943,7 @@ function viewAdvice(focusId) {
 }
 
 function viewBadges() {
-  setHeader('Mine mærker'); setTab('maerker');
+  setHeader('Mine mærker', '#/uge'); setTab('maerker');
   const store = earnedBadges() || {}; const BL = allBadges(); const n = BL.filter(b => store[b.id]).length;
   let html = '<div class="card hint-card"><b>Du har ' + n + ' af ' + BL.length + ' mærker</b>' +
     '<div class="bar"><span style="width:' + Math.round(n / BL.length * 100) + '%"></span></div>' +
@@ -881,7 +964,7 @@ function viewBadges() {
 
 /* ---------- Redigering ---------- */
 function viewEditList() {
-  setHeader('Ret øvelser', '#/'); setTab('');
+  setHeader('Ret øvelser', '#/mere'); setTab('mere');
   let html = '<p class="muted small">Her kan fysioterapeuten tilføje, ændre og slette øvelser. Ændringer gemmes kun på denne telefon/computer.</p>';
   html += '<a class="btn" href="#/rediger/ny">＋ Tilføj ny øvelse</a>';
   CATEGORIES.forEach(c => {
@@ -920,7 +1003,7 @@ function viewEditList() {
     }
   };
   document.getElementById('clearLogBtn').onclick = () => {
-    if (confirm('Slet alle afkrydsninger, mærker, læste råd og smertemålinger på denne enhed?')) { log = {}; saveLog(log); localStorage.removeItem(KEY_RAAD); localStorage.removeItem(KEY_PAIN); ['hjo_hael_fase_v1', 'hjo_hael_start_v1', 'hjo_hael_raad_v1', 'hjo_hael_klar_v1', 'hjo_hael_naaet_v1', 'hjo_hael_skotjek_v1'].forEach(k => localStorage.removeItem(k)); writeJson(KEY_BADGES, {}); toast('Fremskridt nulstillet.'); }
+    if (confirm('Slet alle afkrydsninger, mærker, læste råd og smertemålinger på denne enhed?')) { log = {}; saveLog(log); localStorage.removeItem(KEY_RAAD); localStorage.removeItem(KEY_PAIN); ['hjo_hael_fase_v1', 'hjo_hael_start_v1', 'hjo_hael_raad_v1', 'hjo_hael_klar_v1', 'hjo_hael_naaet_v1', 'hjo_hael_skotjek_v1', 'hjo_ryg_v1', 'hjo_ryg_klar_v1'].forEach(k => localStorage.removeItem(k)); writeJson(KEY_BADGES, {}); toast('Fremskridt nulstillet.'); }
   };
 }
 
@@ -1183,8 +1266,14 @@ function route() {
   window.scrollTo(0, 0);
   document.querySelectorAll('canvas.confetti, .celebrate, .routine').forEach(c => c.remove());
   closeOverlays();
+  if (!uiMode()) return viewOnboarding();
+  document.body.classList.remove('onboarding');
   switch (parts[0]) {
     case '': return viewHome();
+    case 'velkommen': return viewOnboarding();
+    case 'programmer': return viewPrograms();
+    case 'mere': return viewMore();
+    case 'ryg': return viewRygSub(parts[1], parts[2]);
     case 'kategori': return viewCategory(parts[1]);
     case 'oevelse': return viewExercise(parts.slice(1).join('/'));
     case 'uge': return viewWeek();
@@ -1197,6 +1286,7 @@ function route() {
     default: return viewHome();
   }
 }
+applyDisplay();
 checkBadges(false);
 window.addEventListener('hashchange', route);
 window.addEventListener('storage', () => { exercises = loadExercises(); log = loadLog(); route(); });

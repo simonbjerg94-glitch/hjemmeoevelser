@@ -290,7 +290,7 @@ const RoutineAnim = (() => {
       (still ? '<p class="r-still-note">Stillbillede (reduceret bevægelse er slået til). Den lyse fod viser den anden stilling.</p>' : '') + '</div>' +
       '<div class="r-count"><b class="r-rep" aria-live="off">' + counterText(state(step, 0)) + '</b>' +
       '<span class="r-phase">' + state(step, 0).label + '</span>' +
-      '<small class="r-tempo">' + (TEMPO_TXT[step.anim] ? TEMPO_TXT[step.anim](T) : '') + '</small></div>';
+      '<small class="r-tempo">' + (TEMPO_TXT[step.anim] ? TEMPO_TXT[step.anim](T) : '') + '</small></div><p class="ff-say" hidden></p>';
   }
   function draw(root, step, tSec) {
     const st = state(step, tSec), animEl = root.querySelector('.r-anim');
@@ -299,7 +299,7 @@ const RoutineAnim = (() => {
     if (still && STILL_LABEL[st.kind] && !st.done) st.label = STILL_LABEL[st.kind]; // ingen blinkende tekst ved reduceret bevægelse
     const rep = root.querySelector('.r-rep'), ph = root.querySelector('.r-phase'), txt = counterText(st);
     if (rep && rep.textContent !== txt) { rep.textContent = txt; rep.dataset.rep = st.rep; }
-    if (ph) { if (ph.textContent !== st.label) ph.textContent = st.label; const hf = st.hold ? '1' : '0'; if (ph.dataset.hold !== hf) ph.dataset.hold = hf; }
+    if (ph) { if (ph.textContent !== st.label) { ph.textContent = st.label; if (!still && typeof Voice !== 'undefined' && root.isConnected) Voice.cue(root, st.label, st.hold ? 'hold' : ''); } const hf = st.hold ? '1' : '0'; if (ph.dataset.hold !== hf) ph.dataset.hold = hf; }
     return st;
   }
 

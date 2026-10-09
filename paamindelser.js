@@ -101,7 +101,7 @@ function downloadIcs(s) {
 
 /* ---------- Indstillinger ---------- */
 function viewReminders() {
-  setHeader('Påmindelser', '#/'); setTab('');
+  setHeader('Påmindelser', '#/mere'); setTab('mere');
   const s = remindSettings(); const notifOk = 'Notification' in window; const perm = notifOk ? Notification.permission : 'unsupported';
   let h = '<div class="card"><div class="row-between switch-row"><label for="rOn" class="sw-lbl">🔔 Påmindelser</label>' +
     '<button type="button" role="switch" id="rOn" class="switch' + (s.on ? ' on' : '') + '" aria-checked="' + s.on + '"><span></span></button></div>' +

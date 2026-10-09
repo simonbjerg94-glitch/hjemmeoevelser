@@ -176,11 +176,13 @@ const HAEL_TRIN_FILM = { 'hael-2-haeloeft-trin-begge': { oneLeg: false }, 'hael-
 function haelTrinFilmHtml(e) {
   const cfg = HAEL_TRIN_FILM[e.id]; if (!cfg) return '';
   const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  return '<div class="card ht-film" data-ex="' + e.id + '"><h3>🎬 Tempo-film</h3>' +
-    '<p class="muted small" style="margin:0 0 8px">' + HaelTrin.TEMPO.up + ' sek. op · ' + HaelTrin.TEMPO.hold + ' sek. hold · ' + HaelTrin.TEMPO.down + ' sek. ned. Følg hælen i dit eget tempo.</p>' +
+  const tempo = HaelTrin.TEMPO.up + ' sek. op · ' + HaelTrin.TEMPO.hold + ' sek. hold · ' + HaelTrin.TEMPO.down + ' sek. ned. Følg hælen i dit eget tempo.';
+  return '<div class="card ht-film" data-ex="' + e.id + '" data-name="' + String(e.name || '').replace(/"/g, '&quot;') + '" data-tempo="' + tempo + '"><h3>🎬 Tempo-film</h3>' +
     '<div class="ht-stage">' + HaelTrin.svg({ t: still ? 1 : 0, oneLeg: cfg.oneLeg, arrow: still ? 'up' : false }) + '</div>' +
     (still ? '<p class="hint">Stillbillede (reduceret bevægelse er slået til): toppen af bevægelsen.</p>'
-      : '<div class="ht-row"><button type="button" class="btn secondary ht-play" aria-pressed="false">▶ Afspil i tempo</button><span class="ht-phase" aria-live="off"></span></div>') + '</div>';
+      : '<div class="ht-row"><button type="button" class="btn ht-play" aria-pressed="false">▶ Afspil filmen</button><span class="ht-phase" aria-live="off"></span></div>' +
+        '<p class="ff-say" hidden></p><div class="ff-tools">' + (typeof Voice !== 'undefined' ? Voice.btnHtml() : '') + '</div>') +
+    '<p class="muted small ff-tempo">' + tempo + '</p></div>';
 }
 function initHaelTrinFilm(root) {
   const box = root.querySelector('.ht-film'); if (!box) return;
@@ -191,13 +193,18 @@ function initHaelTrinFilm(root) {
     if (!box.isConnected) { cancelAnimationFrame(raf); return; }
     const sec = acc + (now - t0) / 1000, st = HaelTrin.phaseAt(sec);
     if (now - last > 33) { stage.innerHTML = HaelTrin.svg({ t: st.t, oneLeg: cfg.oneLeg }); last = now; }
-    if (ph.textContent !== st.label) { ph.textContent = st.label; ph.dataset.key = st.key; }
+    if (ph.textContent !== st.label) { ph.textContent = st.label; ph.dataset.key = st.key; if (typeof Voice !== 'undefined') Voice.cue(box, st.label, st.key); }
     raf = requestAnimationFrame(frame);
   };
+  let introDone = false;
+  if (typeof Voice !== 'undefined') Voice.bind(box);
   btn.onclick = () => {
     const on = btn.getAttribute('aria-pressed') !== 'true';
-    btn.setAttribute('aria-pressed', on); btn.textContent = on ? '⏸ Pause' : '▶ Afspil i tempo';
-    if (on) { t0 = performance.now(); raf = requestAnimationFrame(frame); }
-    else { cancelAnimationFrame(raf); acc += (performance.now() - t0) / 1000; }
+    btn.setAttribute('aria-pressed', on); btn.textContent = on ? '⏸ Pause' : '▶ Afspil filmen';
+    if (on) {
+      const go = () => { if (btn.getAttribute('aria-pressed') !== 'true' || !box.isConnected) return; t0 = performance.now(); raf = requestAnimationFrame(frame); };
+      if (!introDone && typeof Voice !== 'undefined' && Voice.enabled() && Voice.available()) { introDone = true; ph.textContent = 'Lyt …'; Voice.say(box.dataset.name + '. ' + box.dataset.tempo, box, { flush: true, intro: true, onend: go }); }
+      else { introDone = true; go(); }
+    } else { cancelAnimationFrame(raf); acc += t0 ? (performance.now() - t0) / 1000 : 0; t0 = 0; if (typeof Voice !== 'undefined') Voice.reset(box); }
   };
 }

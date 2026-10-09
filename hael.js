@@ -103,7 +103,7 @@ function haelOpenRoutine() {
   try { if (navigator.wakeLock) navigator.wakeLock.request('screen').then(l => { lock = l; }).catch(() => {}); } catch (e) { /* ikke understøttet */ }
   const buzz = () => { try { if (navigator.vibrate && !prefersReducedMotion()) navigator.vibrate(150); } catch (e) { /* */ } };
   const stopAnim = () => { if (typeof RoutineAnim !== 'undefined') RoutineAnim.stop(); };
-  const close = () => { clearInterval(timer); stopAnim(); if (lock) lock.release().catch(() => {}); box.remove(); document.body.classList.remove('noscroll'); };
+  const close = () => { clearInterval(timer); stopAnim(); if (typeof Voice !== 'undefined') Voice.cancel(); if (lock) lock.release().catch(() => {}); box.remove(); document.body.classList.remove('noscroll'); };
   const ring = (frac) => { const r = 54, c = 2 * Math.PI * r; return '<svg class="r-ring" viewBox="0 0 128 128" aria-hidden="true"><circle cx="64" cy="64" r="' + r + '" class="bg"/><circle cx="64" cy="64" r="' + r + '" class="fg" stroke-dasharray="' + (c * frac) + ' ' + c + '"/></svg>'; };
   const soundBtn = () => '<button type="button" class="r-sound" id="rSound" aria-pressed="' + RoutineAnim.soundOn() + '" aria-label="Klik-lyd i takt">' + (RoutineAnim.soundOn() ? '🔊 Lyd til' : '🔇 Lyd fra') + '</button>';
   function render() {
@@ -135,9 +135,11 @@ function haelOpenRoutine() {
       }
     }
     box.querySelector('.r-close').onclick = close;
+    if (typeof Voice !== 'undefined') Voice.bind(box);
+    if (i >= 0 && i < steps.length && !box.querySelector('.ff-say')) { const b = box.querySelector('.r-body'); if (b) b.insertAdjacentHTML('beforeend', '<p class="ff-say" hidden></p>'); }
     const st = box.querySelector('#rStart'); if (st) st.onclick = () => go(0);
     const nx = box.querySelector('#rNext'); if (nx) nx.onclick = () => go(i + 1);
-    const ps = box.querySelector('#rPause'); if (ps) ps.onclick = () => { paused = !paused; if (paused) clockPause(); else clockResume(); render(); };
+    const ps = box.querySelector('#rPause'); if (ps) ps.onclick = () => { paused = !paused; if (paused) { clockPause(); if (typeof Voice !== 'undefined') Voice.cancel(); } else clockResume(); render(); };
     const fi = box.querySelector('#rFinish'); if (fi) fi.onclick = () => {
       const k = dateKey(); const arr = log[k] || []; if (!arr.includes(HAEL_ROUTINE_ID)) { arr.push(HAEL_ROUTINE_ID); log[k] = arr; saveLog(log); }
       haelEnsureStart(); close(); toast('Morgenrutinen er krydset af. 🌅'); route(); checkBadges();
@@ -159,13 +161,14 @@ function haelOpenRoutine() {
     if (i < steps.length && steps[i].sec) { left = steps[i].sec; clockStart(); timer = setInterval(tickTimer, 100); }
     else { clock.running = false; clock.acc = 0; }
     render();
+    if (typeof Voice !== 'undefined') { box._voice = null; if (i >= 0 && i < steps.length) Voice.say(steps[i].text, box, { flush: true, intro: !!hasAnim(steps[i]) }); else if (i >= steps.length) Voice.say('Godt gået! Morgenrutinen er lavet.', box, { flush: true }); }
   }
   render();
 }
 
 /* ---------- Programsiden for hælspore ---------- */
 function viewHael() {
-  setHeader(HAEL_CATEGORY.short || 'Hælspore', '#/'); setTab('home');
+  setHeader(HAEL_CATEGORY.short || 'Hælspore', '#/programmer'); setTab('prog');
   localStorage.setItem('hjo_sidst_kat_v1', 'haelspore'); haelEnsureStart();
   const f = haelPhase(), P = haelPhaseObj(f), w = haelCurrentWeek(), list = haelPhaseExercises(f);
   const mv = haelMorningToday(), L = haelLoadLevel(mv);
@@ -219,7 +222,7 @@ function haelFlareModal() {
 /* ---------- Undersider: plan, klar, skotjek, myter, trafiklys, hjælpemidler ---------- */
 function viewHaelSub(sub) {
   if (!HAEL_ON) { location.hash = '#/'; return; }
-  const back = '#/kategori/haelspore'; setTab('home');
+  const back = '#/kategori/haelspore'; setTab('prog');
   const f = haelPhase();
   let h = '';
   if (sub === 'plan') {
@@ -317,7 +320,7 @@ function haelShouldStepBack() {
 /* ---------- Infosider (fanen Gode råd → Hælspore) ---------- */
 function haelReadInfo() { const ids = new Set(HAEL_INFO.map(x => x.id)); return readJson(KEY_HAEL_RAAD, []).filter(id => ids.has(id)); }
 function viewHaelInfo(focusId) {
-  setHeader('Gode råd'); setTab('raad');
+  setHeader('Gode råd', '#/mere'); setTab('raad');
   const read = new Set(haelReadInfo()), pct = Math.round(read.size / HAEL_INFO.length * 100);
   let h = adviceTabs('hael');
   h += '<div class="card raad-top"><b>' + (pct === 100 ? '🎉 Du har læst alt om hælspore!' : 'Du har læst ' + read.size + ' af ' + HAEL_INFO.length + ' sider om hælspore (' + pct + ' %)') + '</b>' +

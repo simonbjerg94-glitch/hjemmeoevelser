@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#2f6f6a">
-  <meta name="description" content="Hjemmeøvelser ved knæ- og hofteartrose og hælspore med billedserier, videoer, smertevurdering og gode råd.">
+  <meta name="description" content="Hjemmeøvelser ved knæ- og hofteartrose, hælspore og ryg/nakke med tegnede tempo-film, stemme, smertevurdering og gode råd.">
   <title>Hjemmeøvelser</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
@@ -23,23 +23,26 @@
   <main id="app" tabindex="-1"></main>
 
   <nav class="tabbar" aria-label="Hovedmenu">
-    <a href="#/" data-tab="home"><span aria-hidden="true">🏠</span>Øvelser</a>
-    <a href="#/uge" data-tab="uge"><span aria-hidden="true">📅</span>Min uge</a>
-    <a href="#/smerte" data-tab="smerte"><span aria-hidden="true">📈</span>Smerte</a>
-    <a href="#/raad" data-tab="raad"><span aria-hidden="true">💡</span>Gode råd</a>
-    <a href="#/maerker" data-tab="maerker"><span aria-hidden="true">🏅</span>Mærker</a>
+    <a href="#/" data-tab="home"><span aria-hidden="true">🏠</span>I dag</a>
+    <a href="#/programmer" data-tab="prog"><span aria-hidden="true">📋</span>Øvelser</a>
+    <a href="#/uge" data-tab="uge"><span aria-hidden="true">📈</span>Fremgang</a>
+    <a href="#/mere" data-tab="mere"><span aria-hidden="true">☰</span>Mere</a>
   </nav>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="data.js"></script>
   <script src="data-haelspore.js"></script>
+  <script src="data-ryg.js"></script>
   <script src="rutine-anim.js"></script>
   <script src="haeloeft-figur.js"></script>
   <script src="film-engine.js"></script>
   <script src="film-defs.js"></script>
+  <script src="film-defs-ryg.js"></script>
+  <script src="voice.js"></script>
   <script src="hael.js"></script>
   <script src="paamindelser.js"></script>
+  <script src="ryg.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
