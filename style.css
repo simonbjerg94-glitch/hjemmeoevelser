@@ -705,3 +705,14 @@ details.phase-pick > summary { min-height: 48px; display: flex; align-items: cen
 }
 .coach-load[hidden] { display: none; }
 .coach .ff-say { display: none; }
+
+/* Stemmevalg (v22) */
+.ob-voice { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ob-voice.sel { border: 2px solid var(--primary); }
+.ob-vi { font-size: 40px; }
+.ob-voice .ob-txt { flex: 1; min-width: 150px; display: flex; flex-direction: column; }
+.ob-voice .ob-txt b { font-size: 1.15em; }
+.ob-vb { display: flex; gap: 8px; width: 100%; }
+.ob-vb .btn { flex: 1; min-height: 52px; margin: 0; }
+.voice-listen { display: flex; gap: 8px; margin-top: 10px; }
+.voice-listen .btn { flex: 1; min-height: 48px; margin: 0; }

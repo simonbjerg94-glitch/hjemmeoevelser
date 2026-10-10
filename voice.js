@@ -7,9 +7,13 @@
    Til/fra gemmes lokalt (hjo_stemme_v1). Standard: TIL. */
 'use strict';
 const Voice = (() => {
-  const KEY = 'hjo_stemme_v1', BASE = 'audio/';
+  const KEY = 'hjo_stemme_v1', KEY_WHO = 'hjo_stemme_valg_v1', BASE = 'audio/';
+  const PREVIEW = 'Hej. Jeg hjælper dig gennem øvelserne, roligt og i dit eget tempo.';
   const W = typeof window !== 'undefined' ? window : {};
-  const CLIPS = () => (typeof VOICE_CLIPS !== 'undefined' ? VOICE_CLIPS : (W.VOICE_CLIPS || {}));
+  const WHO = { kvinde: 'Blid kvindestemme', mand: 'Varm mandestemme' };
+  const who = () => { try { const w = localStorage.getItem(KEY_WHO); return WHO[w] ? w : 'kvinde'; } catch (e) { return 'kvinde'; } };
+  const SETS = () => (typeof VOICE_SETS !== 'undefined' ? VOICE_SETS : (W.VOICE_SETS || null));
+  const CLIPS = w => { const S = SETS(); if (S) return S[w || who()] || {}; return typeof VOICE_CLIPS !== 'undefined' ? VOICE_CLIPS : (W.VOICE_CLIPS || {}); };
   const synth = () => W.speechSynthesis || null;
   const log = [];                                 // til test: { text, via: 'clip' | 'tts' | 'text' }
   let daVoice = null;
@@ -22,13 +26,13 @@ const Voice = (() => {
 
   /* Samme normalisering som i tools/make_voice.py */
   const norm = t => String(t || '').toLowerCase().replace(/[“”"«»]/g, '').replace(/\s+/g, ' ').trim().replace(/[\s.!?…,:;]+$/, '');
-  const clipOf = t => CLIPS()[norm(t)] || null;  // → [fil, varighed]
+  const clipOf = (t, w) => CLIPS(w)[norm(t)] || null;  // → [fil, varighed]
   /* Tekst → liste af klip. "Hold... 10" → ["Hold", "10"]. null, hvis et stykke mangler. */
-  function clipsFor(text) {
-    const c = clipOf(text); if (c) return [c];
+  function clipsFor(text, w) {
+    const c = clipOf(text, w); if (c) return [c];
     const parts = String(text).split(/\.\.\.\s*/).filter(p => p.trim());
     if (parts.length < 2) return null;
-    const cs = parts.map(clipOf);
+    const cs = parts.map(p => clipOf(p, w));
     return cs.every(Boolean) ? cs : null;
   }
 
@@ -94,11 +98,11 @@ const Voice = (() => {
     if (el) { const c = el.querySelector('.ff-say'); if (c) { c.textContent = text ? '🔈 ' + text : ''; c.hidden = !text; } }
     if (o.intro && el) { el._voiceBusy = true; const prev = o.onend; o.onend = () => { el._voiceBusy = false; if (prev) prev(); }; }
     const end = () => { if (o.onend) setTimeout(o.onend, 0); };
-    if (!text || !enabled()) { end(); return false; }
-    const list = canClip() ? clipsFor(text) : null;
+    if (!text || (!enabled() && !o.force)) { end(); return false; }
+    const list = canClip() ? clipsFor(text, o.who) : null;
     if (list) {
       if (o.flush) cancel();
-      log.push({ text, via: 'clip' }); playClips(list, o.onend); return true;
+      log.push({ text, via: 'clip', who: o.who || who() }); playClips(list, o.onend); return true;
     }
     if (!ttsAvailable()) { log.push({ text, via: 'text' }); if (o.onend) setTimeout(o.onend, 0); return false; }
     const s = synth(), u = new SpeechSynthesisUtterance(text);
@@ -139,11 +143,31 @@ const Voice = (() => {
   }
   /* Forvarm klippene til en film: intro + alle fase-ord og tal. */
   function preloadFilm(intro, labels) { const out = [intro]; labels.forEach(l => { const p = parse(l); out.push(SAY[p.base] || p.base); if (p.n != null) out.push(String(p.n)); }); preload(out); }
+  /* Valg af stemme: 'kvinde' | 'mand' | 'fra'. Gemmes lokalt. */
+  const choice = () => enabled() ? who() : 'fra';
+  function setChoice(c) {
+    if (c === 'fra') { set(false); return; }
+    if (WHO[c]) localStorage.setItem(KEY_WHO, c);
+    cancel(); set(true); cacheChosen();
+  }
+  function preview(w, el) { unlock(); cancel(); return say(PREVIEW, el || null, { who: w, force: true, flush: true }); }
+  /* Bed service workeren om at gemme den valgte stemmes lydklip til offline brug (den anden hentes kun, hvis den bruges). */
+  function cacheChosen() {
+    try {
+      const sw = navigator.serviceWorker; if (!sw) return;
+      const send = () => { if (sw.controller && enabled()) sw.controller.postMessage({ type: 'voice', who: who() }); };
+      if (sw.controller) send(); else if (sw.ready) sw.ready.then(() => setTimeout(send, 500));
+    } catch (e) { /* ignore */ }
+  }
+  if (typeof navigator !== 'undefined' && navigator.serviceWorker) {
+    try { navigator.serviceWorker.addEventListener('controllerchange', cacheChosen); } catch (e) { /* ignore */ }
+    if (typeof window !== 'undefined' && window.addEventListener) window.addEventListener('load', () => setTimeout(cacheChosen, 1500));
+  }
   function reset(el) { if (el) el._voice = null; cancel(); }
   function paintBtn(b) { const on = enabled(); b.setAttribute('aria-pressed', on); b.textContent = on ? '🔊 Stemme til' : '🔇 Stemme fra'; }
   function btnHtml() { return '<button type="button" class="btn small secondary voice-btn" aria-pressed="' + enabled() + '">' + (enabled() ? '🔊 Stemme til' : '🔇 Stemme fra') + '</button>'; }
   function bind(root) { (root || document).querySelectorAll('.voice-btn').forEach(b => { paintBtn(b); b.onclick = () => { set(!enabled()); if (enabled()) { unlock(); say('Stemmen er slået til.', b.closest('.ht-film, .routine, .coach')); } }; }); }
   function note() { return available() ? '' : 'Der er ingen dansk stemme på denne enhed. Ordene vises i stedet som tekst under filmen.'; }
-  return { say, cue, cueText, reset, cancel, enabled, set, available, btnHtml, bind, note, parse, norm, clipsFor, preload, preloadFilm, unlock, log, KEY };
+  return { PREVIEW, WHO, who, choice, setChoice, preview, cacheChosen, say, cue, cueText, reset, cancel, enabled, set, available, btnHtml, bind, note, parse, norm, clipsFor, preload, preloadFilm, unlock, log, KEY };
 })();
 if (typeof module !== 'undefined') module.exports = Voice;

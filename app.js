@@ -540,10 +540,34 @@ function viewOnboarding(then) {
   h += '<p class="hint" style="text-align:center">Du kan altid skifte senere under <b>☰ Mere</b>. Alt gemmes kun på denne telefon.</p>';
   $app.innerHTML = h;
   $app.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => {
-    setMode(b.dataset.mode); document.body.classList.remove('onboarding');
+    setMode(b.dataset.mode);
     toast(MODE_INFO[b.dataset.mode].name + ' er valgt.');
-    if (location.hash && location.hash !== '#/' && location.hash !== '#/velkommen') route(); else { location.hash = '#/'; route(); }
+    if (typeof Voice !== 'undefined' && Voice.WHO) viewOnboardingVoice(); else finishOnboarding();
   });
+}
+function finishOnboarding() {
+  document.body.classList.remove('onboarding');
+  if (location.hash && location.hash !== '#/' && location.hash !== '#/velkommen') route(); else { location.hash = '#/'; route(); }
+}
+/* Velkomst, trin 2: vælg stemme (med "Lyt"-knap) */
+const VOICE_INFO = { kvinde: { icon: '👩', text: 'Rolig og venlig' }, mand: { icon: '👨', text: 'Rolig og lidt dybere' } };
+function voiceChoiceHtml(cur, big) {
+  return Object.keys(Voice.WHO).map(w => '<div class="card ob-voice' + (cur === w ? ' sel' : '') + '"><span class="ob-vi" aria-hidden="true">' + VOICE_INFO[w].icon + '</span>' +
+    '<span class="ob-txt"><b>' + Voice.WHO[w] + '</b><span>' + VOICE_INFO[w].text + '</span></span>' +
+    '<span class="ob-vb"><button type="button" class="btn small secondary" data-listen="' + w + '" aria-label="Lyt til ' + Voice.WHO[w].toLowerCase() + '">▶ Lyt</button>' +
+    '<button type="button" class="btn small' + (cur === w ? ' done' : '') + '" data-who="' + w + '" aria-pressed="' + (cur === w) + '">' + (cur === w ? '✓ Valgt' : 'Vælg') + '</button></span></div>').join('');
+}
+function bindVoiceChoice(root, after) {
+  root.querySelectorAll('[data-listen]').forEach(b => b.onclick = () => Voice.preview(b.dataset.listen));
+  root.querySelectorAll('[data-who]').forEach(b => b.onclick = () => { Voice.setChoice(b.dataset.who); toast(b.dataset.who === 'fra' ? 'Stemmen er slået fra.' : Voice.WHO[b.dataset.who] + ' er valgt.'); after(b.dataset.who); });
+}
+function viewOnboardingVoice() {
+  setHeader('Velkommen'); document.body.classList.add('onboarding'); setTab('');
+  let h = '<h2 class="ob-h">Hvilken stemme vil du høre?</h2><p class="lead">Stemmen forklarer øvelserne og siger tempoet. Tryk <b>▶ Lyt</b> for at høre den.</p>';
+  h += voiceChoiceHtml(null) + '<button type="button" class="btn secondary" data-who="fra">Uden stemme</button>';
+  h += '<p class="hint" style="text-align:center">Du kan altid skifte under <b>☰ Mere</b> › Stemme.</p>';
+  $app.innerHTML = h;
+  bindVoiceChoice($app, () => finishOnboarding());
 }
 
 /* ---------- I dag (forside): én stor knap + "Hvad skal jeg gøre nu?" ---------- */
@@ -611,7 +635,11 @@ function viewMore() {
     '<button type="button" role="radio" class="seg-b' + ((isSimple() ? 'enkel' : 'fuld') === m ? ' sel' : '') + '" aria-checked="' + ((isSimple() ? 'enkel' : 'fuld') === m) + '" data-mode="' + m + '"><b>' + MODE_INFO[m].name + '</b></button>').join('') + '</div>';
   h += '<h2>Tekststørrelse</h2><div class="seg three" role="radiogroup" aria-label="Tekststørrelse">' + [['normal', 'Normal'], ['stor', 'Stor'], ['xl', 'Meget stor']].map(([k, n]) =>
     '<button type="button" role="radio" class="seg-b ts-b-' + k + (textSize() === k ? ' sel' : '') + '" aria-checked="' + (textSize() === k) + '" data-ts="' + k + '"><b>' + n + '</b></button>').join('') + '</div>';
-  h += '<h2>Stemme</h2><div class="card voice-card"><p style="margin:0 0 10px">En rolig, naturlig dansk stemme forklarer øvelsen og siger tempoet: "Op … og ned", "Hold … 3, 2, 1". Den virker også uden internet.</p>' + (typeof Voice !== 'undefined' ? Voice.btnHtml() + (Voice.note() ? '<p class="hint">' + Voice.note() + '</p>' : '') : '') + '</div>';
+  h += '<h2>Stemme</h2><div class="card voice-card"><p style="margin:0 0 10px">En rolig dansk stemme forklarer øvelsen og siger tempoet: "Op … og ned", "Hold … 3, 2, 1". Den virker også uden internet.</p>' +
+    (typeof Voice !== 'undefined' ? '<div class="seg three voice-seg" role="radiogroup" aria-label="Stemme">' + [['kvinde', 'Kvinde'], ['mand', 'Mand'], ['fra', 'Fra']].map(([k, n]) =>
+      '<button type="button" role="radio" class="seg-b' + (Voice.choice() === k ? ' sel' : '') + '" aria-checked="' + (Voice.choice() === k) + '" data-vchoice="' + k + '"><b>' + n + '</b></button>').join('') + '</div>' +
+      '<div class="voice-listen"><button type="button" class="btn small secondary" data-listen="kvinde">▶ Lyt: kvinde</button><button type="button" class="btn small secondary" data-listen="mand">▶ Lyt: mand</button></div>' +
+      (Voice.note() ? '<p class="hint">' + Voice.note() + '</p>' : '') : '') + '</div>';
   h += '<h2>Mere i appen</h2>' +
     row('#/raad', '📖', 'Gode råd', 'Om artrose, hælspore og træning') +
     row('#/smerte', '📈', 'Min smerte', 'Graf over din smerte uge for uge') +
@@ -622,7 +650,10 @@ function viewMore() {
   h += '<h2>Til fysioterapeuten</h2>' + row('#/rediger', '⚙️', 'Ret øvelser', 'Tilpas, tilføj, eksportér og importér');
   h += '<p class="hint" style="margin-top:18px">Alt, du skriver i appen, gemmes kun på denne telefon.</p>';
   $app.innerHTML = h;
-  if (typeof Voice !== 'undefined') Voice.bind($app);
+  if (typeof Voice !== 'undefined') {
+    $app.querySelectorAll('[data-listen]').forEach(b => b.onclick = () => Voice.preview(b.dataset.listen));
+    $app.querySelectorAll('[data-vchoice]').forEach(b => b.onclick = () => { const c = b.dataset.vchoice; Voice.setChoice(c); toast(c === 'fra' ? 'Stemmen er slået fra.' : Voice.WHO[c] + ' er valgt.'); if (c !== 'fra') Voice.say('Stemmen er slået til.', null); const y = window.scrollY; viewMore(); window.scrollTo(0, y); });
+  }
   $app.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => { setMode(b.dataset.mode); toast(MODE_INFO[b.dataset.mode].name + ' er valgt.'); viewMore(); });
   $app.querySelectorAll('[data-ts]').forEach(b => b.onclick = () => { localStorage.setItem(KEY_TEXT, b.dataset.ts); applyDisplay(); viewMore(); });
 }
