@@ -91,6 +91,11 @@ const CoachRules = (() => {
     calfStretch: { type: 'hold', view: 'side', seconds: 30, rest: 10, cond: { metric: 'stance', min: 0.25 }, lost: 'Sæt foden tilbage' },
     sidePlank: { type: 'hold', view: 'front', seconds: 15, rest: 10, cond: { metric: 'hip', min: 150 }, lost: 'Løft hoften igen' },
     neckIso: { type: 'hold', view: 'front', seconds: 8, rest: 5, still: true, lost: 'Hold hovedet helt stille' },
+    armFwd: { type: 'reps', view: 'side', metric: 'armRaise', side: 'max', rest: 25, goal: 80, holdTop: 1, minRep: 2, shallow: 'Løft armen lidt højere', form: { metric: 'trunkLean', max: 20, cue: 'Stå rank' } },
+    armSide: { type: 'reps', view: 'front', metric: 'shoulderAbd', side: 'min', rest: 20, goal: 75, minRep: 2, shallow: 'Løft armene lidt højere' },
+    press: { type: 'reps', view: 'front', metric: 'shoulderAbd', side: 'min', rest: 95, goal: 150, minRep: 2, shallow: 'Pres armene helt op' },
+    wallPush: { type: 'reps', view: 'side', metric: 'elbow', side: 'min', rest: 155, goal: 110, minRep: 2, shallow: 'Bøj albuerne lidt mere' },
+    shoulderIso: { type: 'hold', view: 'front', seconds: 10, rest: 10, still: true, lost: 'Hold armen stille' },
     presence: { type: 'presence', view: 'side', seconds: 60 }
   };
   const pres = (view, seconds, what) => Object.assign({}, R.presence, { view, seconds, what });
@@ -114,9 +119,13 @@ const CoachRules = (() => {
     'bryst-2-roning-elastik': R.row, 'bryst-2-vaegengel': R.wallAngel, 'bryst-3-roning-foroverboejet': R.row,
     'nakke-h-hagetilbage': pres('side', 60, 'den lille bevægelse med hagen'), 'nakke-h-skulderrul': pres('front', 60, 'skulderrullet'),
     'nakke-h-drej': R.headTurn, 'nakke-h-sideboej': R.headTilt, 'nakke-1-dyb-nakkeboejer': pres('lying', 120, 'det lille nik'),
-    'nakke-1-isometrisk': R.neckIso, 'nakke-2-hovedloeft': pres('lying', 90, 'det lille løft af hovedet'), 'nakke-2-roning-elastik': R.row, 'nakke-3-y-loeft': R.yRaise
+    'nakke-1-isometrisk': R.neckIso, 'nakke-2-hovedloeft': pres('lying', 90, 'det lille løft af hovedet'), 'nakke-2-roning-elastik': R.row, 'nakke-3-y-loeft': R.yRaise,
+    'skulder-h-pendul': pres('side', 60, 'pendulsvinget'), 'skulder-h-bordglid': pres('side', 90, 'glidet frem på bordet'),
+    'skulder-h-stok-liggende': pres('lying', 90, 'armløftet med stokken'), 'skulder-h-udadrot-stok': pres('front', 90, 'drejningen af armen udad'),
+    'skulder-1-loeft-frem': R.armFwd, 'skulder-1-isometrisk-udad': R.shoulderIso, 'skulder-2-udadrot-elastik': pres('front', 90, 'drejningen af armen udad mod elastikken'),
+    'skulder-2-sideloeft': R.armSide, 'skulder-3-armstraek-op': R.press, 'skulder-3-vaegpres': R.wallPush
   };
-  const CATEGORY_DEFAULT = { knae: 'side', hofte: 'side', balance: 'front', haelspore: 'side', laend: 'lying', bryst: 'front', nakke: 'front' };
+  const CATEGORY_DEFAULT = { knae: 'side', hofte: 'side', balance: 'front', haelspore: 'side', laend: 'lying', bryst: 'front', nakke: 'front', skulder: 'front' };
   function ruleFor(e) {
     const id = typeof e === 'string' ? e : e.id;
     return RULES[id] || pres(CATEGORY_DEFAULT[(e && e.category) || ''] || 'side', 60, 'øvelsen');

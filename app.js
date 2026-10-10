@@ -49,7 +49,7 @@ function slug(s) {
 /* ---------- Lager ---------- */
 const KEY_STD_SEEN = 'hjo_std_flettet_v1';
 /* Alle standardøvelser: artrose/balance (data.js) + hælspore (data-haelspore.js). */
-function allDefaults() { return DEFAULT_EXERCISES.concat(typeof HAEL_EXERCISES !== 'undefined' ? HAEL_EXERCISES : [], typeof RYG_EXERCISES !== 'undefined' ? RYG_EXERCISES : []); }
+function allDefaults() { return DEFAULT_EXERCISES.concat(typeof HAEL_EXERCISES !== 'undefined' ? HAEL_EXERCISES : [], typeof RYG_EXERCISES !== 'undefined' ? RYG_EXERCISES : [], typeof LED_EXERCISES !== 'undefined' ? LED_EXERCISES : []); }
 /* Gemte lister flettes med nye standardøvelser (fx hælsporet), uden at slettede eller rettede øvelser kommer tilbage. */
 function loadExercises() {
   let arr = null;
@@ -615,15 +615,41 @@ function progCard(c) {
     '<span class="cat-txt"><strong>' + esc(c.name) + '</strong><span class="count">' + esc(programLevelLabel(c.id)) + (d ? ' · ' + d + ' ✓' : '') + '</span>' +
     (cur ? '<span class="cur-tag">Dit program nu</span>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>';
 }
+/* Kropsområder: "Hvor gør det ondt?" – i Stor og enkel vises kun områderne (få, store valg); i Fuld oversigt alle programmer under hvert område */
+function bodyAreas() {
+  const A = [{ id: 'knae-hofte', name: 'Knæ, hofte og balance', progs: CATEGORIES.filter(c => !c.area && c.id !== 'haelspore') }];
+  if (HAEL_ON) A.push({ id: 'fod', name: 'Fødder', progs: CATEGORIES.filter(c => c.id === 'haelspore') });
+  if (typeof RYG_ON !== 'undefined' && RYG_ON) A.push({ id: 'ryg', name: 'Ryg og nakke', intro: RYG_AREA.intro, progs: CATEGORIES.filter(c => c.area === 'ryg') });
+  if (typeof LED_AREAS !== 'undefined') LED_AREAS.forEach(a => A.push({ id: a.id, name: a.name, intro: a.intro, progs: CATEGORIES.filter(c => c.area === a.id) }));
+  return A.filter(a => a.progs.length);
+}
+function areaCard(a) {
+  const cur = a.progs.some(c => c.id === lastCategory()), href = a.progs.length === 1 ? '#/kategori/' + a.progs[0].id : '#/omraade/' + a.id;
+  return '<a class="prog-card area-card' + (cur ? ' cur' : '') + '" href="' + href + '" data-area="' + a.id + '">' + catThumb(a.progs[0]) +
+    '<span class="cat-txt"><strong>' + esc(a.name) + '</strong><span class="count">' + esc(a.progs.length === 1 ? (a.progs[0].name !== a.name ? a.progs[0].name + ' · ' : '') + programLevelLabel(a.progs[0].id) : a.progs.map(c => c.name).join(' · ')) + '</span>' +
+    (cur ? '<span class="cur-tag">Dit program nu</span>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>';
+}
 function viewPrograms() {
   setHeader('Øvelser'); setTab('prog');
-  let h = '<p class="lead">Vælg det program, du vil træne.</p>';
-  h += '<h2>Knæ, hofte og balance</h2>' + CATEGORIES.filter(c => !c.area && c.id !== 'haelspore').map(progCard).join('');
-  if (HAEL_ON) h += '<h2>Fødder</h2>' + CATEGORIES.filter(c => c.id === 'haelspore').map(progCard).join('');
-  if (typeof RYG_ON !== 'undefined' && RYG_ON) h += '<h2>Ryg og nakke</h2><p class="muted small" style="margin:-4px 0 10px">' + esc(RYG_AREA.intro) + '</p>' + CATEGORIES.filter(c => c.area === 'ryg').map(progCard).join('');
+  const A = bodyAreas();
+  let h = '';
+  if (isSimple()) {
+    h += '<h2 class="ob-h" style="margin-top:4px">Hvor gør det ondt?</h2><p class="lead">Tryk på det sted, du vil træne.</p>' + A.map(areaCard).join('');
+  } else {
+    h += '<p class="lead">Vælg det program, du vil træne.</p>';
+    A.forEach(a => { h += '<h2>' + esc(a.name) + '</h2>' + (a.intro && a.progs.length > 1 ? '<p class="muted small" style="margin:-4px 0 10px">' + esc(a.intro) + '</p>' : '') + a.progs.map(progCard).join(''); });
+  }
   $app.innerHTML = h;
   hydrateMedia($app);
   $app.querySelectorAll('[data-prog]').forEach(a => a.addEventListener('click', () => localStorage.setItem(KEY_LASTCAT, a.dataset.prog)));
+}
+function viewArea(id) {
+  const a = bodyAreas().find(x => x.id === id); if (!a) return viewPrograms();
+  setHeader(a.name, '#/programmer'); setTab('prog');
+  let h = (a.intro ? '<p class="lead">' + esc(a.intro) + '</p>' : '<p class="lead">Vælg program.</p>') + a.progs.map(progCard).join('');
+  $app.innerHTML = h;
+  hydrateMedia($app);
+  $app.querySelectorAll('[data-prog]').forEach(x => x.addEventListener('click', () => localStorage.setItem(KEY_LASTCAT, x.dataset.prog)));
 }
 
 /* ---------- Mere: indstillinger og alt det, man ikke bruger hver dag ---------- */
@@ -645,7 +671,7 @@ function viewMore() {
     row('#/smerte', '📈', 'Min smerte', 'Graf over din smerte uge for uge') +
     row('#/maerker', '🏅', 'Mine mærker', 'Små belønninger for at holde fast') +
     row('#/paamindelser', '🔔', 'Påmindelser', rs.on ? 'Slået til · ' + rs.days.length + ' dage kl. ' + rs.time : 'Slået fra') +
-    (typeof RYG_ON !== 'undefined' && RYG_ON ? row('#/ryg/laege', '⚠️', 'Hvornår skal du til læge?', 'Ryg og nakke') : '');
+    (typeof RYG_ON !== 'undefined' && RYG_ON ? row('#/ryg/laege', '⚠️', 'Hvornår skal du til læge?', (typeof LED_ON !== 'undefined' && LED_ON ? 'Ryg, nakke og ' + LED_AREAS.map(a => a.name.toLowerCase()).join(', ') : 'Ryg og nakke')) : '');
   if (HAEL_ON) h += '<h2>Hælspore</h2>' + row('#/hael/plan', '📅', '12-ugers planen') + row('#/hael/trafiklys', '🚦', 'Hvor meget må jeg gå?') + row('#/hael/skotjek', '👟', 'Skotjek') + row('#/hael/myter', '💬', 'Myter og fakta') + row('#/hael/hjaelpemidler', '🩹', 'Hjælpemidler');
   h += '<h2>Til fysioterapeuten</h2>' + row('#/rediger', '⚙️', 'Ret øvelser', 'Tilpas, tilføj, eksportér og importér');
   h += '<p class="hint" style="margin-top:18px">Alt, du skriver i appen, gemmes kun på denne telefon.</p>';
@@ -712,7 +738,7 @@ function viewExercise(id) {
   const nav = programNav(e), simple = isSimple();
   let html = '<div class="ex-head">' + (isHael
     ? '<span class="badge phase" style="--pc:' + (HAEL_PHASES[Math.min(lv, 4) - 1] || HAEL_PHASES[0]).color + '">' + (Array.isArray(e.phases) && e.phases.length ? 'Fase ' + e.phases.join(', ') : 'Fase ' + lv) + '</span>'
-    : ryg ? '<span class="badge lv' + lv + '">' + (e.track === 'hold' ? 'Hold – de første dage' : 'Forebyg · Fase ' + (Array.isArray(e.phases) ? e.phases.join(', ') : lv)) + '</span>'
+    : ryg ? '<span class="badge lv' + lv + '">' + (e.track === 'hold' ? holdLabel(rygProg(e.category)) : fbLabel(rygProg(e.category)) + ' · ' + pWord(rygProg(e.category)) + ' ' + (Array.isArray(e.phases) ? e.phases.join(', ') : lv)) + '</span>'
     : '<span class="badge lv' + lv + '">' + L.name + ' · ' + L.sub + '</span>') +
     (nav ? '<span class="ex-pos">Øvelse ' + nav.i + ' af ' + nav.n + '</span>' : '') + '</div>';
   html += '<h2 class="ex-title">' + esc(e.name) + '</h2>';
@@ -1306,7 +1332,8 @@ function route() {
     case 'velkommen': return viewOnboarding();
     case 'programmer': return viewPrograms();
     case 'mere': return viewMore();
-    case 'ryg': return viewRygSub(parts[1], parts[2]);
+    case 'ryg': case 'led': return viewRygSub(parts[1], parts[2]);
+    case 'omraade': return viewArea(parts[1]);
     case 'kategori': return viewCategory(parts[1]);
     case 'oevelse': return viewExercise(parts.slice(1).join('/'));
     case 'uge': return viewWeek();

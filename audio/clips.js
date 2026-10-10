@@ -241,6 +241,14 @@ const VOICE_SETS = {
 "kvinde/5913ef89b1.mp3",
 0.5
 ],
+"armløft liggende med stok. lig på ryggen med bøjede knæ, og hold stokken med begge hænder. løft armene roligt op og bagud over hovedet (3 sek.), så langt det er rart, og før dem tilbage (3 sek.). 10 gange": [
+"kvinde/26c315d2e0.mp3",
+15.0
+],
+"armstrækninger mod væggen. stå en armlængde fra væggen med hænderne i skulderhøjde. bøj albuerne, så brystet kommer ind mod væggen (2 sek.), og pres dig ud igen (2 sek.). kroppen er lige. 3 sæt × 10": [
+"kvinde/23ef245fa4.mp3",
+16.13
+],
 "bagud": [
 "kvinde/01d081556e.mp3",
 0.67
@@ -272,6 +280,10 @@ const VOICE_SETS = {
 "bøj": [
 "kvinde/3b2906cd67.mp3",
 0.62
+],
+"bøj albuerne lidt mere": [
+"kvinde/ee3b3ce5cb.mp3",
+1.75
 ],
 "bøj i hofterne med ret ryg (med kosteskaft). ca. 2–3 sek. ned · 2 sek. op. bøj i hofterne med ret ryg – skaftet rører baghoved, skulderblade og haleben hele vejen": [
 "kvinde/4e602753f0.mp3",
@@ -313,6 +325,14 @@ const VOICE_SETS = {
 "kvinde/d029fb2f7d.mp3",
 13.87
 ],
+"drej armen udad med elastik. albuen ind til kroppen og bøjet i en ret vinkel. drej hånden roligt ud til siden mod elastikken (2 sek.), og før den langsomt tilbage (3 sek.). 3 sæt × 10–15": [
+"kvinde/b36925ff05.mp3",
+13.25
+],
+"drej armen udad med stok. albuerne ind til siden og bøjet i en ret vinkel. skub med den raske hånd, så den onde arms hånd drejer ud til siden (3 sek.), hold 3 sek., og før den tilbage (3 sek.). 10 gange": [
+"kvinde/0e03e84b0c.mp3",
+15.17
+],
 "drej hovedet roligt. sid ret. drej roligt hovedet til den ene side, så langt det er rart (3 sek.), hold 2 sek., og drej tilbage. så til den anden side. 5–10 gange til hver side": [
 "kvinde/88ff3491af.mp3",
 12.38
@@ -328,6 +348,10 @@ const VOICE_SETS = {
 "drej til siden": [
 "kvinde/f3c879601d.mp3",
 1.18
+],
+"drej ud": [
+"kvinde/e3de387eea.mp3",
+0.77
 ],
 "en gang til": [
 "kvinde/e963124074.mp3",
@@ -368,6 +392,14 @@ const VOICE_SETS = {
 "glat ud": [
 "kvinde/fa7cfef0ac.mp3",
 0.86
+],
+"glid armen frem på bordet. sid ved bordet med hånden på et håndklæde. glid hånden roligt frem, og bøj overkroppen med (3 sek.), hold 5 sek., og glid tilbage (3 sek.). 10 gange": [
+"kvinde/b1495a7f90.mp3",
+13.97
+],
+"glid frem": [
+"kvinde/0632b6f64f.mp3",
+0.98
 ],
 "godt": [
 "kvinde/4803aef50b.mp3",
@@ -416,6 +448,10 @@ const VOICE_SETS = {
 "hold": [
 "kvinde/9937f714e7.mp3",
 0.5
+],
+"hold armen stille": [
+"kvinde/38ea20b07a.mp3",
+1.37
 ],
 "hold hovedet helt stille": [
 "kvinde/025580322d.mp3",
@@ -517,6 +553,10 @@ const VOICE_SETS = {
 "kvinde/4f377f6975.mp3",
 1.06
 ],
+"langsomt tilbage": [
+"kvinde/d446f1df2d.mp3",
+1.44
+],
 "lille nik": [
 "kvinde/b7a7e11ae2.mp3",
 0.94
@@ -545,9 +585,21 @@ const VOICE_SETS = {
 "kvinde/75b5b2a3a3.mp3",
 0.74
 ],
+"løft armen frem. stå rank med tommelfingeren frem. løft armen roligt frem og op til skulderhøjde (2 sek.), hold 1 sek., og sænk langsomt (3 sek.). 2–3 sæt × 10": [
+"kvinde/79329bf174.mp3",
+13.56
+],
+"løft armen lidt højere": [
+"kvinde/bbd8e527c4.mp3",
+1.66
+],
 "løft armene lidt højere": [
 "kvinde/63c9b627e7.mp3",
 1.66
+],
+"løft armene ud til siden. stå rank med tommelfingrene frem. løft armene roligt ud til siden og lidt frem, til skulderhøjde (2 sek.), og sænk langsomt (3 sek.). 3 sæt × 10–12": [
+"kvinde/0e9531fc4c.mp3",
+13.54
 ],
 "løft en kasse fra gulvet. stå tæt ved kassen. bøj i hofter og knæ med ret ryg (3 sek.), tag fat, og rejs dig med kassen tæt ind til kroppen (3 sek.). sæt den ned på samme måde. 8–10 gange": [
 "kvinde/f99f540a1b.mp3",
@@ -572,6 +624,10 @@ const VOICE_SETS = {
 "løft lidt højere": [
 "kvinde/0bf55a0077.mp3",
 1.42
+],
+"løft over hovedet. stå rank med flaskerne i skulderhøjde. pres armene roligt op over hovedet (2 sek.), og sænk langsomt (3 sek.). spænd let i maven. 3 sæt × 8–12": [
+"kvinde/db370618ef.mp3",
+12.62
 ],
 "minisquat ved køkkenbordet. ca. 2–3 sek. ned · 2 sek. op. bagdelen bagud, som mod en høj barstol": [
 "kvinde/279978151c.mp3",
@@ -609,13 +665,25 @@ const VOICE_SETS = {
 "kvinde/7ceae418fc.mp3",
 0.89
 ],
+"op og bagud": [
+"kvinde/b489159a56.mp3",
+1.13
+],
 "pause": [
 "kvinde/7a01c0c90a.mp3",
 0.72
 ],
+"pendulsving. støt dig til bordet med den raske hånd, og bøj dig lidt frem. lad den onde arm hænge afslappet, og sving den roligt frem og tilbage som et pendul. 30–60 sek": [
+"kvinde/86d637c74b.mp3",
+13.32
+],
 "pres": [
 "kvinde/e66e2fb9b5.mp3",
 0.7
+],
+"pres armene helt op": [
+"kvinde/6a0d50b6e9.mp3",
+1.66
 ],
 "pres foden mod væggen (isometrisk). pres forfoden mod væggen med ca. halv kraft – foden flytter sig ikke · hold 30–45 sek. · slap af. 1 minuts pause mellem gentagelserne": [
 "kvinde/401c829aaf.mp3",
@@ -628,6 +696,14 @@ const VOICE_SETS = {
 "pres lænden ned": [
 "kvinde/0dca73d0b1.mp3",
 1.54
+],
+"pres ud": [
+"kvinde/06db1ac5c4.mp3",
+0.86
+],
+"pres udad mod væggen. stå med siden mod væggen, albuen ind til kroppen. pres håndryggen ud mod væggen med cirka halv kraft – armen flytter sig ikke. hold 10 sek., og slip. 5 gange": [
+"kvinde/c4d683836e.mp3",
+17.33
 ],
 "prøv at holde dig helt stille": [
 "kvinde/af1e92b940.mp3",
@@ -820,6 +896,10 @@ const VOICE_SETS = {
 "stå på ét ben. løft den ene fod lidt fra gulvet (5–10 cm), og stå i op til 30 sek. standbenet er strakt. hold let i bordet. skift ben": [
 "kvinde/9565432675.mp3",
 12.26
+],
+"stå rank": [
+"kvinde/73d8bf7212.mp3",
+1.03
 ],
 "svaj let": [
 "kvinde/d3fee247de.mp3",
@@ -1191,6 +1271,14 @@ const VOICE_SETS = {
 "mand/1756e01608.mp3",
 0.53
 ],
+"armløft liggende med stok. lig på ryggen med bøjede knæ, og hold stokken med begge hænder. løft armene roligt op og bagud over hovedet (3 sek.), så langt det er rart, og før dem tilbage (3 sek.). 10 gange": [
+"mand/9fb22762f8.mp3",
+15.24
+],
+"armstrækninger mod væggen. stå en armlængde fra væggen med hænderne i skulderhøjde. bøj albuerne, så brystet kommer ind mod væggen (2 sek.), og pres dig ud igen (2 sek.). kroppen er lige. 3 sæt × 10": [
+"mand/08a614ed78.mp3",
+15.98
+],
 "bagud": [
 "mand/102863f70f.mp3",
 0.72
@@ -1222,6 +1310,10 @@ const VOICE_SETS = {
 "bøj": [
 "mand/a2877646b4.mp3",
 0.6
+],
+"bøj albuerne lidt mere": [
+"mand/1039b3adc4.mp3",
+2.02
 ],
 "bøj i hofterne med ret ryg (med kosteskaft). ca. 2–3 sek. ned · 2 sek. op. bøj i hofterne med ret ryg – skaftet rører baghoved, skulderblade og haleben hele vejen": [
 "mand/0fb6658825.mp3",
@@ -1263,6 +1355,14 @@ const VOICE_SETS = {
 "mand/387e5876f3.mp3",
 14.38
 ],
+"drej armen udad med elastik. albuen ind til kroppen og bøjet i en ret vinkel. drej hånden roligt ud til siden mod elastikken (2 sek.), og før den langsomt tilbage (3 sek.). 3 sæt × 10–15": [
+"mand/8e9f87b8dc.mp3",
+13.7
+],
+"drej armen udad med stok. albuerne ind til siden og bøjet i en ret vinkel. skub med den raske hånd, så den onde arms hånd drejer ud til siden (3 sek.), hold 3 sek., og før den tilbage (3 sek.). 10 gange": [
+"mand/87630acf6f.mp3",
+15.84
+],
 "drej hovedet roligt. sid ret. drej roligt hovedet til den ene side, så langt det er rart (3 sek.), hold 2 sek., og drej tilbage. så til den anden side. 5–10 gange til hver side": [
 "mand/2920d7f3b0.mp3",
 12.55
@@ -1278,6 +1378,10 @@ const VOICE_SETS = {
 "drej til siden": [
 "mand/fc9fcede91.mp3",
 1.06
+],
+"drej ud": [
+"mand/6c76cd39ba.mp3",
+0.79
 ],
 "en gang til": [
 "mand/4978d137aa.mp3",
@@ -1318,6 +1422,14 @@ const VOICE_SETS = {
 "glat ud": [
 "mand/8c8409dc38.mp3",
 0.94
+],
+"glid armen frem på bordet. sid ved bordet med hånden på et håndklæde. glid hånden roligt frem, og bøj overkroppen med (3 sek.), hold 5 sek., og glid tilbage (3 sek.). 10 gange": [
+"mand/079208afad.mp3",
+13.8
+],
+"glid frem": [
+"mand/cea7949171.mp3",
+0.84
 ],
 "godt": [
 "mand/e8a119186d.mp3",
@@ -1366,6 +1478,10 @@ const VOICE_SETS = {
 "hold": [
 "mand/0688c3bc92.mp3",
 0.46
+],
+"hold armen stille": [
+"mand/8459cf9961.mp3",
+1.37
 ],
 "hold hovedet helt stille": [
 "mand/398d473b8a.mp3",
@@ -1467,6 +1583,10 @@ const VOICE_SETS = {
 "mand/9e4fd1882f.mp3",
 1.15
 ],
+"langsomt tilbage": [
+"mand/7696977308.mp3",
+1.54
+],
 "lille nik": [
 "mand/96b9d68960.mp3",
 1.03
@@ -1495,9 +1615,21 @@ const VOICE_SETS = {
 "mand/2cf3cd0863.mp3",
 0.72
 ],
+"løft armen frem. stå rank med tommelfingeren frem. løft armen roligt frem og op til skulderhøjde (2 sek.), hold 1 sek., og sænk langsomt (3 sek.). 2–3 sæt × 10": [
+"mand/9ab496b4cc.mp3",
+13.2
+],
+"løft armen lidt højere": [
+"mand/cb08a2f46c.mp3",
+1.63
+],
 "løft armene lidt højere": [
 "mand/a1251cbdaf.mp3",
 1.78
+],
+"løft armene ud til siden. stå rank med tommelfingrene frem. løft armene roligt ud til siden og lidt frem, til skulderhøjde (2 sek.), og sænk langsomt (3 sek.). 3 sæt × 10–12": [
+"mand/9e01ec8c6f.mp3",
+13.68
 ],
 "løft en kasse fra gulvet. stå tæt ved kassen. bøj i hofter og knæ med ret ryg (3 sek.), tag fat, og rejs dig med kassen tæt ind til kroppen (3 sek.). sæt den ned på samme måde. 8–10 gange": [
 "mand/240f05b034.mp3",
@@ -1522,6 +1654,10 @@ const VOICE_SETS = {
 "løft lidt højere": [
 "mand/d809897735.mp3",
 1.32
+],
+"løft over hovedet. stå rank med flaskerne i skulderhøjde. pres armene roligt op over hovedet (2 sek.), og sænk langsomt (3 sek.). spænd let i maven. 3 sæt × 8–12": [
+"mand/848d7760e1.mp3",
+12.34
 ],
 "minisquat ved køkkenbordet. ca. 2–3 sek. ned · 2 sek. op. bagdelen bagud, som mod en høj barstol": [
 "mand/6dc021b9e8.mp3",
@@ -1559,13 +1695,25 @@ const VOICE_SETS = {
 "mand/99e278dd8f.mp3",
 0.98
 ],
+"op og bagud": [
+"mand/f0c8d891af.mp3",
+1.3
+],
 "pause": [
 "mand/de56f8e305.mp3",
 0.74
 ],
+"pendulsving. støt dig til bordet med den raske hånd, og bøj dig lidt frem. lad den onde arm hænge afslappet, og sving den roligt frem og tilbage som et pendul. 30–60 sek": [
+"mand/d403c5d801.mp3",
+13.54
+],
 "pres": [
 "mand/c1fd815052.mp3",
 0.62
+],
+"pres armene helt op": [
+"mand/db818b834e.mp3",
+1.68
 ],
 "pres foden mod væggen (isometrisk). pres forfoden mod væggen med ca. halv kraft – foden flytter sig ikke · hold 30–45 sek. · slap af. 1 minuts pause mellem gentagelserne": [
 "mand/b5a791789f.mp3",
@@ -1578,6 +1726,14 @@ const VOICE_SETS = {
 "pres lænden ned": [
 "mand/30ad1d5da7.mp3",
 1.49
+],
+"pres ud": [
+"mand/54e4077451.mp3",
+0.89
+],
+"pres udad mod væggen. stå med siden mod væggen, albuen ind til kroppen. pres håndryggen ud mod væggen med cirka halv kraft – armen flytter sig ikke. hold 10 sek., og slip. 5 gange": [
+"mand/b72f0df46a.mp3",
+16.75
 ],
 "prøv at holde dig helt stille": [
 "mand/86e83bc6b3.mp3",
@@ -1770,6 +1926,10 @@ const VOICE_SETS = {
 "stå på ét ben. løft den ene fod lidt fra gulvet (5–10 cm), og stå i op til 30 sek. standbenet er strakt. hold let i bordet. skift ben": [
 "mand/87f94cb04a.mp3",
 12.41
+],
+"stå rank": [
+"mand/856b77c5d8.mp3",
+1.03
 ],
 "svaj let": [
 "mand/47da2ab0e3.mp3",
