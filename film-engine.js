@@ -337,7 +337,9 @@ const FigFilm = (() => {
     return '<svg class="ff-svg" viewBox="' + (F.vb || [0, 0, F.W, F.H]).join(' ') + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="' + (F.aria || 'Tegnet film af øvelsen') + '">' + s + '</svg>';
   }
   function define(id, F) { F.id = id; FILMS[id] = F; }
-  return { footSide, shoeSide, C, L, R, rot, add, sub, mul, lerp, dirA, ik, sideFig, frontFig, sideJoints, frontJoints, define, FILMS, has: id => !!FILMS[id], svg: svgFor, state: (id, sec) => stateAt(FILMS[id], sec), cycleLen: id => cycleLen(FILMS[id]), headSide, P2, f1, limb };
+  // Intro-sætningen, som stemmen læser, før tempoet starter (samme tekst bruges af tools/make_voice.py)
+  const introText = (id, name) => (name ? name + '. ' : '') + FILMS[id].tempo.replace(/\s*\((Set [^)]*)\)/g, '');
+  return { introText, footSide, shoeSide, C, L, R, rot, add, sub, mul, lerp, dirA, ik, sideFig, frontFig, sideJoints, frontJoints, define, FILMS, has: id => !!FILMS[id], svg: svgFor, state: (id, sec) => stateAt(FILMS[id], sec), cycleLen: id => cycleLen(FILMS[id]), headSide, P2, f1, limb };
 })();
 if (typeof module !== 'undefined') module.exports = FigFilm;
 
@@ -369,7 +371,7 @@ function initFigFilm(root) {
     raf = requestAnimationFrame(frame);
   };
   let introDone = false;
-  if (typeof Voice !== 'undefined') Voice.bind(box);
+  if (typeof Voice !== 'undefined') { Voice.bind(box); const labels = new Set(), cl = FigFilm.cycleLen(id); for (let s = 0; s < cl; s += 0.1) labels.add(FigFilm.state(id, s).label); Voice.preloadFilm(FigFilm.introText(id, box.dataset.name), [...labels]); }
   btn.onclick = () => {
     const on = btn.getAttribute('aria-pressed') !== 'true';
     btn.setAttribute('aria-pressed', on); btn.textContent = on ? '⏸ Pause' : '▶ Afspil filmen';
@@ -377,7 +379,7 @@ function initFigFilm(root) {
       const go = () => { if (btn.getAttribute('aria-pressed') !== 'true' || !box.isConnected) return; t0 = performance.now(); raf = requestAnimationFrame(frame); };
       if (!introDone && typeof Voice !== 'undefined' && Voice.enabled() && Voice.available()) { // kort introduktion, før tempoet starter
         introDone = true; ph.textContent = 'Lyt …';
-        Voice.say((box.dataset.name ? box.dataset.name + '. ' : '') + FigFilm.FILMS[id].tempo.replace(/\s*\((Set [^)]*)\)/g, ''), box, { flush: true, intro: true, onend: go });
+        Voice.say(FigFilm.introText(id, box.dataset.name), box, { flush: true, intro: true, onend: go });
       } else { introDone = true; go(); }
     } else { cancelAnimationFrame(raf); acc += t0 ? (performance.now() - t0) / 1000 : 0; t0 = 0; if (typeof Voice !== 'undefined') Voice.reset(box); }
   };

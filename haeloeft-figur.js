@@ -169,14 +169,16 @@ const HaelTrin = (() => {
   return { svg, scene, joints, phaseAt, TEMPO, W, H, MTP, EDGE, STEP };
 })();
 if (typeof module !== 'undefined') module.exports = HaelTrin;
+if (typeof module !== 'undefined') module.exports.haelTrinTempo = () => haelTrinTempo();
 
 
 /* ---------- Lille tempo-film på øvelsessiden (3 sek. op · 2 sek. hold · 3 sek. ned) ---------- */
 const HAEL_TRIN_FILM = { 'hael-2-haeloeft-trin-begge': { oneLeg: false }, 'hael-3-tungt-haeloeft-et-ben': { oneLeg: true } };
+function haelTrinTempo() { return HaelTrin.TEMPO.up + ' sek. op · ' + HaelTrin.TEMPO.hold + ' sek. hold · ' + HaelTrin.TEMPO.down + ' sek. ned. Følg hælen i dit eget tempo.'; }
 function haelTrinFilmHtml(e) {
   const cfg = HAEL_TRIN_FILM[e.id]; if (!cfg) return '';
   const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const tempo = HaelTrin.TEMPO.up + ' sek. op · ' + HaelTrin.TEMPO.hold + ' sek. hold · ' + HaelTrin.TEMPO.down + ' sek. ned. Følg hælen i dit eget tempo.';
+  const tempo = haelTrinTempo();
   return '<div class="card ht-film" data-ex="' + e.id + '" data-name="' + String(e.name || '').replace(/"/g, '&quot;') + '" data-tempo="' + tempo + '"><h3>🎬 Tempo-film</h3>' +
     '<div class="ht-stage">' + HaelTrin.svg({ t: still ? 1 : 0, oneLeg: cfg.oneLeg, arrow: still ? 'up' : false }) + '</div>' +
     (still ? '<p class="hint">Stillbillede (reduceret bevægelse er slået til): toppen af bevægelsen.</p>'

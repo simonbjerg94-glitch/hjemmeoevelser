@@ -611,7 +611,7 @@ function viewMore() {
     '<button type="button" role="radio" class="seg-b' + ((isSimple() ? 'enkel' : 'fuld') === m ? ' sel' : '') + '" aria-checked="' + ((isSimple() ? 'enkel' : 'fuld') === m) + '" data-mode="' + m + '"><b>' + MODE_INFO[m].name + '</b></button>').join('') + '</div>';
   h += '<h2>Tekststørrelse</h2><div class="seg three" role="radiogroup" aria-label="Tekststørrelse">' + [['normal', 'Normal'], ['stor', 'Stor'], ['xl', 'Meget stor']].map(([k, n]) =>
     '<button type="button" role="radio" class="seg-b ts-b-' + k + (textSize() === k ? ' sel' : '') + '" aria-checked="' + (textSize() === k) + '" data-ts="' + k + '"><b>' + n + '</b></button>').join('') + '</div>';
-  h += '<h2>Stemme</h2><div class="card voice-card"><p style="margin:0 0 10px">En stemme forklarer øvelsen og siger tempoet: "Op … og ned", "Hold … 3, 2, 1".</p>' + (typeof Voice !== 'undefined' ? Voice.btnHtml() + (Voice.note() ? '<p class="hint">' + Voice.note() + '</p>' : '') : '') + '</div>';
+  h += '<h2>Stemme</h2><div class="card voice-card"><p style="margin:0 0 10px">En rolig, naturlig dansk stemme forklarer øvelsen og siger tempoet: "Op … og ned", "Hold … 3, 2, 1". Den virker også uden internet.</p>' + (typeof Voice !== 'undefined' ? Voice.btnHtml() + (Voice.note() ? '<p class="hint">' + Voice.note() + '</p>' : '') : '') + '</div>';
   h += '<h2>Mere i appen</h2>' +
     row('#/raad', '📖', 'Gode råd', 'Om artrose, hælspore og træning') +
     row('#/smerte', '📈', 'Min smerte', 'Graf over din smerte uge for uge') +
@@ -690,6 +690,7 @@ function viewExercise(id) {
   if (typeof haelTrinFilmHtml === 'function') html += haelTrinFilmHtml(e);
   if (typeof figFilmHtml === 'function') html += figFilmHtml(e);
   html += videoHtml(e);
+  if (typeof Coach !== 'undefined') html += Coach.btnHtml(e);
   html += '<div class="dose"><span aria-hidden="true">🔁</span><span>' + esc(e.dose) + '</span></div>';
   html += '<button id="doneBtn" class="btn ' + (d ? 'done' : '') + '" type="button">' + (d ? '✓ Lavet i dag – tryk for at fortryde' : 'Markér som lavet i dag') + '</button>';
   if (d && nav && nav.next) html += '<a class="btn next-btn" id="nextBtn" href="#/oevelse/' + encodeURIComponent(nav.next.id) + '">Næste øvelse: ' + esc(nav.next.name) + ' ›</a>';
@@ -708,6 +709,7 @@ function viewExercise(id) {
   hydrateMedia($app); initGallery($app, e); initVideo($app);
   if (typeof initHaelTrinFilm === 'function') initHaelTrinFilm($app);
   if (typeof initFigFilm === 'function') initFigFilm($app);
+  if (typeof Coach !== 'undefined') Coach.bind($app, e);
   const fin = document.getElementById('finishBtn'); if (fin) fin.onclick = () => painAfter(e.category, () => checkBadges());
   document.getElementById('doneBtn').onclick = () => {
     const nowDone = toggleDone(e.id);

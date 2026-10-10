@@ -1,0 +1,2 @@
+Apache License 2.0 – https://www.apache.org/licenses/LICENSE-2.0
+MediaPipe © Google LLC. Modellen pose_landmarker_lite: Apache-2.0 (se MediaPipe model card).
