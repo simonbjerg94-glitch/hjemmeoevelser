@@ -349,6 +349,10 @@ const VOICE_SETS = {
 "kvinde/0e03e84b0c.mp3",
 15.17
 ],
+"drej foden ud mod elastikken. sid med strakte ben og en elastik om begge forfødder. drej den onde fod ud til siden mod elastikken (2 sek.), og før den langsomt tilbage (3 sek.). hælen bliver liggende. 3 sæt × 15": [
+"kvinde/9402bb24ef.mp3",
+18.89
+],
 "drej hovedet roligt. sid ret. drej roligt hovedet til den ene side, så langt det er rart (3 sek.), hold 2 sek., og drej tilbage. så til den anden side. 5–10 gange til hver side": [
 "kvinde/88ff3491af.mp3",
 12.38
@@ -392,6 +396,10 @@ const VOICE_SETS = {
 "flot, bliv ved i roligt tempo": [
 "kvinde/1dbe154578.mp3",
 2.38
+],
+"flyt vægten over på foden. stå ved køkkenbordet med fødderne i hoftebredde. flyt roligt vægten over på den onde fod (2 sek.), hold lidt, og flyt den tilbage (2 sek.). 10 gange": [
+"kvinde/550c6d9654.mp3",
+15.53
 ],
 "fod bagud": [
 "kvinde/00038a3feb.mp3",
@@ -509,6 +517,10 @@ const VOICE_SETS = {
 "kvinde/ed1ef30e51.mp3",
 0.55
 ],
+"hop fra side til side. stå med samlede fødder ved siden af en streg på gulvet. hop roligt over stregen og tilbage, og land blødt med bøjede knæ. 10–20 hop. start med små hop": [
+"kvinde/2d3a7f36d8.mp3",
+20.26
+],
 "hovedet væk": [
 "kvinde/33c78a40d2.mp3",
 1.06
@@ -536,6 +548,10 @@ const VOICE_SETS = {
 "hæløft på begge ben. 3 sek. op · hold 2 sek. · 3 sek. ned. så højt du kan, og helt ned til gulvet igen": [
 "kvinde/884018fe39.mp3",
 8.04
+],
+"hæløft på ét ben. stå på det onde ben med hænderne let mod væggen. løft hælen roligt op (2 sek.), hold 1 sek., og sænk langsomt (3 sek.). 3 sæt × 10–15": [
+"kvinde/f8f37dfb83.mp3",
+14.28
 ],
 "ind": [
 "kvinde/6e1b0f004b.mp3",
@@ -597,6 +613,14 @@ const VOICE_SETS = {
 "kvinde/0138df91e9.mp3",
 1.08
 ],
+"knæ mod væggen. stå med den onde fod lidt fra væggen og den anden bagved. bøj knæet frem mod væggen (2 sek.), mens hælen bliver i gulvet. hold 2 sek., og gå tilbage. 10–15 gange. ryk foden lidt længere væk, når det er let": [
+"kvinde/07df360a00.mp3",
+20.59
+],
+"knæet frem": [
+"kvinde/3098a4e47c.mp3",
+1.08
+],
 "knæstræk siddende. 2 sek. op · hold 3 sek. med tæerne trukket op · 2 sek. ned": [
 "kvinde/7465526550.mp3",
 9.98
@@ -624,6 +648,10 @@ const VOICE_SETS = {
 "krøl tæerne": [
 "kvinde/ea76ce5aaf.mp3",
 1.08
+],
+"land blødt": [
+"kvinde/7a739670f3.mp3",
+0.94
 ],
 "langfinger": [
 "kvinde/c38000fbe3.mp3",
@@ -765,6 +793,10 @@ const VOICE_SETS = {
 "kvinde/b489159a56.mp3",
 1.13
 ],
+"over på foden": [
+"kvinde/a52f0b7fe2.mp3",
+1.1
+],
 "pause": [
 "kvinde/7a01c0c90a.mp3",
 0.72
@@ -813,6 +845,10 @@ const VOICE_SETS = {
 "kvinde/c4d683836e.mp3",
 17.33
 ],
+"pres væk": [
+"kvinde/d220d5ea0f.mp3",
+0.91
+],
 "prøv at holde dig helt stille": [
 "kvinde/af1e92b940.mp3",
 1.73
@@ -856,6 +892,10 @@ const VOICE_SETS = {
 "rund ryggen": [
 "kvinde/8c1b123cc0.mp3",
 1.03
+],
+"rundt": [
+"kvinde/bb4e48e4d5.mp3",
+0.58
 ],
 "rygliggende arm- og benstræk (død bille). lig på ryggen, knæ og arme i vejret. stræk langsomt det ene ben og den modsatte arm ud (3 sek.), og kom tilbage (3 sek.). lænden bliver i gulvet. 6–10 til hver side": [
 "kvinde/c8bc8a4ec7.mp3",
@@ -1017,6 +1057,10 @@ const VOICE_SETS = {
 "kvinde/4dd001c6e5.mp3",
 1.54
 ],
+"stræk læggen med et håndklæde. sid med strakte ben og et håndklæde om forfoden. træk roligt i håndklædet, så tæerne kommer mod dig, til du mærker et stræk i læggen. hold 30 sek. 3 gange": [
+"kvinde/48acb6b305.mp3",
+18.98
+],
 "stræk over stoleryggen. sid helt inde på stolen, hænderne bag hovedet. læn dig roligt tilbage over stoleryggen (3 sek.), hold 3 sek., og kom op igen. 8–10 gange": [
 "kvinde/7ad4930f70.mp3",
 13.34
@@ -1040,6 +1084,10 @@ const VOICE_SETS = {
 "stå med samlede fødder. stil fødderne helt sammen, og stå stille i 20–30 sek. hænderne lige over bordkanten": [
 "kvinde/e42e160b62.mp3",
 11.38
+],
+"stå på ét ben og ræk med foden. stå på det onde ben med let bøjet knæ, og hold let i bordet. ræk roligt med den anden fod frem og rør gulvet let (2 sek.), og ræk så bagud (2 sek.). 10 gange. skift ben": [
+"kvinde/fac101cfa9.mp3",
+19.32
 ],
 "stå på ét ben. løft den ene fod lidt fra gulvet (5–10 cm), og stå i op til 30 sek. standbenet er strakt. hold let i bordet. skift ben": [
 "kvinde/9565432675.mp3",
@@ -1081,6 +1129,10 @@ const VOICE_SETS = {
 "kvinde/080f126344.mp3",
 16.75
 ],
+"tegn cirkler med foden. læg benet højt på en pude. tegn store, rolige cirkler med tæerne – 10 gange den ene vej og 10 gange den anden vej": [
+"kvinde/2f4d841dac.mp3",
+13.54
+],
 "tegn store, rolige cirkler med foden, 5 gange hver vej": [
 "kvinde/21366ee504.mp3",
 5.09
@@ -1112,6 +1164,14 @@ const VOICE_SETS = {
 "trin op på trappetrin. fod op · ca. 2 sek. op · 2–3 sek. ned med samme ben først. hold i gelænderet": [
 "kvinde/2aeb15ccd9.mp3",
 11.83
+],
+"træd ned": [
+"kvinde/d2c344bf66.mp3",
+1.1
+],
+"træd ned mod elastikken. sid med benet strakt og en elastik om forfoden. træd foden ned mod elastikken (2 sek.), og før den langsomt tilbage (3 sek.). 3 sæt × 15": [
+"kvinde/e3f3cccc3b.mp3",
+15.5
 ],
 "træk": [
 "kvinde/e59ed23c34.mp3",
@@ -1148,6 +1208,10 @@ const VOICE_SETS = {
 "vip foden op og ned 20 gange. det vækker læggen og fodsålen": [
 "kvinde/a7e5d00deb.mp3",
 5.78
+],
+"vip foden op og ned med benet højt. læg benet højt på en pude. træk tæerne op mod dig (1 sek.), og pres dem væk (1 sek.). roligt i 1–2 minutter, flere gange om dagen": [
+"kvinde/f30e271827.mp3",
+16.63
 ],
 "vrid": [
 "kvinde/aa24edf0b0.mp3",
@@ -1547,6 +1611,10 @@ const VOICE_SETS = {
 "mand/87630acf6f.mp3",
 15.84
 ],
+"drej foden ud mod elastikken. sid med strakte ben og en elastik om begge forfødder. drej den onde fod ud til siden mod elastikken (2 sek.), og før den langsomt tilbage (3 sek.). hælen bliver liggende. 3 sæt × 15": [
+"mand/f612e585ae.mp3",
+19.13
+],
 "drej hovedet roligt. sid ret. drej roligt hovedet til den ene side, så langt det er rart (3 sek.), hold 2 sek., og drej tilbage. så til den anden side. 5–10 gange til hver side": [
 "mand/2920d7f3b0.mp3",
 12.55
@@ -1590,6 +1658,10 @@ const VOICE_SETS = {
 "flot, bliv ved i roligt tempo": [
 "mand/e2485d8b9b.mp3",
 2.66
+],
+"flyt vægten over på foden. stå ved køkkenbordet med fødderne i hoftebredde. flyt roligt vægten over på den onde fod (2 sek.), hold lidt, og flyt den tilbage (2 sek.). 10 gange": [
+"mand/2651e223ff.mp3",
+15.46
 ],
 "fod bagud": [
 "mand/6dfcbdc842.mp3",
@@ -1707,6 +1779,10 @@ const VOICE_SETS = {
 "mand/e9b4b86127.mp3",
 0.38
 ],
+"hop fra side til side. stå med samlede fødder ved siden af en streg på gulvet. hop roligt over stregen og tilbage, og land blødt med bøjede knæ. 10–20 hop. start med små hop": [
+"mand/59fb706201.mp3",
+19.56
+],
 "hovedet væk": [
 "mand/1bb55f6ae8.mp3",
 0.96
@@ -1734,6 +1810,10 @@ const VOICE_SETS = {
 "hæløft på begge ben. 3 sek. op · hold 2 sek. · 3 sek. ned. så højt du kan, og helt ned til gulvet igen": [
 "mand/a88ca5e6fc.mp3",
 8.35
+],
+"hæløft på ét ben. stå på det onde ben med hænderne let mod væggen. løft hælen roligt op (2 sek.), hold 1 sek., og sænk langsomt (3 sek.). 3 sæt × 10–15": [
+"mand/42be4f66db.mp3",
+14.26
 ],
 "ind": [
 "mand/3764a942da.mp3",
@@ -1795,6 +1875,14 @@ const VOICE_SETS = {
 "mand/fab1580bb7.mp3",
 1.08
 ],
+"knæ mod væggen. stå med den onde fod lidt fra væggen og den anden bagved. bøj knæet frem mod væggen (2 sek.), mens hælen bliver i gulvet. hold 2 sek., og gå tilbage. 10–15 gange. ryk foden lidt længere væk, når det er let": [
+"mand/a6f35a0014.mp3",
+20.64
+],
+"knæet frem": [
+"mand/cc28beeb61.mp3",
+1.01
+],
 "knæstræk siddende. 2 sek. op · hold 3 sek. med tæerne trukket op · 2 sek. ned": [
 "mand/0259ec3965.mp3",
 10.01
@@ -1822,6 +1910,10 @@ const VOICE_SETS = {
 "krøl tæerne": [
 "mand/39961de05a.mp3",
 1.06
+],
+"land blødt": [
+"mand/9853bcd416.mp3",
+0.96
 ],
 "langfinger": [
 "mand/90cff066d2.mp3",
@@ -1963,6 +2055,10 @@ const VOICE_SETS = {
 "mand/f0c8d891af.mp3",
 1.3
 ],
+"over på foden": [
+"mand/3001e2f315.mp3",
+1.18
+],
 "pause": [
 "mand/de56f8e305.mp3",
 0.74
@@ -2011,6 +2107,10 @@ const VOICE_SETS = {
 "mand/b72f0df46a.mp3",
 16.75
 ],
+"pres væk": [
+"mand/e521bb367b.mp3",
+0.86
+],
 "prøv at holde dig helt stille": [
 "mand/86e83bc6b3.mp3",
 1.82
@@ -2054,6 +2154,10 @@ const VOICE_SETS = {
 "rund ryggen": [
 "mand/8d4192817a.mp3",
 0.96
+],
+"rundt": [
+"mand/6856fba6a7.mp3",
+0.62
 ],
 "rygliggende arm- og benstræk (død bille). lig på ryggen, knæ og arme i vejret. stræk langsomt det ene ben og den modsatte arm ud (3 sek.), og kom tilbage (3 sek.). lænden bliver i gulvet. 6–10 til hver side": [
 "mand/55e01a86ce.mp3",
@@ -2215,6 +2319,10 @@ const VOICE_SETS = {
 "mand/d36ea2d879.mp3",
 1.56
 ],
+"stræk læggen med et håndklæde. sid med strakte ben og et håndklæde om forfoden. træk roligt i håndklædet, så tæerne kommer mod dig, til du mærker et stræk i læggen. hold 30 sek. 3 gange": [
+"mand/8f0c153255.mp3",
+19.03
+],
 "stræk over stoleryggen. sid helt inde på stolen, hænderne bag hovedet. læn dig roligt tilbage over stoleryggen (3 sek.), hold 3 sek., og kom op igen. 8–10 gange": [
 "mand/a9d69e52fb.mp3",
 13.54
@@ -2238,6 +2346,10 @@ const VOICE_SETS = {
 "stå med samlede fødder. stil fødderne helt sammen, og stå stille i 20–30 sek. hænderne lige over bordkanten": [
 "mand/27f2b3c646.mp3",
 11.71
+],
+"stå på ét ben og ræk med foden. stå på det onde ben med let bøjet knæ, og hold let i bordet. ræk roligt med den anden fod frem og rør gulvet let (2 sek.), og ræk så bagud (2 sek.). 10 gange. skift ben": [
+"mand/34f0872b76.mp3",
+19.2
 ],
 "stå på ét ben. løft den ene fod lidt fra gulvet (5–10 cm), og stå i op til 30 sek. standbenet er strakt. hold let i bordet. skift ben": [
 "mand/87f94cb04a.mp3",
@@ -2279,6 +2391,10 @@ const VOICE_SETS = {
 "mand/b7e32c0f9a.mp3",
 16.56
 ],
+"tegn cirkler med foden. læg benet højt på en pude. tegn store, rolige cirkler med tæerne – 10 gange den ene vej og 10 gange den anden vej": [
+"mand/34c353c6c4.mp3",
+13.03
+],
 "tegn store, rolige cirkler med foden, 5 gange hver vej": [
 "mand/f21457f901.mp3",
 4.56
@@ -2310,6 +2426,14 @@ const VOICE_SETS = {
 "trin op på trappetrin. fod op · ca. 2 sek. op · 2–3 sek. ned med samme ben først. hold i gelænderet": [
 "mand/c80017f60e.mp3",
 11.83
+],
+"træd ned": [
+"mand/cdb99dc5f2.mp3",
+1.13
+],
+"træd ned mod elastikken. sid med benet strakt og en elastik om forfoden. træd foden ned mod elastikken (2 sek.), og før den langsomt tilbage (3 sek.). 3 sæt × 15": [
+"mand/0f2e85a3df.mp3",
+15.65
 ],
 "træk": [
 "mand/af05067483.mp3",
@@ -2346,6 +2470,10 @@ const VOICE_SETS = {
 "vip foden op og ned 20 gange. det vækker læggen og fodsålen": [
 "mand/d0f5f5015b.mp3",
 5.9
+],
+"vip foden op og ned med benet højt. læg benet højt på en pude. træk tæerne op mod dig (1 sek.), og pres dem væk (1 sek.). roligt i 1–2 minutter, flere gange om dagen": [
+"mand/11b5a93177.mp3",
+15.7
 ],
 "vrid": [
 "mand/bc876179e2.mp3",
