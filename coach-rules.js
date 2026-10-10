@@ -129,9 +129,15 @@ const CoachRules = (() => {
     'albue-h-straek-strak': pres('front', 90, 'strækket af underarmen'), 'albue-h-straek-boej': pres('front', 90, 'strækket af underarmen'),
     'albue-1-loeft-op': pres('front', 120, 'løftet med hånden'), 'albue-1-loeft-boej': pres('front', 120, 'løftet med hånden'),
     'albue-1-drej': pres('front', 120, 'drejningen af underarmen'), 'albue-2-kun-ned': pres('front', 150, 'den langsomme sænkning'),
-    'albue-2-haandklaede-vrid': pres('front', 90, 'vridet med håndklædet'), 'albue-3-baere': pres('side', 60, 'turen med posen')
+    'albue-2-haandklaede-vrid': pres('front', 90, 'vridet med håndklædet'), 'albue-3-baere': pres('side', 60, 'turen med posen'),
+    // Hånd: fingrenes bevægelser er for små til kroppens skelet → tilstedeværelse + tid
+    'haand-h-knyt': pres('front', 60, 'fingrenes bevægelse'), 'haand-h-senegled': pres('front', 90, 'fingrenes stillinger'),
+    'haand-h-nerveglid': pres('front', 60, 'bevægelsen af hånd og hoved'), 'haand-h-haandled': pres('front', 60, 'håndleddets bevægelse'),
+    'haand-1-tommel-fingre': pres('front', 90, 'tommelen mod fingerspidserne'), 'haand-1-spred': pres('front', 60, 'fingrenes spredning'),
+    'haand-2-klem-bold': pres('front', 120, 'klemmet om bolden'), 'haand-2-elastik-spred': pres('front', 90, 'fingrenes spredning mod elastikken'),
+    'haand-2-tommel-elastik': pres('front', 90, 'tommelen mod elastikken'), 'haand-3-knib': pres('front', 90, 'knibet med tommel og pegefinger')
   };
-  const CATEGORY_DEFAULT = { knae: 'side', hofte: 'side', balance: 'front', haelspore: 'side', laend: 'lying', bryst: 'front', nakke: 'front', skulder: 'front', albue: 'front' };
+  const CATEGORY_DEFAULT = { knae: 'side', hofte: 'side', balance: 'front', haelspore: 'side', laend: 'lying', bryst: 'front', nakke: 'front', skulder: 'front', albue: 'front', haand: 'front' };
   function ruleFor(e) {
     const id = typeof e === 'string' ? e : e.id;
     return RULES[id] || pres(CATEGORY_DEFAULT[(e && e.category) || ''] || 'side', 60, 'øvelsen');

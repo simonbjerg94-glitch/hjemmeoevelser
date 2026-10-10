@@ -335,4 +335,160 @@
       over: () => tag(170, 60, 'Strakt arm · rank')
     }));
   })();
+
+  /* ================= HÅNDLED OG HÅND =================
+     To nærbilleder af hånden: set fra tommelfingersiden (fingrene bøjer mod venstre) og set forfra med håndfladen mod os. */
+  const HV = { W: 320, H: 400, floor: 400, view: 'custom' };
+  const ik2 = (A, T, l1, l2, side) => { // to-leds IK: led-punkt mellem A og T, bøjet til side (+1/−1)
+    const d = sub(T, A), D = Math.min(Math.hypot(d[0], d[1]), l1 + l2 - 0.5), u = mul(d, 1 / (Math.hypot(d[0], d[1]) || 1));
+    const a = (l1 * l1 - l2 * l2 + D * D) / (2 * D), h = Math.sqrt(Math.max(0, l1 * l1 - a * a));
+    return add(add(A, mul(u, a)), mul([-u[1] * side, u[0] * side], h)); };
+  const sdir = a => [-Math.sin(a * Math.PI / 180), -Math.cos(a * Math.PI / 180)];   // 0 = op, + = bøjet mod håndfladen (venstre)
+  const nail = (tip, a, col) => { const n = [Math.cos(a * Math.PI / 180), -Math.sin(a * Math.PI / 180)], b = sub(tip, mul(sdir(a), 7));
+    return '<ellipse cx="' + f1(b[0] + n[0] * 5) + '" cy="' + f1(b[1] + n[1] * 5) + '" rx="3.2" ry="6" transform="rotate(' + f1(-a) + ' ' + f1(b[0] + n[0] * 5) + ' ' + f1(b[1] + n[1] * 5) + ')" fill="' + (col || C.nail) + '"/>'; };
+  // Set fra siden. fa = [mcp, pip, dip] for fingrene, ta = [cmc, mp, ip] for tommelen (grader), ball = {r, sq}
+  function handSideV(P) {
+    const fa = P.fa || [0, 0, 0], ta = P.ta || [38, 10, 8];
+    const Wr = [172, 300];
+    let s = FF.limb([182, 440], Wr, 62, 54, C.skin) + '<rect x="130" y="384" width="110" height="30" rx="10" fill="' + C.tealDark + '"/>';
+    const fingers = [{ b: [190, 204], L: [36, 22, 19], w: 18, c: C.skinDark, o: -16 }, { b: [186, 192], L: [46, 29, 22], w: 20, c: C.skinMid, o: -10 }, { b: [181, 186], L: [50, 31, 23], w: 21, c: C.skinMid, o: -5 }, { b: [174, 193], L: [46, 27, 22], w: 21, c: C.skin, o: 0 }];
+    const drawF = (F, sc) => { let p = F.b, a = F.o * (1 - Math.min(1, fa[0] / 60)), r = ''; const k = sc || 1; for (let i = 0; i < 3; i++) { a += fa[i] * k; const q = add(p, mul(sdir(a), F.L[i])); r += FF.limb(p, q, F.w - i * 1.5, F.w - (i + 1) * 1.5, F.c); p = q; } return r + nail(p, a, F.c === C.skin ? C.nail : '#e9cdb9'); };
+    s += drawF(fingers[0], 1.04) + drawF(fingers[1], 1.02) + drawF(fingers[2]);
+    s += '<path fill="' + C.skin + '" d="M146,302 C132,272 136,232 154,198 L196,186 C200,226 200,268 198,302 Z"/>';
+    s += '<path fill="none" stroke="' + C.skinDark + '" stroke-width="1.4" opacity=".55" d="M150,262 C158,250 166,246 176,246"/>';
+    if (P.ball) { const r = P.ball.r || 30, sq = P.ball.sq || 0; s += '<ellipse cx="' + f1(140 + sq * 6) + '" cy="232" rx="' + f1(r * (1 - 0.18 * sq)) + '" ry="' + f1(r * (1 + 0.1 * sq)) + '" fill="' + C.ball + '" stroke="' + C.ballDark + '" stroke-width="2"/>'; }
+    s += drawF(fingers[3]);
+    if (P.pinch) { // tommel mod pegefinger med en lille bold imellem (set fra siden)
+      const F = fingers[3]; let q = F.b, aa = 0; for (let i = 0; i < 3; i++) { aa += fa[i]; q = add(q, mul(sdir(aa), F.L[i])); }
+      const r = 13, sq = P.pinch.sq || 0, ry = r * (1 - 0.3 * sq), c = add(q, [1, ry + 2]), T = add(c, [2, ry + 4]);
+      const M = add([156, 282], mul(sdir(30), 42)), K = ik2(M, T, 30, 25, -1);
+      s += '<ellipse cx="' + f1(c[0]) + '" cy="' + f1(c[1]) + '" rx="' + f1(r * (1 + 0.2 * sq)) + '" ry="' + f1(ry) + '" fill="' + C.ball + '" stroke="' + C.ballDark + '" stroke-width="2"/>';
+      s += FF.limb([156, 282], M, 26, 23, C.skin) + FF.limb(M, K, 22, 20, C.skin, ' stroke="' + C.skinDark + '" stroke-width=".8" stroke-opacity=".5"') + FF.limb(K, T, 20, 17, C.skin, ' stroke="' + C.skinDark + '" stroke-width=".8" stroke-opacity=".5"');
+      const ta2 = Math.atan2(-(T[0] - K[0]), -(T[1] - K[1])) * 180 / Math.PI; return s + nail(T, ta2);
+    }
+    // tommelen (forrest)
+    let p = [156, 282], a = 0; const TL = [42, 30, 25], TW = [26, 22, 19];
+    for (let i = 0; i < 3; i++) { a += ta[i]; const q = add(p, mul(sdir(a), TL[i])); s += FF.limb(p, q, TW[i], TW[i] - 3, C.skin) + (i ? '<circle cx="' + f1(p[0]) + '" cy="' + f1(p[1]) + '" r="' + f1(TW[i] / 2) + '" fill="' + C.skin + '" stroke="' + C.skinDark + '" stroke-width=".8" stroke-opacity=".5"/>' : ''); p = q; }
+    s += nail(p, a);
+    return s;
+  }
+  // Set forfra (håndfladen mod os, tommelen til venstre). fl = bøjning pr. finger 0–1, sp = spredning 0–1, m = tommelens rod mod håndfladen 0–1, T = tommelspidsens mål
+  const FB = [[124, 206], [150, 197], [176, 199], [200, 210]], FLn = [[42, 26, 22], [46, 29, 23], [43, 27, 22], [34, 21, 18]], FW = [22, 23, 22, 19];
+  const fJoints = (i, fl, sp) => { const base = [-7, -2, 3, 9][i] + (sp || 0) * [-12, -4, 5, 14][i], ang = [80, 95, 60].map(x => x * (fl || 0));
+    const pts = [FB[i]]; let c = 0; for (let j = 0; j < 3; j++) { c += ang[j]; const v = FF.rot([0, -Math.cos(c * Math.PI / 180) * FLn[i][j]], base); pts.push(add(pts[j], v)); } return pts; };
+  const TOPEN = [62, 214], MOPEN = [98, 262], MOPP = [126, 252];
+  function handFront(P) {
+    const fl = P.fl || [0, 0, 0, 0], sp = P.sp || 0;
+    let s = FF.limb([160, 440], [160, 318], 66, 62, C.skin) + '<rect x="110" y="390" width="100" height="30" rx="10" fill="' + C.tealDark + '"/>';
+    s += '<path fill="' + C.skin + '" d="M128,322 C114,292 108,252 112,206 C130,190 190,188 210,204 C214,244 206,292 194,322 Z"/>';
+    s += '<path fill="none" stroke="' + C.skinDark + '" stroke-width="1.5" opacity=".5" d="M120,250 C134,272 150,286 158,312 M132,228 C160,224 186,226 204,236"/>';
+    const J = [];
+    for (let i = 3; i >= 0; i--) { const pts = fJoints(i, fl[i], sp); J[i] = pts; for (let j = 0; j < 3; j++) s += FF.limb(pts[j], pts[j + 1], FW[i] - j * 1.6, FW[i] - (j + 1) * 1.6, fl[i] > 0.4 && j > 0 ? C.skinMid : C.skin, ' stroke="' + C.skinDark + '" stroke-width="' + (fl[i] > 0.4 ? 1.4 : 0.8) + '" stroke-opacity="' + (fl[i] > 0.4 ? 0.9 : 0.45) + '"');
+      if (fl[i] > 0.4) s += '<circle cx="' + f1(pts[3][0]) + '" cy="' + f1(pts[3][1]) + '" r="' + f1(FW[i] / 2 - 2) + '" fill="#ecc6a8" stroke="' + C.skinDark + '" stroke-width="1.2"/>'; }
+    if (P.band === 'fingre') { const q = J.map(p => FF.lerp(p[1], p[2], 0.35)); s += '<path fill="none" stroke="' + C.band + '" stroke-width="6" stroke-linecap="round" d="M' + q.map(P2).join(' L') + '"/>'; }
+    if (P.ball2) { const T = P.T, I = J[0][3], c = FF.lerp(T, I, 0.5), sq = P.ball2.sq || 0; s += '<ellipse cx="' + f1(c[0] - 4) + '" cy="' + f1(c[1]) + '" rx="' + f1(16 * (1 - 0.25 * sq)) + '" ry="' + f1(16 * (1 + 0.15 * sq)) + '" fill="' + C.ball + '" stroke="' + C.ballDark + '" stroke-width="2"/>'; }
+    const M = FF.lerp(MOPEN, MOPP, P.m || 0), T = P.T || TOPEN, K = ik2(M, T, 34, 28, 1);
+    const TS = ' stroke="' + C.skinDark + '" stroke-width="1.4" stroke-opacity=".85"';
+    s += FF.limb([132, 300], M, 34, 26, C.skin) + FF.limb(M, K, 25, 22, C.skin, TS) + FF.limb(K, T, 22, 19, C.skin, TS) + nail(T, Math.atan2(-(T[0] - K[0]), -(T[1] - K[1])) * 180 / Math.PI);
+    if (P.touch) s += '<circle cx="' + f1(T[0]) + '" cy="' + f1(T[1]) + '" r="' + f1(16 * P.touch) + '" fill="none" stroke="' + C.accent + '" stroke-width="3" opacity="' + f1(P.touch) + '"/>';
+    if (P.band === 'tommel') { const a = FF.lerp(M, K, 0.7), b = FF.lerp(J[0][0], J[0][1], 0.5); s += '<path fill="none" stroke="' + C.band + '" stroke-width="6" stroke-linecap="round" d="M' + P2(add(a, [0, -7])) + ' L' + P2(add(b, [0, -7])) + ' M' + P2(add(a, [0, 7])) + ' L' + P2(add(b, [0, 7])) + '"/>'; }
+    return s;
+  }
+  const tipFor = (i, fl) => fJoints(i, fl, 0)[3];
+  const hvFilm = (draw, extra) => Object.assign({}, HV, { vb: [0, 60, 320, 340], draw }, extra);
+
+  // Knyt og stræk hånden (set fra siden)
+  const OPEN = { fa: [0, 0, 0], ta: [38, 10, 8] }, FIST = { fa: [88, 100, 62], ta: [24, 6, -75] }, HOOK = { fa: [0, 100, 75], ta: [30, 14, 10] }, TABLE = { fa: [85, 0, 0], ta: [25, 18, 12] };
+  define('haand-h-knyt', hvFilm(handSideV, {
+    tempo: 'Knyt hånden blødt (2 sek.), og stræk så fingrene helt ud og spred dem (2 sek.). 10 gange. Gerne flere gange om dagen.',
+    poses: { open: OPEN, fist: FIST }, start: 'open',
+    seq: [{ to: 'fist', d: 2, k: 'op', l: 'Knyt', count: false }, { d: 0.6, k: 'hold', l: 'Knyt', count: false }, { to: 'open', d: 2, k: 'ned', l: 'Stræk', count: false }, { d: 0.8, k: 'pause', l: 'Stræk', count: false }],
+    still: 2.3, ghost: 'open',
+    over: () => tag(12, 70, 'Blødt – uden at klemme')
+  }));
+  // Senegled-øvelser: lige – krog – lige – knytnæve – lige – bordplade
+  define('haand-h-senegled', hvFilm(handSideV, {
+    tempo: 'Hold hånden lige op. Bøj fingrene til en krog, og hold 3 sek. Ret ud. Knyt hånden, og hold 3 sek. Ret ud. Bøj kun i knoerne, så fingrene er lige som en bordplade, og hold 3 sek. 5 gange.',
+    poses: { open: OPEN, hook: HOOK, fist: FIST, table: TABLE }, start: 'open',
+    seq: [{ to: 'hook', d: 1.5, k: 'op', l: 'Krog', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'open', d: 1.5, k: 'ned', l: 'Ret ud', count: false },
+      { to: 'fist', d: 1.5, k: 'op', l: 'Knytnæve', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'open', d: 1.5, k: 'ned', l: 'Ret ud', count: false },
+      { to: 'table', d: 1.5, k: 'op', l: 'Bordplade', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'open', d: 1.5, k: 'ned', l: 'Ret ud', count: false }],
+    shots: [1.4, 7.4, 13.4], still: 7.4, ghost: 'open',
+    over: (P, J, c) => tag(12, 70, c && c.key === 'hold' ? 'Hold stillingen' : 'Roligt fra stilling til stilling')
+  }));
+  // Klem en blød bold (set fra siden)
+  define('haand-2-klem-bold', hvFilm(handSideV, {
+    tempo: 'Hold en blød bold eller en sammenrullet sok i hånden. Klem roligt (2 sek.), hold 3 sek., og slip langsomt (2 sek.). 3 sæt × 10.',
+    poses: { rest: { fa: [48, 62, 36], ta: [22, 40, 30], ball: { r: 32, sq: 0 } }, sq: { fa: [58, 76, 44], ta: [18, 48, 36], ball: { r: 32, sq: 1 } } }, start: 'rest',
+    seq: [{ to: 'sq', d: 2, k: 'op', l: 'Klem', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'rest', d: 2, k: 'ned', l: 'Slip', count: false }, { d: 0.8, k: 'pause', l: 'Slap af', count: false }],
+    still: 3, ghost: null,
+    over: () => tag(12, 70, 'Klem med hele hånden')
+  }));
+  // Tommel mod hver fingerspids (set forfra)
+  (() => {
+    const opp = i => { const fl = [0, 0, 0, 0]; fl[i] = 0.62 + i * 0.04; return { fl, m: 0.7 + i * 0.12, T: add(tipFor(i, fl[i]), [-5, 5]), touch: 1 }; };
+    define('haand-1-tommel-fingre', hvFilm(handFront, {
+      tempo: 'Rør roligt spidsen af hver finger med tommelfingeren, så de danner et rundt O – pegefinger, langfinger, ringfinger og lillefinger. Åbn hånden helt. 5–10 gange.',
+      poses: { open: { fl: [0, 0, 0, 0], m: 0, T: TOPEN, touch: 0 }, a: opp(0), b: opp(1), c: opp(2), d: opp(3) }, start: 'open',
+      seq: [{ to: 'a', d: 1.5, k: 'op', l: 'Pegefinger', count: false }, { to: 'open', d: 1, k: 'ned', l: 'Åbn', count: false }, { to: 'b', d: 1.5, k: 'op', l: 'Langfinger', count: false }, { to: 'open', d: 1, k: 'ned', l: 'Åbn', count: false },
+        { to: 'c', d: 1.5, k: 'op', l: 'Ringfinger', count: false }, { to: 'open', d: 1, k: 'ned', l: 'Åbn', count: false }, { to: 'd', d: 1.5, k: 'op', l: 'Lillefinger', count: false }, { to: 'open', d: 1.5, k: 'ned', l: 'Åbn hånden', count: false }],
+      shots: [1.45, 3.95, 8.95], still: 1.45, ghost: 'open',
+      over: () => tag(12, 70, 'Rundt O – ikke fladt')
+    }));
+  })();
+  // Spred fingrene (set forfra) – uden og med elastik
+  define('haand-1-spred', hvFilm(handFront, {
+    tempo: 'Hold hånden op med håndfladen mod dig. Spred fingrene så meget du kan (2 sek.), hold 3 sek., og saml dem igen (2 sek.). 10 gange.',
+    poses: { a: { fl: [0, 0, 0, 0], sp: 0, T: [78, 222] }, b: { fl: [0, 0, 0, 0], sp: 1, T: [52, 232] } }, start: 'a',
+    seq: [{ to: 'b', d: 2, k: 'op', l: 'Spred', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'a', d: 2, k: 'ned', l: 'Saml', count: false }, { d: 0.6, k: 'pause', l: 'Slap af', count: false }],
+    still: 3, ghost: 'a',
+    over: () => tag(12, 70, 'Spred alle fingre')
+  }));
+  define('haand-2-elastik-spred', hvFilm(handFront, {
+    tempo: 'Sæt en elastik om fingrene. Spred fingrene ud mod elastikken (2 sek.), hold 3 sek., og saml dem langsomt (2 sek.). 3 sæt × 10.',
+    poses: { a: { fl: [0.12, 0.12, 0.12, 0.12], sp: 0, T: [92, 214], band: 'fingre' }, b: { fl: [0.12, 0.12, 0.12, 0.12], sp: 1, T: [60, 226], band: 'fingre' } }, start: 'a',
+    seq: [{ to: 'b', d: 2, k: 'op', l: 'Spred', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'a', d: 2, k: 'ned', l: 'Saml', count: false }, { d: 0.6, k: 'pause', l: 'Slap af', count: false }],
+    still: 3, ghost: null,
+    over: () => tag(12, 70, 'Elastik om fingrene')
+  }));
+  define('haand-2-tommel-elastik', hvFilm(handFront, {
+    tempo: 'Sæt en elastik om tommelfingeren og pegefingeren. Før tommelen ud til siden mod elastikken (2 sek.), hold 3 sek., og før den langsomt tilbage (3 sek.). 3 sæt × 10.',
+    poses: { a: { fl: [0, 0, 0, 0], m: 0.25, T: [96, 214], band: 'tommel' }, b: { fl: [0, 0, 0, 0], m: 0, T: [46, 236], band: 'tommel' } }, start: 'a',
+    seq: [{ to: 'b', d: 2, k: 'op', l: 'Ud', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'a', d: 3, k: 'ned', l: 'Tilbage', count: false }, { d: 0.6, k: 'pause', l: 'Slap af', count: false }],
+    still: 3, ghost: 'a',
+    over: () => tag(12, 70, 'Tommelen ud til siden')
+  }));
+  // Knib en lille bold mellem tommel og pegefinger (set fra siden: et rundt O)
+  define('haand-3-knib', hvFilm(handSideV, {
+    tempo: 'Hold en lille blød bold mellem tommelen og pegefingeren, så de danner et rundt O. Knib roligt (2 sek.), hold 3 sek., og slip (2 sek.). 3 sæt × 10.',
+    poses: { a: { fa: [38, 62, 40], pinch: { sq: 0 } }, b: { fa: [42, 68, 44], pinch: { sq: 1 } } }, start: 'a',
+    seq: [{ to: 'b', d: 2, k: 'op', l: 'Knib', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'a', d: 2, k: 'ned', l: 'Slip', count: false }, { d: 0.6, k: 'pause', l: 'Slap af', count: false }],
+    still: 3, ghost: null,
+    over: () => tag(12, 70, 'Rundt O – tommelen må ikke knække')
+  }));
+  // Bevæg håndleddet op og ned (underarmen på bordet)
+  define('haand-h-haandled', cuFilm({
+    tempo: 'Underarmen på bordet, hånden ud over kanten. Bøj roligt hånden op (2 sek.) og ned (2 sek.), så langt det er rart. 10 gange. Gerne flere gange om dagen.',
+    poses: { up: { w: 45, palm: 'ned', towel: 1 }, down: { w: -45, palm: 'ned', towel: 1 } }, start: 'up',
+    seq: [{ to: 'down', d: 2, k: 'ned', l: 'Ned', count: false }, { to: 'up', d: 2, k: 'op', l: 'Op', count: false }], shots: [0, 1, 2],
+    still: 1, ghost: 'down',
+    over: P => wristArrow(P, true) + wristArrow(P, false) + tag(14, 30, 'Roligt – kun så langt, det er rart')
+  }));
+  // Nerveglid (karpaltunnel): armen ud til siden, håndfladen op; hånden bagud + hovedet mod armen, så hånden frem + hovedet væk
+  (() => {
+    const P = (w, tilt) => ({ hip: ROT_HIP, legR: { ank: [ROT_HIP[0] - 18, ANK] }, legL: { ank: [ROT_HIP[0] + 18, ANK] }, headTilt: tilt, w });
+    define('haand-h-nerveglid', Object.assign(FRONT(), {
+      vb: [0, 40, 320, 330],
+      tempo: 'Stå eller sid. Løft armen ud til siden med håndfladen opad og albuen næsten strakt. Bøj hånden bagud, og vip hovedet mod armen (2 sek.). Ret hånden, og vip hovedet væk fra armen (2 sek.). 10 gange, roligt.',
+      poses: { a: P(-50, 20), b: P(20, -20) }, start: 'b',
+      seq: [{ to: 'a', d: 2, k: 'op', l: 'Hånden bagud', count: false }, { to: 'b', d: 2, k: 'ned', l: 'Hovedet væk', count: false }],
+      still: 2, ghost: null, shots: [0, 1.98, 3.9],
+      mod: P => { const S0 = frontS(P, 'R'), d = dirA(-86); P.armR = { el: add(S0, mul(d, 57)), hand: add(S0, mul(d, 110)) }; return P; },
+      figOpt: P => ({ front: J => {
+        const c = [82, 300], r = 62, hd = J.arms.R.hd; // forstørret udsnit af hånden
+        return '<defs><clipPath id="ngc"><circle cx="' + c[0] + '" cy="' + c[1] + '" r="' + r + '"/></clipPath></defs><circle cx="' + c[0] + '" cy="' + c[1] + '" r="' + (r + 3) + '" fill="#fff" stroke="' + C.guide + '" stroke-width="2.5"/>' +
+          '<line x1="' + f1(hd[0]) + '" y1="' + f1(hd[1] + 6) + '" x2="' + c[0] + '" y2="' + (c[1] - r) + '" stroke="' + C.guide + '" stroke-width="2" stroke-dasharray="4 4"/>' + '<g clip-path="url(#ngc)"><g transform="translate(' + (c[0] + 150) + ' ' + (c[1] - 52) + ') scale(-0.5,0.5)">' + armCU({ mode: 'straight', w: P.w, palm: 'op' }).svg + '</g></g>'; } }),
+      over: () => tag(150, 60, 'Håndfladen op · armen ud')
+    }));
+  })();
 })();

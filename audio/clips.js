@@ -257,9 +257,17 @@ const VOICE_SETS = {
 "kvinde/5d96eb726d.mp3",
 12.89
 ],
+"bevæg håndleddet op og ned. underarmen på bordet, hånden ud over kanten. bøj roligt hånden op (2 sek.) og ned (2 sek.), så langt det er rart. 10 gange. gerne flere gange om dagen": [
+"kvinde/55b49bd6da.mp3",
+15.17
+],
 "bliv i stillingen": [
 "kvinde/bcd807c132.mp3",
 1.18
+],
+"bordplade": [
+"kvinde/e6b165b16f.mp3",
+0.91
 ],
 "broen på ét ben. 2 sek. op · hold 2–3 sek. · 2 sek. ned. det strakte ben følger låret": [
 "kvinde/95b7b67a49.mp3",
@@ -501,6 +509,10 @@ const VOICE_SETS = {
 "kvinde/ed1ef30e51.mp3",
 0.55
 ],
+"hovedet væk": [
+"kvinde/33c78a40d2.mp3",
+1.06
+],
 "husk at trække vejret roligt": [
 "kvinde/d1cefe8832.mp3",
 1.92
@@ -512,6 +524,10 @@ const VOICE_SETS = {
 "hvilestilling med benene på en stol. lig på ryggen med underbenene på en stol eller sofa (90° i hofter og knæ). træk vejret roligt: ind i 4 sek., ud i 6 sek. bliv liggende 2–5 minutter": [
 "kvinde/74e11c7aff.mp3",
 13.58
+],
+"hånden bagud": [
+"kvinde/80bc09fd75.mp3",
+1.06
 ],
 "hæløft med håndklæde på trappetrin, begge ben. 3 sek. op · 2 sek. hold · 3 sek. ned. følg hælen i dit eget tempo": [
 "kvinde/ca77e7c5e8.mp3",
@@ -557,6 +573,30 @@ const VOICE_SETS = {
 "kvinde/f61afd8506.mp3",
 0.5
 ],
+"klem en blød bold. hold en blød bold eller en sammenrullet sok i hånden. klem roligt (2 sek.), hold 3 sek., og slip langsomt (2 sek.). 3 sæt × 10": [
+"kvinde/3823848794.mp3",
+15.0
+],
+"knib": [
+"kvinde/acdb99eb4f.mp3",
+0.67
+],
+"knib en lille bold. hold en lille blød bold mellem tommelen og pegefingeren, så de danner et rundt o. knib roligt (2 sek.), hold 3 sek., og slip (2 sek.). 3 sæt × 10": [
+"kvinde/a06df613a3.mp3",
+13.94
+],
+"knyt": [
+"kvinde/8ccf6f7025.mp3",
+1.25
+],
+"knyt og stræk hånden. knyt hånden blødt (2 sek.), og stræk så fingrene helt ud og spred dem (2 sek.). 10 gange. gerne flere gange om dagen": [
+"kvinde/b993394fb2.mp3",
+15.19
+],
+"knytnæve": [
+"kvinde/0138df91e9.mp3",
+1.08
+],
 "knæstræk siddende. 2 sek. op · hold 3 sek. med tæerne trukket op · 2 sek. ned": [
 "kvinde/7465526550.mp3",
 9.98
@@ -564,6 +604,10 @@ const VOICE_SETS = {
 "knævip liggende. lig på ryggen med bøjede knæ og fødderne i underlaget. lad knæene falde roligt til den ene side og så til den anden – kun så langt, det er rart. 10 gange til hver side": [
 "kvinde/529356aeb5.mp3",
 12.74
+],
+"krog": [
+"kvinde/5f704132ed.mp3",
+0.58
 ],
 "krøl": [
 "kvinde/3668e4d602.mp3",
@@ -581,6 +625,10 @@ const VOICE_SETS = {
 "kvinde/ea76ce5aaf.mp3",
 1.08
 ],
+"langfinger": [
+"kvinde/c38000fbe3.mp3",
+1.01
+],
 "langsommere": [
 "kvinde/4f377f6975.mp3",
 1.06
@@ -596,6 +644,10 @@ const VOICE_SETS = {
 "lille nik": [
 "kvinde/b7a7e11ae2.mp3",
 0.94
+],
+"lillefinger": [
+"kvinde/a82f62bdbf.mp3",
+1.01
 ],
 "luk": [
 "kvinde/5e042a0ab3.mp3",
@@ -685,6 +737,10 @@ const VOICE_SETS = {
 "kvinde/c368df7f56.mp3",
 0.82
 ],
+"nerveglid for sovende fingre. stå eller sid. løft armen ud til siden med håndfladen opad og albuen næsten strakt. bøj hånden bagud, og vip hovedet mod armen (2 sek.). ret hånden, og vip hovedet væk fra armen (2 sek.). 10 gange, roligt": [
+"kvinde/b9ca5475ee.mp3",
+20.74
+],
 "nik og løft": [
 "kvinde/22b0bdc3f9.mp3",
 1.15
@@ -712,6 +768,10 @@ const VOICE_SETS = {
 "pause": [
 "kvinde/7a01c0c90a.mp3",
 0.72
+],
+"pegefinger": [
+"kvinde/34b7b033b2.mp3",
+0.98
 ],
 "pendulsving. støt dig til bordet med den raske hånd, og bøj dig lidt frem. lad den onde arm hænge afslappet, og sving den roligt frem og tilbage som et pendul. 30–60 sek": [
 "kvinde/86d637c74b.mp3",
@@ -777,6 +837,14 @@ const VOICE_SETS = {
 "kvinde/28a195a2c3.mp3",
 12.72
 ],
+"ret ud": [
+"kvinde/9e4eb0f192.mp3",
+0.79
+],
+"ringfinger": [
+"kvinde/6c8031886c.mp3",
+0.94
+],
 "roning med elastik. elastikken sidder fast i et dørhåndtag. træk albuerne tilbage langs kroppen, og klem skulderbladene sammen (2 sek.), hold 2 sek., og slip langsomt (3 sek.). 2–3 sæt × 10–12": [
 "kvinde/9d86f1625e.mp3",
 11.06
@@ -797,9 +865,17 @@ const VOICE_SETS = {
 "kvinde/81cf253bf0.mp3",
 0.89
 ],
+"saml": [
+"kvinde/d8c746a4cc.mp3",
+0.84
+],
 "saml fødderne": [
 "kvinde/1432f10993.mp3",
 1.2
+],
+"senegled – krog, knytnæve og bordplade. hold hånden lige op. bøj fingrene til en krog, og hold 3 sek. ret ud. knyt hånden, og hold 3 sek. ret ud. bøj kun i knoerne, så fingrene er lige som en bordplade, og hold 3 sek. 5 gange": [
+"kvinde/8219412daa.mp3",
+27.5
 ],
 "sidelæns gang langs køkkenbordet. roligt: træd ud til siden, før den anden fod efter. let bøjede knæ": [
 "kvinde/3595592b42.mp3",
@@ -880,6 +956,18 @@ const VOICE_SETS = {
 "små hop på stedet (kun før løb og sport). små, rytmiske hop på forfødderne (ca. 2 hop i sekundet). knæene næsten strakte, land blødt. 10–20 hop pr. sæt": [
 "kvinde/0a470c067f.mp3",
 11.86
+],
+"spred": [
+"kvinde/5195f6a43c.mp3",
+0.67
+],
+"spred fingrene mod en elastik. sæt en elastik om fingrene. spred fingrene ud mod elastikken (2 sek.), hold 3 sek., og saml dem langsomt (2 sek.). 3 sæt × 10": [
+"kvinde/cc1711afa0.mp3",
+15.24
+],
+"spred fingrene. hold hånden op med håndfladen mod dig. spred fingrene så meget du kan (2 sek.), hold 3 sek., og saml dem igen (2 sek.). 10 gange": [
+"kvinde/485dc3be8c.mp3",
+13.08
 ],
 "spred og ræk ud": [
 "kvinde/aa7adb73b0.mp3",
@@ -1009,6 +1097,14 @@ const VOICE_SETS = {
 "kvinde/00aa942f78.mp3",
 0.82
 ],
+"tommel mod hver fingerspids. rør roligt spidsen af hver finger med tommelfingeren, så de danner et rundt o – pegefinger, langfinger, ringfinger og lillefinger. åbn hånden helt. 5–10 gange": [
+"kvinde/66a0c15b12.mp3",
+18.02
+],
+"tommelen ud mod en elastik. sæt en elastik om tommelfingeren og pegefingeren. før tommelen ud til siden mod elastikken (2 sek.), hold 3 sek., og før den langsomt tilbage (3 sek.). 3 sæt × 10": [
+"kvinde/44081da4b5.mp3",
+16.44
+],
 "trin ned fra trappetrin. ca. 3 sek. ned · rør gulvet let med hælen · 2 sek. op. hold i gelænderet": [
 "kvinde/7e195a9555.mp3",
 10.66
@@ -1076,6 +1172,10 @@ const VOICE_SETS = {
 "åbn": [
 "kvinde/3897ee9a87.mp3",
 0.74
+],
+"åbn hånden": [
+"kvinde/e8cf25e73e.mp3",
+1.03
 ],
 "ånd ind": [
 "kvinde/7d6b321078.mp3",
@@ -1355,9 +1455,17 @@ const VOICE_SETS = {
 "mand/33ef2a5a1b.mp3",
 11.95
 ],
+"bevæg håndleddet op og ned. underarmen på bordet, hånden ud over kanten. bøj roligt hånden op (2 sek.) og ned (2 sek.), så langt det er rart. 10 gange. gerne flere gange om dagen": [
+"mand/943785a856.mp3",
+14.81
+],
 "bliv i stillingen": [
 "mand/a8cf01a8cc.mp3",
 1.32
+],
+"bordplade": [
+"mand/84004315f7.mp3",
+0.91
 ],
 "broen på ét ben. 2 sek. op · hold 2–3 sek. · 2 sek. ned. det strakte ben følger låret": [
 "mand/7f8a6040b6.mp3",
@@ -1599,6 +1707,10 @@ const VOICE_SETS = {
 "mand/e9b4b86127.mp3",
 0.38
 ],
+"hovedet væk": [
+"mand/1bb55f6ae8.mp3",
+0.96
+],
 "husk at trække vejret roligt": [
 "mand/86053296ed.mp3",
 1.97
@@ -1610,6 +1722,10 @@ const VOICE_SETS = {
 "hvilestilling med benene på en stol. lig på ryggen med underbenene på en stol eller sofa (90° i hofter og knæ). træk vejret roligt: ind i 4 sek., ud i 6 sek. bliv liggende 2–5 minutter": [
 "mand/b7ab353776.mp3",
 14.06
+],
+"hånden bagud": [
+"mand/e4497d46a1.mp3",
+1.15
 ],
 "hæløft med håndklæde på trappetrin, begge ben. 3 sek. op · 2 sek. hold · 3 sek. ned. følg hælen i dit eget tempo": [
 "mand/29d2a0d3e4.mp3",
@@ -1655,6 +1771,30 @@ const VOICE_SETS = {
 "mand/0115da61f3.mp3",
 0.55
 ],
+"klem en blød bold. hold en blød bold eller en sammenrullet sok i hånden. klem roligt (2 sek.), hold 3 sek., og slip langsomt (2 sek.). 3 sæt × 10": [
+"mand/5a8a498c55.mp3",
+14.42
+],
+"knib": [
+"mand/533bbaf8ad.mp3",
+0.62
+],
+"knib en lille bold. hold en lille blød bold mellem tommelen og pegefingeren, så de danner et rundt o. knib roligt (2 sek.), hold 3 sek., og slip (2 sek.). 3 sæt × 10": [
+"mand/bf52cb0bdb.mp3",
+13.7
+],
+"knyt": [
+"mand/e9843f2b80.mp3",
+1.2
+],
+"knyt og stræk hånden. knyt hånden blødt (2 sek.), og stræk så fingrene helt ud og spred dem (2 sek.). 10 gange. gerne flere gange om dagen": [
+"mand/46a0aea620.mp3",
+14.23
+],
+"knytnæve": [
+"mand/fab1580bb7.mp3",
+1.08
+],
 "knæstræk siddende. 2 sek. op · hold 3 sek. med tæerne trukket op · 2 sek. ned": [
 "mand/0259ec3965.mp3",
 10.01
@@ -1662,6 +1802,10 @@ const VOICE_SETS = {
 "knævip liggende. lig på ryggen med bøjede knæ og fødderne i underlaget. lad knæene falde roligt til den ene side og så til den anden – kun så langt, det er rart. 10 gange til hver side": [
 "mand/fc640378de.mp3",
 12.94
+],
+"krog": [
+"mand/9b68112e2f.mp3",
+0.55
 ],
 "krøl": [
 "mand/b94f5fe92c.mp3",
@@ -1679,6 +1823,10 @@ const VOICE_SETS = {
 "mand/39961de05a.mp3",
 1.06
 ],
+"langfinger": [
+"mand/90cff066d2.mp3",
+1.06
+],
 "langsommere": [
 "mand/9e4fd1882f.mp3",
 1.15
@@ -1694,6 +1842,10 @@ const VOICE_SETS = {
 "lille nik": [
 "mand/96b9d68960.mp3",
 1.03
+],
+"lillefinger": [
+"mand/382e904c90.mp3",
+1.06
 ],
 "luk": [
 "mand/c327636b71.mp3",
@@ -1783,6 +1935,10 @@ const VOICE_SETS = {
 "mand/d908a2c41d.mp3",
 0.79
 ],
+"nerveglid for sovende fingre. stå eller sid. løft armen ud til siden med håndfladen opad og albuen næsten strakt. bøj hånden bagud, og vip hovedet mod armen (2 sek.). ret hånden, og vip hovedet væk fra armen (2 sek.). 10 gange, roligt": [
+"mand/babda367c7.mp3",
+20.23
+],
 "nik og løft": [
 "mand/9dc6675ef7.mp3",
 1.3
@@ -1810,6 +1966,10 @@ const VOICE_SETS = {
 "pause": [
 "mand/de56f8e305.mp3",
 0.74
+],
+"pegefinger": [
+"mand/6e66033d3a.mp3",
+0.98
 ],
 "pendulsving. støt dig til bordet med den raske hånd, og bøj dig lidt frem. lad den onde arm hænge afslappet, og sving den roligt frem og tilbage som et pendul. 30–60 sek": [
 "mand/d403c5d801.mp3",
@@ -1875,6 +2035,14 @@ const VOICE_SETS = {
 "mand/aa85d036d0.mp3",
 13.18
 ],
+"ret ud": [
+"mand/59ae7a00de.mp3",
+0.91
+],
+"ringfinger": [
+"mand/cd91e2b93b.mp3",
+1.08
+],
 "roning med elastik. elastikken sidder fast i et dørhåndtag. træk albuerne tilbage langs kroppen, og klem skulderbladene sammen (2 sek.), hold 2 sek., og slip langsomt (3 sek.). 2–3 sæt × 10–12": [
 "mand/0bcfd99266.mp3",
 10.94
@@ -1895,9 +2063,17 @@ const VOICE_SETS = {
 "mand/edd3d79deb.mp3",
 0.84
 ],
+"saml": [
+"mand/e016de2431.mp3",
+0.89
+],
 "saml fødderne": [
 "mand/2866812520.mp3",
 1.27
+],
+"senegled – krog, knytnæve og bordplade. hold hånden lige op. bøj fingrene til en krog, og hold 3 sek. ret ud. knyt hånden, og hold 3 sek. ret ud. bøj kun i knoerne, så fingrene er lige som en bordplade, og hold 3 sek. 5 gange": [
+"mand/b4b294758b.mp3",
+26.52
 ],
 "sidelæns gang langs køkkenbordet. roligt: træd ud til siden, før den anden fod efter. let bøjede knæ": [
 "mand/f8ec258251.mp3",
@@ -1978,6 +2154,18 @@ const VOICE_SETS = {
 "små hop på stedet (kun før løb og sport). små, rytmiske hop på forfødderne (ca. 2 hop i sekundet). knæene næsten strakte, land blødt. 10–20 hop pr. sæt": [
 "mand/79fba1c0af.mp3",
 12.0
+],
+"spred": [
+"mand/4871c3efd6.mp3",
+0.77
+],
+"spred fingrene mod en elastik. sæt en elastik om fingrene. spred fingrene ud mod elastikken (2 sek.), hold 3 sek., og saml dem langsomt (2 sek.). 3 sæt × 10": [
+"mand/b9584f0bd1.mp3",
+15.43
+],
+"spred fingrene. hold hånden op med håndfladen mod dig. spred fingrene så meget du kan (2 sek.), hold 3 sek., og saml dem igen (2 sek.). 10 gange": [
+"mand/233ecef189.mp3",
+12.91
 ],
 "spred og ræk ud": [
 "mand/0808804f1e.mp3",
@@ -2107,6 +2295,14 @@ const VOICE_SETS = {
 "mand/ff45255ea6.mp3",
 0.98
 ],
+"tommel mod hver fingerspids. rør roligt spidsen af hver finger med tommelfingeren, så de danner et rundt o – pegefinger, langfinger, ringfinger og lillefinger. åbn hånden helt. 5–10 gange": [
+"mand/1cf65d0f4f.mp3",
+18.1
+],
+"tommelen ud mod en elastik. sæt en elastik om tommelfingeren og pegefingeren. før tommelen ud til siden mod elastikken (2 sek.), hold 3 sek., og før den langsomt tilbage (3 sek.). 3 sæt × 10": [
+"mand/dc963a5d7a.mp3",
+17.04
+],
 "trin ned fra trappetrin. ca. 3 sek. ned · rør gulvet let med hælen · 2 sek. op. hold i gelænderet": [
 "mand/d67ccc6cb8.mp3",
 10.97
@@ -2174,6 +2370,10 @@ const VOICE_SETS = {
 "åbn": [
 "mand/55a94f5d95.mp3",
 0.77
+],
+"åbn hånden": [
+"mand/7b8925c7a1.mp3",
+1.1
 ],
 "ånd ind": [
 "mand/56a77e0e21.mp3",

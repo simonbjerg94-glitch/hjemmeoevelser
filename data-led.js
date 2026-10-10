@@ -7,12 +7,16 @@
    Pieters m.fl. 2020 (systematisk review: træning er førstevalg ved skuldersmerter); NICE CKS Shoulder pain (2023).
    Albue: JOSPT CPG Lateral elbow pain (Lucado m.fl. 2022); Karanasios m.fl. BJSM 2021 (træning med belastning af håndledsstrækkerne virker bedst);
    Coombes m.fl. JAMA 2013 og Bisset m.fl. BMJ 2006 (blokade hjælper kort, men dårligere efter 6–12 mdr.; fysioterapi med øvelser bedre end vent og se);
-   Peterson m.fl. 2014 (excentrisk/koncentrisk træning); Vicenzino/Coombes 2015 (isometrisk smertelindring, belastningsstyring); NICE CKS Tennis elbow (2024). */
+   Peterson m.fl. 2014 (excentrisk/koncentrisk træning); Vicenzino/Coombes 2015 (isometrisk smertelindring, belastningsstyring); NICE CKS Tennis elbow (2024).
+   Hånd: EULAR-anbefalinger for håndartrose (Kloppenburg m.fl. 2019); Østerås m.fl. Cochrane 2017 (træning ved håndartrose);
+   Kjeken m.fl. 2021 og Wouters m.fl. 2019 (træning, skinne og hjælpemidler ved tommelfingerrodsartrose); NICE NG226 Osteoarthritis (2022);
+   AAOS CPG Carpal tunnel syndrome (2016: natskinne; sene- og nerveglid kun svag evidens); Page m.fl. Cochrane 2012 (nerveglid). */
 'use strict';
 
 const LED_AREAS = [
   { id: 'skulder', name: 'Skulder', icon: '💪', intro: 'Slidgigt i skulderen, frossen skulder og "klemt sene" (smerter, når du løfter armen).' },
-  { id: 'albue', name: 'Albue', icon: '🎾', intro: 'Tennisalbue (ondt på ydersiden) og golfalbue (ondt på indersiden) – ondt, når du griber, løfter eller vrider.' }
+  { id: 'albue', name: 'Albue', icon: '🎾', intro: 'Tennisalbue (ondt på ydersiden) og golfalbue (ondt på indersiden) – ondt, når du griber, løfter eller vrider.' },
+  { id: 'haand', name: 'Hånd og håndled', icon: '✋', intro: 'Slidgigt i tommelfinger og fingre, ondt i håndleddet og karpaltunnelsyndrom (sovende fingre).' }
 ];
 
 const LED_PAIN_RULE = {
@@ -21,7 +25,11 @@ const LED_PAIN_RULE = {
     'Stop og kontakt læge, hvis du får snurren, føleforstyrrelser eller kraftnedsættelse i armen, eller hvis noget i "Hvornår skal du til læge?" passer på dig.',
   albue: 'Det må gerne gøre lidt ondt i albuen, mens du træner: 0–2 er fint, og 3–5 er i orden, hvis det er faldet til ro igen næste morgen. ' +
     'Gør albuen mere ondt næste dag, eller får du svært ved at gribe om en kop, så skru ned: lettere vægt, færre gentagelser eller kortere tid. ' +
-    'Stop og kontakt læge, hvis du får snurren eller føleforstyrrelser i fingrene, hvis hånden bliver svag, eller hvis noget i "Hvornår skal du til læge?" passer på dig.'
+    'Stop og kontakt læge, hvis du får snurren eller føleforstyrrelser i fingrene, hvis hånden bliver svag, eller hvis noget i "Hvornår skal du til læge?" passer på dig.',
+  haand: 'Det må gerne gøre lidt ondt eller føles stift, mens du træner: 0–2 er fint, og 3–5 er i orden, hvis det er faldet til ro igen næste morgen. ' +
+    'Er fingrene mere hævede eller ømme næste dag, så skru ned: færre gentagelser, blødere bold eller lettere elastik. ' +
+    'Nerveglid må give en let snurren, men den skal forsvinde igen inden for et par minutter. ' +
+    'Stop og kontakt læge, hvis følelsesløsheden bliver ved, hvis hånden bliver svag, eller hvis noget i "Hvornår skal du til læge?" passer på dig.'
 };
 
 const LED_PROGRAMS = [
@@ -130,12 +138,66 @@ const LED_PROGRAMS = [
       today: ['Albuen er rød, varm og hævet, og du har feber eller føler dig syg – især hvis der er en hævelse eller et sår på albuespidsen.', 'Du kan ikke strække eller bøje albuen helt efter et fald.', 'Det gav et smæld foran i albuen ved et tungt løft, og nu er der blå mærker og armen er svag (kan være en sene, der er revet over).'],
       weeks: ['Det er slet ikke blevet bedre efter 1–2 uger med mindre belastning og øvelser.', 'Du får snurren eller prikken i ring- og lillefinger, eller hånden bliver svag og klodset.', 'Albuen bliver mere og mere stiv, så du ikke kan strække eller bøje den.', 'Smerten er der hele tiden, også om natten og i hvile, eller du har haft kræft eller taber dig uden at ville det.']
     }
+  },
+  {
+    id: 'haand', area: 'haand', name: 'Hånd og håndled', long: 'Hånd og håndled', icon: 'haand', word: 'Niveau', holdLabel: 'Ondt nu', fbLabel: 'Styrke', aboutTitle: 'Gode råd om hånden',
+    intro: 'Slidgigt i tommelfingeren og fingrene, ondt i håndleddet og "sovende fingre" (karpaltunnelsyndrom) er meget almindeligt. Bevægelse og let styrketræning holder hånden smidig og stærk, så du bedre kan klare hverdagen.',
+    tabs: { hold: ['🆘 Ondt nu', 'Når hånden er øm, stiv eller sover'], forebyg: ['💪 Styrke', 'Når det er blevet lidt bedre'] },
+    hold: {
+      title: 'Øm, stiv eller sovende hånd – de første uger',
+      calm: 'Slidgigt i hånden er ikke farligt, og du slider ikke leddene op ved at bruge dem. Stivheden om morgenen går ofte over efter lidt bevægelse. Sovende fingre om natten skyldes som regel tryk på en nerve i håndleddet, og det kan ofte lindres.',
+      course: 'Slidgigt i hånden kommer og går i perioder. Smerten er ofte værst i de første år og bliver mindre med tiden – men leddene kan blive lidt tykkere. Øvelser hjælper på smerte, stivhed og greb efter 6–12 uger. Karpaltunnelsyndrom bliver bedre hos mange med en natskinne og færre bøjede stillinger, ofte i løbet af nogle uger.',
+      advice: [
+        'Bevæg hånden blidt flere gange om dagen – især om morgenen. Varmt vand (fx opvask eller et håndbad) gør det lettere.',
+        'Brug hjælpemidler, der skåner tommelfingeren: tykke greb, glasåbner, elektrisk dåseåbner og en nøglevender.',
+        'En skinne til tommelfingeren kan lindre ved slidgigt i tommelfingerroden – spørg din fysio- eller ergoterapeut.',
+        'Sover fingrene om natten? Brug en håndledsskinne om natten, der holder håndleddet lige. Det er den bedst dokumenterede hjælp.',
+        'Smertestillende gel eller håndkøbsmedicin kan hjælpe i perioder. Følg pakningen, og spørg apoteket eller lægen.'
+      ],
+      positions: [
+        'Om natten: hold håndleddet lige – ikke bøjet ind under puden eller hagen.',
+        'Ved telefon og tablet: støt albuen, og skift hånd, så håndleddet ikke er bøjet længe ad gangen.',
+        'Sover fingrene? Ryst hånden let, og lad armen hænge afslappet ned et øjeblik.'
+      ],
+      exercises: ['haand-h-knyt', 'haand-h-senegled', 'haand-h-nerveglid', 'haand-h-haandled']
+    },
+    phases: [
+      { n: 1, name: 'Niveau 1: Bevægelighed', weeks: 'Ca. uge 1–4', color: '#5b8def', goal: 'Gør fingre, tommel og håndled smidige, og træn tommelens runde "O".',
+        exercises: ['haand-1-tommel-fingre', 'haand-1-spred', 'haand-h-senegled', 'haand-h-haandled', 'haand-h-knyt'],
+        criteria: ['Jeg kan røre alle fingerspidser med tommelen i et rundt O.', 'Jeg kan knytte hånden og strække fingrene helt ud uden smerte over 3.', 'Hånden er ikke mere hævet eller øm næste morgen efter træning.'] },
+      { n: 2, name: 'Niveau 2: Greb og styrke', weeks: 'Ca. uge 4–10', color: '#3aa17e', goal: 'Gør grebet og tommelens muskler stærkere med bold og elastik.',
+        exercises: ['haand-2-klem-bold', 'haand-2-elastik-spred', 'haand-2-tommel-elastik', 'albue-1-loeft-op', 'haand-1-tommel-fingre'],
+        criteria: ['Jeg kan klemme bolden 3 × 10 gange uden smerte over 3.', 'Jeg kan føre tommelen ud mod elastikken 3 × 10 gange.', 'Jeg kan skrue låg af og på en flaske uden at det gør meget ondt.'] },
+      { n: 3, name: 'Niveau 3: Fint og stærkt greb', weeks: 'Fra ca. uge 10 – og så 2 gange om ugen', color: '#e0913a', goal: 'Gør hånden klar til knappe tøj, åbne glas, strikke, arbejde i haven og bære.',
+        exercises: ['haand-3-knib', 'haand-2-tommel-elastik', 'haand-2-klem-bold', 'albue-1-loeft-boej', 'albue-1-drej'],
+        criteria: ['Jeg kan knibe bolden med et rundt O 3 × 10 gange.', 'Jeg kan bære en indkøbspose og åbne et syltetøjsglas med hjælpemiddel.', 'Jeg træner hånden 2 gange om ugen.'] }
+    ],
+    everyday: [
+      'Bliv ved med øvelserne 2 gange om ugen – også i de gode perioder.',
+      'Brug begge hænder og store led: bær posen på underarmen, og løft gryden med to hænder.',
+      'Tykke greb på bestik, kuglepen og haveredskaber skåner leddene.',
+      'Hold små pauser ved strik, havearbejde, mobil og computer – ryst hænderne, og stræk fingrene.',
+      'Kommer smerten eller hævelsen igen? Gå tilbage til "Ondt nu" i en uge eller to, og byg op igen.'
+    ],
+    about: [
+      ['Slidgigt i tommelfingerroden', 'Ondt nederst ved tommelfingeren, når du knibber, vrider eller åbner glas. Leddet kan blive tykkere og stivere. Øvelser, der styrker musklerne omkring tommelen, en skinne og smarte hjælpemidler lindrer for de fleste.'],
+      ['Slidgigt i fingrene', 'Små knuder ved fingrenes yderste og midterste led er almindelige, især hos kvinder efter 50 år. Leddene kan være ømme og hævede i perioder. Bevægelse og varme hjælper på stivheden.'],
+      ['Karpaltunnelsyndrom (sovende fingre)', 'Nerven til tommel-, pege- og langfinger kommer i klemme i håndleddet. Fingrene snurrer og sover – ofte om natten. Natskinne og færre bøjede stillinger hjælper mange. Nerveglid er blide bevægelser, der kan lindre – men stop, hvis snurren bliver værre. Bliver følelsesløsheden ved, eller bliver hånden svag, skal du til lægen.'],
+      ['Ondt i håndleddet', 'Ofte er det overbelastning efter meget arbejde med hænderne, eller lidt slidgigt. Blid bevægelse og gradvis styrketræning hjælper. Har du faldet på hånden og har ondt ved tommelfingersiden af håndleddet, skal det undersøges – også selvom du kan bevæge det.'],
+      ['Må det gøre ondt?', 'Ja, lidt. Det er normalt, at leddene gør lidt ondt under træningen. Det vigtige er, at smerten og hævelsen er faldet til ro igen næste morgen. Se smertereglen nederst.']
+    ],
+    redFlags: {
+      now: ['Du får pludselig smerter eller trykken i brystet, der stråler ud i armen, især med åndenød, sved eller kvalme (kan være hjertet).', 'Du får pludselig lammelse eller følelsesløshed i armen eller hånden sammen med skæv mund eller besvær med at tale (kan være en blodprop i hjernen).', 'Håndleddet eller en finger ser skævt ud efter et fald, eller hånden bliver kold, hvid eller blå.'],
+      today: ['Et led i hånden eller en finger er rødt, varmt og hævet, og du har feber – især efter et sår, en rift eller et bid.', 'Du er faldet på hånden og har ondt på tommelfingersiden af håndleddet (kan være et brud, der ikke ses udefra).', 'Du kan pludselig ikke strække eller bøje en finger efter et uheld (kan være en sene).'],
+      weeks: ['Fingrene er følelsesløse hele tiden – ikke kun om natten – eller følelsen bliver dårligere.', 'Hånden bliver svag og klodset: du taber ting, eller musklen ved tommelfingerroden bliver tyndere.', 'Du har snurren i begge hænder, eller også i fødderne.', 'Mange led i begge hænder er hævede og stive i mere end en time om morgenen (kan være leddegigt).', 'Det er slet ikke blevet bedre efter 1–2 uger, eller smerten er der hele tiden, også om natten.']
+    }
   }
 ];
 
 const LED_PAIN_CHECK = {
   skulder: { beforeQuestion: 'Hvor ondt har du i skulderen lige nu?', afterQuestion: 'Hvor ondt har du i skulderen nu, efter øvelserne?' },
-  albue: { beforeQuestion: 'Hvor ondt har du i albuen lige nu?', afterQuestion: 'Hvor ondt har du i albuen nu, efter øvelserne?' }
+  albue: { beforeQuestion: 'Hvor ondt har du i albuen lige nu?', afterQuestion: 'Hvor ondt har du i albuen nu, efter øvelserne?' },
+  haand: { beforeQuestion: 'Hvor ondt har du i hånden lige nu?', afterQuestion: 'Hvor ondt har du i hånden nu, efter øvelserne?' }
 };
 const LED_READY_TEXT = {
   allChecked: 'Flot! Du er klar til næste niveau. Start roligt, og hold øje med, hvordan skulderen har det næste morgen.',
@@ -367,6 +429,117 @@ const LED_EXERCISES = [
     tips: ['Hold et fast greb, og lad skulderen være nede.', 'Godt til både tennis- og golfalbue – og til hverdagen.'],
     progression: 'Lettere: en let pose og kortere tid. Sværere: tungere pose, eller gå længere.',
     stop: LED_PAIN_RULE.albue
+  },
+  /* ================= HÅND OG HÅNDLED ================= */
+  {
+    id: 'haand-h-knyt', category: 'haand', track: 'hold', level: 1, phases: [1],
+    images: [{"src": "images/haand-h-knyt/1.webp", "caption": "1. Hold hånden op med fingrene strakt.", "w": 480, "h": 510}, {"src": "images/haand-h-knyt/2.webp", "caption": "2. Knyt hånden blødt – uden at klemme.", "w": 480, "h": 510}, {"src": "images/haand-h-knyt/3.webp", "caption": "3. Stræk fingrene helt ud igen, og spred dem.", "w": 480, "h": 510}], /* auto: tools/sync_images.py */
+    name: 'Knyt og stræk hånden',
+    equipment: 'Ingen. Gerne i varmt vand.',
+    dose: '10 gange. Flere gange om dagen, især om morgenen.',
+    steps: ['Hold hånden op med fingrene strakt.', 'Knyt hånden blødt – uden at klemme.', 'Stræk fingrene helt ud igen, og spred dem.'],
+    tips: ['Gør det i varmt vand om morgenen, når fingrene er stive.', 'Roligt og blødt – det skal ikke gøre ondt.'],
+    progression: 'Lettere: knyt kun halvt. Sværere: hold 3 sekunder i hver stilling.',
+    stop: LED_PAIN_RULE.haand
+  },
+  {
+    id: 'haand-h-senegled', category: 'haand', track: 'hold', level: 1, phases: [1],
+    images: [{"src": "images/haand-h-senegled/1.webp", "caption": "1. Hold hånden lige op med strakte fingre. Bøj fingrene til en krog, og hold 3 sekunder.", "w": 480, "h": 510}, {"src": "images/haand-h-senegled/2.webp", "caption": "2. Ret ud, knyt hånden blødt, og hold 3 sekunder.", "w": 480, "h": 510}, {"src": "images/haand-h-senegled/3.webp", "caption": "3. Ret ud, bøj kun i knoerne, så fingrene er lige som en bordplade, og hold 3 sekunder.", "w": 480, "h": 510}], /* auto: tools/sync_images.py */
+    name: 'Senegled – krog, knytnæve og bordplade',
+    equipment: 'Ingen.',
+    dose: '5 gange hele rækken. 2–3 gange om dagen.',
+    steps: ['Hold hånden lige op med strakte fingre. Bøj fingrene til en krog, og hold 3 sekunder.', 'Ret ud, knyt hånden blødt, og hold 3 sekunder.', 'Ret ud, bøj kun i knoerne, så fingrene er lige som en bordplade, og hold 3 sekunder.'],
+    tips: ['Får senerne til at glide frit – godt ved stive fingre og sovende fingre.', 'Ret helt ud mellem hver stilling.'],
+    progression: 'Lettere: færre gentagelser. Sværere: hold 5 sekunder i hver stilling.',
+    stop: LED_PAIN_RULE.haand
+  },
+  {
+    id: 'haand-h-nerveglid', category: 'haand', track: 'hold', level: 1, phases: [1],
+    images: [{"src": "images/haand-h-nerveglid/1.webp", "caption": "1. Løft armen ud til siden med håndfladen opad og albuen næsten strakt.", "w": 480, "h": 495}, {"src": "images/haand-h-nerveglid/2.webp", "caption": "2. Bøj hånden bagud, og vip samtidig hovedet mod armen.", "w": 480, "h": 495}, {"src": "images/haand-h-nerveglid/3.webp", "caption": "3. Ret hånden, og vip hovedet væk fra armen. Bliv ved roligt frem og tilbage.", "w": 480, "h": 495}], /* auto: tools/sync_images.py */
+    name: 'Nerveglid for sovende fingre',
+    equipment: 'Ingen. Stå eller sid.',
+    dose: '10 gange, roligt. 2 gange om dagen.',
+    steps: ['Løft armen ud til siden med håndfladen opad og albuen næsten strakt.', 'Bøj hånden bagud, og vip samtidig hovedet mod armen.', 'Ret hånden, og vip hovedet væk fra armen. Bliv ved roligt frem og tilbage.'],
+    tips: ['En let snurren er i orden, men den skal forsvinde igen inden for et par minutter.', 'Gå ikke helt ud i yderstillingen – det skal være blidt.'],
+    progression: 'Lettere: hold armen lavere og albuen bøjet. Sværere: stræk albuen helt.',
+    stop: LED_PAIN_RULE.haand
+  },
+  {
+    id: 'haand-h-haandled', category: 'haand', track: 'hold', level: 1, phases: [1, 2],
+    images: [{"src": "images/haand-h-haandled/1.webp", "caption": "1. Læg underarmen på bordet med hånden ud over kanten.", "w": 720, "h": 393}, {"src": "images/haand-h-haandled/2.webp", "caption": "2. Bøj roligt hånden op, så langt det er rart.", "w": 720, "h": 393}, {"src": "images/haand-h-haandled/3.webp", "caption": "3. Bøj den roligt ned. Bevæg den også lidt fra side til side.", "w": 720, "h": 393}], /* auto: tools/sync_images.py */
+    name: 'Bevæg håndleddet op og ned',
+    equipment: 'Et bord og evt. et foldet håndklæde.',
+    dose: '10 gange. Flere gange om dagen.',
+    steps: ['Læg underarmen på bordet med hånden ud over kanten.', 'Bøj roligt hånden op, så langt det er rart.', 'Bøj den roligt ned. Bevæg den også lidt fra side til side.'],
+    tips: ['Godt, når håndleddet er stift efter hvile eller en skinne.', 'Lad bevægelsen være blød – ingen ryk.'],
+    progression: 'Lettere: små bevægelser. Sværere: hold en lille flaske (se "Løft hånden op med en flaske").',
+    stop: LED_PAIN_RULE.haand
+  },
+  {
+    id: 'haand-1-tommel-fingre', category: 'haand', track: 'forebyg', level: 1, phases: [1, 2],
+    images: [{"src": "images/haand-1-tommel-fingre/1.webp", "caption": "1. Hold hånden op med håndfladen mod dig.", "w": 480, "h": 510}, {"src": "images/haand-1-tommel-fingre/2.webp", "caption": "2. Rør spidsen af pegefingeren med spidsen af tommelen, så de danner et rundt O.", "w": 480, "h": 510}, {"src": "images/haand-1-tommel-fingre/3.webp", "caption": "3. Gør det samme med langfinger, ringfinger og lillefinger, og åbn hånden helt.", "w": 480, "h": 510}], /* auto: tools/sync_images.py */
+    name: 'Tommel mod hver fingerspids',
+    equipment: 'Ingen.',
+    dose: '5–10 gange hele rækken. Hver dag.',
+    steps: ['Hold hånden op med håndfladen mod dig.', 'Rør spidsen af pegefingeren med spidsen af tommelen, så de danner et rundt O.', 'Gør det samme med langfinger, ringfinger og lillefinger, og åbn hånden helt.'],
+    tips: ['Tommelen skal være rund – ikke knække bagud i leddet.', 'Godt ved slidgigt i tommelfingerroden.'],
+    progression: 'Lettere: kun pegefinger og langfinger. Sværere: pres let mod hver finger i 2 sekunder.',
+    stop: LED_PAIN_RULE.haand
+  },
+  {
+    id: 'haand-1-spred', category: 'haand', track: 'forebyg', level: 1, phases: [1],
+    images: [{"src": "images/haand-1-spred/1.webp", "caption": "1. Hold hånden op med håndfladen mod dig.", "w": 480, "h": 510}, {"src": "images/haand-1-spred/2.webp", "caption": "2. Spred fingrene så meget du kan, og hold 3 sekunder.", "w": 480, "h": 510}, {"src": "images/haand-1-spred/3.webp", "caption": "3. Saml dem igen.", "w": 480, "h": 510}], /* auto: tools/sync_images.py */
+    name: 'Spred fingrene',
+    equipment: 'Ingen.',
+    dose: '10 gange. Hver dag.',
+    steps: ['Hold hånden op med håndfladen mod dig.', 'Spred fingrene så meget du kan, og hold 3 sekunder.', 'Saml dem igen.'],
+    tips: ['Kan også laves med hånden fladt på bordet.', 'Godt mod stivhed i fingrene.'],
+    progression: 'Sværere: brug en elastik om fingrene (Niveau 2).',
+    stop: LED_PAIN_RULE.haand
+  },
+  {
+    id: 'haand-2-klem-bold', category: 'haand', track: 'forebyg', level: 2, phases: [2, 3],
+    images: [{"src": "images/haand-2-klem-bold/1.webp", "caption": "1. Hold bolden i hånden.", "w": 480, "h": 510}, {"src": "images/haand-2-klem-bold/2.webp", "caption": "2. Klem roligt med hele hånden, og hold 3 sekunder.", "w": 480, "h": 510}, {"src": "images/haand-2-klem-bold/3.webp", "caption": "3. Slip langsomt.", "w": 480, "h": 510}], /* auto: tools/sync_images.py */
+    name: 'Klem en blød bold',
+    equipment: 'En blød bold, en sammenrullet sok eller træningsler.',
+    dose: '3 sæt med 10 gentagelser. Hver anden dag.',
+    steps: ['Hold bolden i hånden.', 'Klem roligt med hele hånden, og hold 3 sekunder.', 'Slip langsomt.'],
+    tips: ['Klem med cirka halv kraft – ikke alt, hvad du kan.', 'Har du ondt i tommelfingerroden, så lad tommelen ligge på siden af bolden.'],
+    progression: 'Lettere: en sok. Sværere: en hårdere bold eller træningsler.',
+    stop: LED_PAIN_RULE.haand
+  },
+  {
+    id: 'haand-2-elastik-spred', category: 'haand', track: 'forebyg', level: 2, phases: [2, 3],
+    images: [{"src": "images/haand-2-elastik-spred/1.webp", "caption": "1. Sæt elastikken om fingrene og tommelen.", "w": 480, "h": 510}, {"src": "images/haand-2-elastik-spred/2.webp", "caption": "2. Spred fingrene ud mod elastikken, og hold 3 sekunder.", "w": 480, "h": 510}, {"src": "images/haand-2-elastik-spred/3.webp", "caption": "3. Saml dem langsomt igen.", "w": 480, "h": 510}], /* auto: tools/sync_images.py */
+    name: 'Spred fingrene mod en elastik',
+    equipment: 'En almindelig elastik eller en fingerelastik.',
+    dose: '3 sæt med 10 gentagelser. Hver anden dag.',
+    steps: ['Sæt elastikken om fingrene og tommelen.', 'Spred fingrene ud mod elastikken, og hold 3 sekunder.', 'Saml dem langsomt igen.'],
+    tips: ['Træner de muskler, der åbner hånden – godt modvægt til alle greb.', 'Brug en let elastik i starten.'],
+    progression: 'Sværere: en strammere elastik, eller to elastikker.',
+    stop: LED_PAIN_RULE.haand
+  },
+  {
+    id: 'haand-2-tommel-elastik', category: 'haand', track: 'forebyg', level: 2, phases: [2, 3],
+    images: [{"src": "images/haand-2-tommel-elastik/1.webp", "caption": "1. Sæt elastikken om tommelen og pegefingeren.", "w": 480, "h": 510}, {"src": "images/haand-2-tommel-elastik/2.webp", "caption": "2. Før tommelen ud til siden mod elastikken, og hold 3 sekunder.", "w": 480, "h": 510}, {"src": "images/haand-2-tommel-elastik/3.webp", "caption": "3. Før den langsomt tilbage.", "w": 480, "h": 510}], /* auto: tools/sync_images.py */
+    name: 'Tommelen ud mod en elastik',
+    equipment: 'En almindelig elastik.',
+    dose: '3 sæt med 10 gentagelser. Hver anden dag.',
+    steps: ['Sæt elastikken om tommelen og pegefingeren.', 'Før tommelen ud til siden mod elastikken, og hold 3 sekunder.', 'Før den langsomt tilbage.'],
+    tips: ['Styrker musklerne, der holder tommelfingerroden stabil – godt ved slidgigt i tommelen.', 'Hold tommelens yderste led let bøjet.'],
+    progression: 'Sværere: en strammere elastik, eller hold 5 sekunder.',
+    stop: LED_PAIN_RULE.haand
+  },
+  {
+    id: 'haand-3-knib', category: 'haand', track: 'forebyg', level: 3, phases: [3],
+    images: [{"src": "images/haand-3-knib/1.webp", "caption": "1. Hold bolden mellem tommelen og pegefingeren.", "w": 480, "h": 510}, {"src": "images/haand-3-knib/2.webp", "caption": "2. Knib roligt, så tommel og pegefinger danner et rundt O, og hold 3 sekunder.", "w": 480, "h": 510}, {"src": "images/haand-3-knib/3.webp", "caption": "3. Slip.", "w": 480, "h": 510}], /* auto: tools/sync_images.py */
+    name: 'Knib en lille bold',
+    equipment: 'En lille blød bold, en vinkork eller træningsler.',
+    dose: '3 sæt med 10 gentagelser. 2–3 gange om ugen.',
+    steps: ['Hold bolden mellem tommelen og pegefingeren.', 'Knib roligt, så tommel og pegefinger danner et rundt O, og hold 3 sekunder.', 'Slip.'],
+    tips: ['Tommelen må ikke knække bagud i leddet – så er det for hårdt.', 'Skift til langfinger, ringfinger og lillefinger.'],
+    progression: 'Lettere: en blødere bold. Sværere: træningsler eller tøjklemmer.',
+    stop: LED_PAIN_RULE.haand
   }
 ];
 if (typeof RYG_PAIN_CHECK !== 'undefined') Object.assign(RYG_PAIN_CHECK, LED_PAIN_CHECK);

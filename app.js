@@ -631,6 +631,33 @@ function bodyAreas() {
   if (typeof LED_AREAS !== 'undefined') LED_AREAS.forEach(a => A.push({ id: a.id, name: a.name, intro: a.intro, progs: CATEGORIES.filter(c => c.area === a.id) }));
   return A.filter(a => a.progs.length);
 }
+/* Stor og enkel: højst 6 store knapper – kropsområderne samles i grupper, og trin 2 viser programmerne i gruppen */
+const AREA_GROUPS = [
+  { id: 'ben', name: 'Ben og fod', icon: '🦵', areas: ['knae-hofte', 'ankel', 'fod'] },
+  { id: 'ryg', name: 'Ryg og nakke', icon: '🧍', areas: ['ryg'] },
+  { id: 'arm', name: 'Arm og hånd', icon: '💪', areas: ['skulder', 'albue', 'haand'] }
+];
+function areaGroups() {
+  const A = bodyAreas(), used = new Set();
+  const G = AREA_GROUPS.map(g => { const as = A.filter(a => g.areas.includes(a.id)); as.forEach(a => used.add(a.id)); return Object.assign({}, g, { progs: as.flatMap(a => a.progs) }); });
+  A.filter(a => !used.has(a.id)).forEach(a => G.push({ id: a.id, name: a.name, areas: [a.id], progs: a.progs })); // nye områder uden gruppe får egen knap
+  return G.filter(g => g.progs.length);
+}
+function groupCard(g) {
+  const cur = g.progs.some(c => c.id === lastCategory()), one = g.progs.length === 1, href = one ? '#/kategori/' + g.progs[0].id : '#/gruppe/' + g.id;
+  const pc = g.progs.find(c => c.id === lastCategory()) || g.progs[0];
+  return '<a class="prog-card area-card' + (cur ? ' cur' : '') + '" href="' + href + '" data-area="' + g.id + '"' + (one ? ' data-prog="' + g.progs[0].id + '"' : '') + '>' + catThumb(pc) +
+    '<span class="cat-txt"><strong>' + esc(g.name) + '</strong><span class="count">' + esc(one ? programLevelLabel(g.progs[0].id) : g.progs.map(c => c.name).join(' · ')) + '</span>' +
+    (cur ? '<span class="cur-tag">Dit program nu</span>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>';
+}
+function viewGroup(id) {
+  const g = areaGroups().find(x => x.id === id); if (!g) return viewPrograms();
+  if (g.progs.length === 1) { location.replace('#/kategori/' + g.progs[0].id); return; }
+  setHeader(g.name, '#/programmer'); setTab('prog');
+  $app.innerHTML = '<h2 class="ob-h" style="margin-top:4px">Hvor præcis?</h2><p class="lead">Tryk på det sted, du vil træne.</p>' + g.progs.map(progCard).join('');
+  hydrateMedia($app);
+  $app.querySelectorAll('[data-prog]').forEach(x => x.addEventListener('click', () => localStorage.setItem(KEY_LASTCAT, x.dataset.prog)));
+}
 function areaCard(a) {
   const cur = a.progs.some(c => c.id === lastCategory()), href = a.progs.length === 1 ? '#/kategori/' + a.progs[0].id : '#/omraade/' + a.id;
   return '<a class="prog-card area-card' + (cur ? ' cur' : '') + '" href="' + href + '" data-area="' + a.id + '">' + catThumb(a.progs[0]) +
@@ -642,7 +669,7 @@ function viewPrograms() {
   const A = bodyAreas();
   let h = '';
   if (isSimple()) {
-    h += '<h2 class="ob-h" style="margin-top:4px">Hvor gør det ondt?</h2><p class="lead">Tryk på det sted, du vil træne.</p>' + A.map(areaCard).join('');
+    h += '<h2 class="ob-h" style="margin-top:4px">Hvor gør det ondt?</h2><p class="lead">Tryk på det sted, du vil træne.</p>' + areaGroups().map(groupCard).join('');
   } else {
     h += '<p class="lead">Vælg det program, du vil træne.</p>';
     A.forEach(a => { h += '<h2>' + esc(a.name) + '</h2>' + (a.intro && a.progs.length > 1 ? '<p class="muted small" style="margin:-4px 0 10px">' + esc(a.intro) + '</p>' : '') + a.progs.map(progCard).join(''); });
@@ -1341,7 +1368,7 @@ function route() {
     case 'programmer': return viewPrograms();
     case 'mere': return viewMore();
     case 'ryg': case 'led': return viewRygSub(parts[1], parts[2]);
-    case 'omraade': return viewArea(parts[1]);
+    case 'omraade': return viewArea(parts[1]); case 'gruppe': return viewGroup(parts[1]);
     case 'kategori': return viewCategory(parts[1]);
     case 'oevelse': return viewExercise(parts.slice(1).join('/'));
     case 'uge': return viewWeek();
