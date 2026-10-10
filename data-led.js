@@ -13,14 +13,17 @@
    AAOS CPG Carpal tunnel syndrome (2016: natskinne; sene- og nerveglid kun svag evidens); Page m.fl. Cochrane 2012 (nerveglid).
    Ankel: Vuurberg m.fl. BJSM 2018 (international guideline for ankelforstuvning: tidlig belastning og træning, bandage frem for gips);
    Doherty m.fl. BJSM 2017; Bleakley m.fl. BMJ 2010 (tidlig træning); Hupperets m.fl. BMJ 2009 (balancetræning hjemme: ca. ⅓ færre nye forstuvninger);
-   Stiell m.fl. JAMA 1993 og Bachmann m.fl. BMJ 2003 (Ottawa ankle rules); Dubois & Esculier BJSM 2020 (PEACE & LOVE); NICE CKS Sprains and strains. */
+   Stiell m.fl. JAMA 1993 og Bachmann m.fl. BMJ 2003 (Ottawa ankle rules); Dubois & Esculier BJSM 2020 (PEACE & LOVE); NICE CKS Sprains and strains.
+   Fod: Menz m.fl. BMJ 2016 (sko med rulle-sål ved storetå-slidgigt); Zammit m.fl. Cochrane 2010 (hallux rigidus); NICE CKS Bunions og Metatarsalgia;
+   McKeon m.fl. BJSM 2015 (fodens små muskler, "foot core"); Mickle m.fl. 2016 (tåstyrke og fald hos ældre); Glasoe m.fl. 2016 (øvelser ved hallux valgus). */
 'use strict';
 
 const LED_AREAS = [
   { id: 'skulder', name: 'Skulder', icon: '💪', intro: 'Slidgigt i skulderen, frossen skulder og "klemt sene" (smerter, når du løfter armen).' },
   { id: 'albue', name: 'Albue', icon: '🎾', intro: 'Tennisalbue (ondt på ydersiden) og golfalbue (ondt på indersiden) – ondt, når du griber, løfter eller vrider.' },
   { id: 'haand', name: 'Hånd og håndled', icon: '✋', intro: 'Slidgigt i tommelfinger og fingre, ondt i håndleddet og karpaltunnelsyndrom (sovende fingre).' },
-  { id: 'ankel', name: 'Ankel', icon: '🦶', intro: 'Forstuvet ankel – de første dage og genoptræningen – stiv ankel og balance, så du ikke vrider om igen.' }
+  { id: 'ankel', name: 'Ankel', icon: '🦶', intro: 'Forstuvet ankel – de første dage og genoptræningen – stiv ankel og balance, så du ikke vrider om igen.' },
+  { id: 'fod', name: 'Fod og hæl', icon: '👣', intro: 'Hælspore, slidgigt i storetåen, skæv storetå, ondt i forfoden og fodens små muskler – og råd om sko og indlæg.' }
 ];
 
 const LED_PAIN_RULE = {
@@ -36,7 +39,10 @@ const LED_PAIN_RULE = {
     'Stop og kontakt læge, hvis følelsesløsheden bliver ved, hvis hånden bliver svag, eller hvis noget i "Hvornår skal du til læge?" passer på dig.',
   ankel: 'Det må gerne gøre lidt ondt eller føles stramt, mens du træner: 0–2 er fint, og 3–5 er i orden, hvis det er faldet til ro igen næste morgen. ' +
     'Er anklen mere hævet eller øm næste dag, så skru ned: færre gentagelser, mere støtte eller et lettere niveau. ' +
-    'Stop og kontakt læge, hvis du ikke kan støtte på foden, hvis anklen giver efter igen og igen, eller hvis noget i "Hvornår skal du til læge?" passer på dig.'
+    'Stop og kontakt læge, hvis du ikke kan støtte på foden, hvis anklen giver efter igen og igen, eller hvis noget i "Hvornår skal du til læge?" passer på dig.',
+  fod: 'Det må gerne gøre lidt ondt eller stramme, mens du træner: 0–2 er fint, og 3–5 er i orden, hvis det er faldet til ro igen næste morgen. ' +
+    'Gør storetåen eller forfoden mere ondt næste dag, så skru ned: færre gentagelser, mindre bevægelse eller et lettere niveau. ' +
+    'Stop og kontakt læge, hvis foden bliver rød, varm og hævet, hvis du får sår på foden, eller hvis noget i "Hvornår skal du til læge?" passer på dig.'
 };
 
 const LED_PROGRAMS = [
@@ -200,9 +206,9 @@ const LED_PROGRAMS = [
     }
   },
   {
-    id: 'ankel', area: 'ankel', name: 'Ankel', long: 'Ankel – forstuvning og stiv ankel', icon: 'ankel', word: 'Niveau', holdLabel: 'Lige forstuvet', fbLabel: 'Genoptræning', aboutTitle: 'Gode råd om anklen',
+    id: 'ankel', area: 'ankel', name: 'Ankel', long: 'Ankel – forstuvning og stiv ankel', icon: 'ankel', word: 'Niveau', holdLabel: 'Ondt nu', fbLabel: 'Styrke', aboutTitle: 'Gode råd om anklen',
     intro: 'En forstuvet ankel er en af de mest almindelige skader. De fleste bliver gode igen – og træning af styrke og balance er det, der virker bedst, også for at undgå at vride om igen.',
-    tabs: { hold: ['🆘 Lige forstuvet', 'De første dage – eller når anklen er stiv og øm'], forebyg: ['💪 Genoptræning', 'Styrke, balance og tilbage til det, du plejer'] },
+    tabs: { hold: ['🆘 Ondt nu', 'Lige forstuvet – eller når anklen er stiv og øm'], forebyg: ['💪 Styrke', 'Genoptræning: styrke, balance og tilbage til det, du plejer'] },
     hold: {
       title: 'Forstuvet ankel – de første dage',
       calm: 'Ved en forstuvning er båndene på ydersiden af anklen strakt eller revet lidt. Det hæver og bliver blåt, og det gør ondt – men det er sjældent farligt. Kan du gå fire skridt og er knoglerne ikke ømme at trykke på (se "Hvornår skal du til læge?"), er der sjældent brud.',
@@ -224,13 +230,13 @@ const LED_PROGRAMS = [
     phases: [
       { n: 1, name: 'Niveau 1: Bevægelse og styrke', weeks: 'Ca. uge 1–3', color: '#5b8def', goal: 'Få bevægeligheden tilbage, vække musklerne om anklen og begynde balancen med støtte.',
         exercises: ['ankel-1-elastik-ned', 'ankel-1-elastik-ud', 'ankel-1-knae-mod-vaeg', 'hael-2-haeloeft-begge', 'balance-3-et-ben', 'hael-1-laeg-straek-strakt'],
-        criteria: ['Jeg kan gå normalt uden at halte.', 'Jeg kan lave 15 hæløft på begge ben uden smerte over 3.', 'Jeg kan stå på det onde ben i 20 sekunder med let støtte.'] },
+        criteria: ['Jeg kan gå normalt uden at halte.', 'Jeg kan lave 15 hæløft på begge ben uden smerte over 3.', 'Anklen er ikke mere hævet eller øm næste morgen efter træning.'] },
       { n: 2, name: 'Niveau 2: Styrke og balance på ét ben', weeks: 'Ca. uge 3–6', color: '#3aa17e', goal: 'Gør læggen og musklerne om anklen stærke, og træn balancen på ét ben.',
         exercises: ['ankel-2-haeloeft-et-ben', 'ankel-2-et-ben-raek', 'balance-3-et-ben', 'ankel-1-elastik-ud', 'knae-2-minisquat'],
-        criteria: ['Jeg kan lave 15 hæløft på det onde ben.', 'Jeg kan stå på det onde ben i 30 sekunder uden at holde fast.', 'Jeg kan gå på trapper og ujævnt underlag uden at anklen giver efter.'] },
-      { n: 3, name: 'Niveau 3: Tilbage til aktivitet', weeks: 'Fra ca. uge 6', color: '#e0913a', goal: 'Gør anklen klar til hop, hurtige vendinger, sport, havearbejde og ture i skoven.',
+        criteria: ['Jeg kan lave 15 hæløft på det onde ben uden smerte over 3.', 'Jeg kan stå på det onde ben i 30 sekunder uden at holde fast.', 'Jeg kan gå på trapper og ujævnt underlag uden at anklen giver efter.'] },
+      { n: 3, name: 'Niveau 3: Tilbage til aktivitet', weeks: 'Fra ca. uge 6 – og så balance 2–3 gange om ugen i 3 måneder', color: '#e0913a', goal: 'Gør anklen klar til hop, hurtige vendinger, sport, havearbejde og ture i skoven.',
         exercises: ['ankel-3-sidehop', 'hael-4-smaa-hop', 'ankel-2-et-ben-raek', 'ankel-2-haeloeft-et-ben', 'knae-3-udfald-frem'],
-        criteria: ['Jeg kan hoppe 20 gange fra side til side uden smerte eller usikkerhed.', 'Jeg kan hoppe på det onde ben 10 gange.', 'Jeg kan løbe eller gå hurtigt i 10 minutter uden at få mere ondt bagefter.'] }
+        criteria: ['Jeg kan hoppe 20 gange fra side til side uden smerte over 3 og uden at føle mig usikker.', 'Jeg kan gå hurtigt eller løbe i 10 minutter uden at få mere ondt næste dag.', 'Jeg træner balancen 2–3 gange om ugen.'] }
     ],
     everyday: [
       'Bliv ved med balancetræningen 2–3 gange om ugen i mindst 3 måneder – det er den, der forebygger nye forstuvninger.',
@@ -251,6 +257,59 @@ const LED_PROGRAMS = [
       today: ['Du kan ikke gå fire skridt (selvom du halter) – hverken lige efter skaden eller nu. Så skal anklen undersøges for brud (Ottawa-reglerne).', 'Det gør ondt, når du trykker på knoglen bag på eller lige under en af ankelknoerne (Ottawa-reglerne).', 'Det gør ondt, når du trykker på knoglen midt på ydersiden af foden (bag lilletåen) eller på den lille knude midt på indersiden af foden (Ottawa-reglerne).', 'Det gav et smæld bag på hælen, som et spark, og du kan ikke stå på tæer (kan være akillessenen).', 'Læggen er hævet, varm og øm, eller anklen er rød, varm og hævet uden at du har slået den – især med feber.'],
       weeks: ['Du kan stadig ikke gå normalt efter 1–2 uger, eller hævelsen og smerten bliver ikke mindre.', 'Anklen giver efter igen og igen, også efter 6 ugers træning.', 'Der er en øm plet inde i leddet, anklen låser, eller den klikker og gør ondt.', 'Du har snurren eller følelsesløshed i foden.']
     }
+  },
+  {
+    id: 'fod', area: 'fod', name: 'Fod og tæer', long: 'Fod og tæer – storetå og forfod', icon: 'fod', word: 'Niveau', holdLabel: 'Ondt nu', fbLabel: 'Styrke', aboutTitle: 'Gode råd om foden og skoene',
+    intro: 'Ondt i storetåen, en skæv storetå eller ondt under forfoden er meget almindeligt med alderen. Gode sko, et blødt indlæg og træning af fodens små muskler hjælper de fleste.',
+    tabs: { hold: ['🆘 Ondt nu', 'Når storetåen eller forfoden gør ondt'], forebyg: ['💪 Styrke', 'Når det er blevet lidt bedre'] },
+    hold: {
+      title: 'Ondt i storetåen eller forfoden – de første uger',
+      calm: 'Smerter i storetåen og forfoden skyldes oftest slidgigt i storetåens grundled, en skæv storetå eller overbelastning af forfoden. Det er ikke farligt, og det kan som regel blive meget bedre med de rigtige sko, aflastning og træning.',
+      course: 'Forfodssmerter bliver ofte bedre over 4–8 uger med bedre sko og indlæg. Slidgigt i storetåen svinger: gode og dårlige perioder. En skæv storetå bliver ikke lige af træning, men generne bliver ofte mindre.',
+      advice: [
+        'Sko med god plads til tæerne – bred og høj forrest. Ingen høje hæle eller spidse sko.',
+        'Ved stiv og øm storetå: en sko med fast, let buet sål ("rulle-sål") gør, at tåen ikke skal bøje så meget, når du går.',
+        'Ved ondt under forfoden: en blød forfodspude lige bag fodballen eller et dæmpende indlæg aflaster.',
+        'Ved skæv storetå: en blød tåspreder mellem storetåen og tå nummer to kan lindre, og en polstring over knyst-knuden mindsker gnav.',
+        'Gå gerne – men vælg bløde underlag og kortere ture, når det gør mest ondt. Kulde eller varme kan lindre.'
+      ],
+      positions: [
+        'Hvil foden højt om aftenen, hvis den er hævet.',
+        'Gå barfodet på blødt underlag (fx et tæppe eller græs) i korte perioder – det træner fodens muskler.',
+        'Prøv skoene om eftermiddagen, hvor foden er størst.'
+      ],
+      exercises: ['fod-h-taa-op-ned', 'fod-h-spred', 'hael-1-rul-under-foden', 'hael-1-laeg-straek-strakt']
+    },
+    phases: [
+      { n: 1, name: 'Niveau 1: Fodens små muskler', weeks: 'Ca. uge 1–4', color: '#5b8def', goal: 'Vække de små muskler i foden og få tæerne til at bevæge sig hver for sig.',
+        exercises: ['fod-1-kort-fod', 'fod-1-taa-yoga', 'fod-1-storetaa-ud', 'hael-2-haandklaede-kroel', 'hael-2-haeloeft-begge'],
+        criteria: ['Jeg kan lave "kort fod" 10 gange uden at krølle tæerne.', 'Jeg kan lave 15 hæløft på begge ben uden smerte over 3.', 'Foden gør ikke mere ondt næste morgen efter træning.'] },
+      { n: 2, name: 'Niveau 2: Stærke tæer og balance', weeks: 'Ca. uge 4–8', color: '#3aa17e', goal: 'Gør tæerne og fodens muskler stærkere, og træn balancen.',
+        exercises: ['fod-2-taa-elastik', 'fod-2-kugle', 'fod-1-kort-fod', 'balance-3-et-ben', 'ankel-2-haeloeft-et-ben'],
+        criteria: ['Jeg kan presse storetåen ned mod elastikken 15 gange uden smerte over 3.', 'Jeg kan stå på ét ben i 30 sekunder.', 'Jeg kan gå en halv time uden at forfoden gør mere ondt bagefter.'] },
+      { n: 3, name: 'Niveau 3: Stærke fødder i hverdagen', weeks: 'Fra ca. uge 8 – og så 2 gange om ugen', color: '#e0913a', goal: 'Gør fødderne klar til lange ture, trapper og at stå op i lang tid.',
+        exercises: ['fod-3-taagang', 'ankel-2-haeloeft-et-ben', 'ankel-2-et-ben-raek', 'fod-2-taa-elastik', 'hael-4-smaa-hop'],
+        criteria: ['Jeg kan gå 20 skridt på tæerne uden smerte over 3.', 'Jeg kan gå en lang tur uden at få mere ondt næste dag.', 'Jeg træner fødderne 2 gange om ugen.'] }
+    ],
+    everyday: [
+      'Brug sko med plads til tæerne, fast hælkappe og en sål, der dæmper.',
+      'Skift sko i løbet af dagen, og gå lidt barfodet på blødt underlag.',
+      'Lav tå-øvelserne, mens du ser fjernsyn eller sidder ved bordet.',
+      'Hold en god vægt – hvert kilo mindre aflaster forfoden.',
+      'Har du sukkersyge eller dårlig følelse i fødderne? Se efter sår hver dag, og gå til fodterapeut.'
+    ],
+    about: [
+      ['Slidgigt i storetåen', 'Storetåens grundled bliver stift og ømt, og der kan komme en knude oven på leddet. Det gør mest ondt, når tåen skal bøje opad – fx når du går op ad bakke. En sko med fast, buet sål aflaster.'],
+      ['Skæv storetå (knyst)', 'Storetåen peger ind mod de andre tæer, og der kommer en knude på indersiden af foden. Øvelser og tåspreder retter den ikke, men kan mindske generne. Bliver den ved med at gøre ondt trods gode sko, kan en operation være en mulighed – spørg din læge.'],
+      ['Ondt under forfoden', 'Smerte under fodballen, ofte som at gå på en sten. Det kommer af overbelastning, stram læg, tynd fedtpude eller skæve tæer. Forfodspude, dæmpende indlæg, gode sko og lægstræk hjælper de fleste.'],
+      ['Fodens små muskler', 'Foden har mange små muskler, der holder svangen og tæerne. De bliver svagere med alderen og i stive sko. Træning af dem kan mindske smerter og give bedre balance.'],
+      ['Sko og indlæg', 'Den bedste sko er bred forrest, har en fast hælkappe og en sål, der dæmper. Færdige indlæg eller forfodspuder fra apoteket er et godt første skridt. Fodterapeuten kan lave indlæg efter mål.']
+    ],
+    redFlags: {
+      now: ['Foden bliver kold, hvid eller blå, eller du mister følelsen i foden.', 'Foden er tydeligt skæv efter et fald eller slag, eller der er et åbent sår ned til knoglen.', 'Du får pludselig åndenød eller smerter i brystet – især hvis læggen også er hævet og øm (kan være en blodprop).'],
+      today: ['Storetåen eller foden bliver pludselig rød, varm, hævet og meget øm (kan være urinsyregigt eller betændelse) – især med feber.', 'Du har sukkersyge og får et sår, en vabel eller en rød, varm plet på foden.', 'Rødmen breder sig, eller du får feber og føler dig syg.', 'Du kan ikke støtte på foden efter et fald eller vrid.'],
+      weeks: ['Forfoden er hævet og gør ondt et bestemt sted på en knogle, uden at du har slået den (kan være et træthedsbrud).', 'Du har brændende smerter, snurren eller følelsesløshed mellem tæerne.', 'Smerterne er ikke bedre efter 6–8 uger med gode sko, indlæg og øvelser.', 'Du har ondt om natten i hvile, eller du taber dig uden grund.', 'Storetåen bliver mere og mere skæv og gnaver, så du ikke kan finde sko.']
+    }
   }
 ];
 
@@ -258,7 +317,8 @@ const LED_PAIN_CHECK = {
   skulder: { beforeQuestion: 'Hvor ondt har du i skulderen lige nu?', afterQuestion: 'Hvor ondt har du i skulderen nu, efter øvelserne?' },
   albue: { beforeQuestion: 'Hvor ondt har du i albuen lige nu?', afterQuestion: 'Hvor ondt har du i albuen nu, efter øvelserne?' },
   haand: { beforeQuestion: 'Hvor ondt har du i hånden lige nu?', afterQuestion: 'Hvor ondt har du i hånden nu, efter øvelserne?' },
-  ankel: { beforeQuestion: 'Hvor ondt har du i anklen lige nu?', afterQuestion: 'Hvor ondt har du i anklen nu, efter øvelserne?' }
+  ankel: { beforeQuestion: 'Hvor ondt har du i anklen lige nu?', afterQuestion: 'Hvor ondt har du i anklen nu, efter øvelserne?' },
+  fod: { beforeQuestion: 'Hvor ondt har du i foden lige nu?', afterQuestion: 'Hvor ondt har du i foden nu, efter øvelserne?' }
 };
 const LED_READY_TEXT = {
   allChecked: 'Flot! Du er klar til næste niveau. Start roligt, og hold øje med, hvordan skulderen har det næste morgen.',
@@ -712,6 +772,95 @@ const LED_EXERCISES = [
     tips: ['Start med små hop, og gør dem større, når det føles trygt.', 'Først når du kan stå på ét ben i 30 sekunder.'],
     progression: 'Sværere: hop frem og tilbage, eller på ét ben.',
     stop: LED_PAIN_RULE.ankel
+  },
+  /* ================= FOD OG TÆER ================= */
+  {
+    id: 'fod-h-taa-op-ned', category: 'fod', track: 'hold', level: 1, phases: [1],
+    images: [{"src": "images/fod-h-taa-op-ned/1.webp", "caption": "1. Sid med foden fladt på gulvet.", "w": 720, "h": 518}, {"src": "images/fod-h-taa-op-ned/2.webp", "caption": "2. Løft alle tæerne op, så højt det er rart.", "w": 720, "h": 518}, {"src": "images/fod-h-taa-op-ned/3.webp", "caption": "3. Krøl dem roligt ned mod gulvet.", "w": 720, "h": 518}], /* auto: tools/sync_images.py */
+    name: 'Tæerne op og ned',
+    equipment: 'En stol.',
+    dose: '10–15 gange. Flere gange om dagen.',
+    steps: ['Sid med foden fladt på gulvet.', 'Løft alle tæerne op, så højt det er rart.', 'Krøl dem roligt ned mod gulvet.'],
+    tips: ['Holder storetåens led bevægeligt.', 'Hælen og forfoden bliver i gulvet.'],
+    progression: 'Sværere: lav det stående.',
+    stop: LED_PAIN_RULE.fod
+  },
+  {
+    id: 'fod-h-spred', category: 'fod', track: 'hold', level: 1, phases: [1, 2],
+    images: [{"src": "images/fod-h-spred/1.webp", "caption": "1. Sid med foden fladt på gulvet.", "w": 720, "h": 518}, {"src": "images/fod-h-spred/2.webp", "caption": "2. Spred tæerne så meget du kan, som en vifte.", "w": 720, "h": 518}, {"src": "images/fod-h-spred/3.webp", "caption": "3. Hold 3 sekunder, og slap af.", "w": 720, "h": 518}], /* auto: tools/sync_images.py */
+    name: 'Spred tæerne',
+    equipment: 'En stol.',
+    dose: '10 gange. 1–2 gange om dagen.',
+    steps: ['Sid med foden fladt på gulvet.', 'Spred tæerne så meget du kan, som en vifte.', 'Hold 3 sekunder, og slap af.'],
+    tips: ['Det er svært i starten – det kommer med øvelse.', 'Hjælp gerne med fingrene de første gange.'],
+    progression: 'Sværere: hold længere, eller læg en elastik om tæerne.',
+    stop: LED_PAIN_RULE.fod
+  },
+  {
+    id: 'fod-1-kort-fod', category: 'fod', track: 'forebyg', level: 1, phases: [1, 2],
+    images: [{"src": "images/fod-1-kort-fod/1.webp", "caption": "1. Sid med foden fladt på gulvet.", "w": 720, "h": 518}, {"src": "images/fod-1-kort-fod/2.webp", "caption": "2. Træk forfoden mod hælen, så svangen løfter sig. Tæerne bliver lige.", "w": 720, "h": 518}, {"src": "images/fod-1-kort-fod/3.webp", "caption": "3. Hold 5 sekunder, og slap af.", "w": 720, "h": 518}], /* auto: tools/sync_images.py */
+    name: 'Kort fod',
+    equipment: 'En stol.',
+    dose: '10 gange 5 sekunder. Hver dag.',
+    steps: ['Sid med foden fladt på gulvet.', 'Træk forfoden mod hælen, så svangen løfter sig. Tæerne bliver lige.', 'Hold 5 sekunder, og slap af.'],
+    tips: ['Den vigtigste øvelse for fodens små muskler.', 'Tæerne må ikke krølle.'],
+    progression: 'Sværere: lav det stående, og senere stående på ét ben.',
+    stop: LED_PAIN_RULE.fod
+  },
+  {
+    id: 'fod-1-taa-yoga', category: 'fod', track: 'forebyg', level: 1, phases: [1],
+    images: [{"src": "images/fod-1-taa-yoga/1.webp", "caption": "1. Sid med foden fladt på gulvet.", "w": 720, "h": 518}, {"src": "images/fod-1-taa-yoga/2.webp", "caption": "2. Løft storetåen, mens de små tæer bliver i gulvet. Hold 3 sekunder.", "w": 720, "h": 518}, {"src": "images/fod-1-taa-yoga/3.webp", "caption": "3. Skift: pres storetåen ned, og løft de små tæer. Hold 3 sekunder.", "w": 720, "h": 518}], /* auto: tools/sync_images.py */
+    name: 'Tå-yoga',
+    equipment: 'En stol.',
+    dose: '10 gange. Hver dag.',
+    steps: ['Sid med foden fladt på gulvet.', 'Løft storetåen, mens de små tæer bliver i gulvet. Hold 3 sekunder.', 'Skift: pres storetåen ned, og løft de små tæer. Hold 3 sekunder.'],
+    tips: ['Træner tæerne til at arbejde hver for sig.', 'Hjælp gerne med en hånd i starten.'],
+    progression: 'Sværere: lav det stående.',
+    stop: LED_PAIN_RULE.fod
+  },
+  {
+    id: 'fod-1-storetaa-ud', category: 'fod', track: 'forebyg', level: 1, phases: [1],
+    images: [{"src": "images/fod-1-storetaa-ud/1.webp", "caption": "1. Sid med foden fladt på gulvet.", "w": 720, "h": 518}, {"src": "images/fod-1-storetaa-ud/2.webp", "caption": "2. Før storetåen væk fra de andre tæer, ind mod den anden fod.", "w": 720, "h": 518}, {"src": "images/fod-1-storetaa-ud/3.webp", "caption": "3. Hold 3 sekunder, og slap af.", "w": 720, "h": 518}], /* auto: tools/sync_images.py */
+    name: 'Storetåen væk fra de andre tæer',
+    equipment: 'En stol.',
+    dose: '10 gange 3 sekunder. Hver dag.',
+    steps: ['Sid med foden fladt på gulvet.', 'Før storetåen væk fra de andre tæer, ind mod den anden fod.', 'Hold 3 sekunder, og slap af.'],
+    tips: ['Godt ved skæv storetå: træner den lille muskel på indersiden af foden.', 'Det er en lille bevægelse – hjælp gerne med en finger.'],
+    progression: 'Sværere: hold længere, eller lav det stående.',
+    stop: LED_PAIN_RULE.fod
+  },
+  {
+    id: 'fod-2-taa-elastik', category: 'fod', track: 'forebyg', level: 2, phases: [2, 3],
+    images: [{"src": "images/fod-2-taa-elastik/1.webp", "caption": "1. Sid med foden i gulvet, og læg elastikken om storetåen.", "w": 720, "h": 518}, {"src": "images/fod-2-taa-elastik/2.webp", "caption": "2. Hold elastikken op med hånden.", "w": 720, "h": 518}, {"src": "images/fod-2-taa-elastik/3.webp", "caption": "3. Pres storetåen ned mod gulvet, og lad den langsomt komme op igen.", "w": 720, "h": 518}], /* auto: tools/sync_images.py */
+    name: 'Pres storetåen ned mod elastikken',
+    equipment: 'En træningselastik.',
+    dose: '3 sæt med 10–15 gentagelser. Hver anden dag.',
+    steps: ['Sid med foden i gulvet, og læg elastikken om storetåen.', 'Hold elastikken op med hånden.', 'Pres storetåen ned mod gulvet, og lad den langsomt komme op igen.'],
+    tips: ['Gør storetåen stærk, så den kan skubbe fra, når du går.', 'Ved slidgigt: kun så langt, det er rart.'],
+    progression: 'Sværere: en hårdere elastik.',
+    stop: LED_PAIN_RULE.fod
+  },
+  {
+    id: 'fod-2-kugle', category: 'fod', track: 'forebyg', level: 2, phases: [2],
+    images: [{"src": "images/fod-2-kugle/1.webp", "caption": "1. Sid med bolden foran tæerne.", "w": 720, "h": 518}, {"src": "images/fod-2-kugle/2.webp", "caption": "2. Grib bolden med tæerne, og løft foden lidt.", "w": 720, "h": 518}, {"src": "images/fod-2-kugle/3.webp", "caption": "3. Hold 3 sekunder, sæt ned og slip.", "w": 720, "h": 518}], /* auto: tools/sync_images.py */
+    name: 'Saml en bold op med tæerne',
+    equipment: 'En lille, blød bold eller en sok.',
+    dose: '10 gange. Hver dag.',
+    steps: ['Sid med bolden foran tæerne.', 'Grib bolden med tæerne, og løft foden lidt.', 'Hold 3 sekunder, sæt ned og slip.'],
+    tips: ['Kan også laves med kugler eller små klude.', 'Skift gerne fod.'],
+    progression: 'Sværere: en mindre bold, eller flyt den over i en skål.',
+    stop: LED_PAIN_RULE.fod
+  },
+  {
+    id: 'fod-3-taagang', category: 'fod', track: 'forebyg', level: 3, phases: [3],
+    images: [{"src": "images/fod-3-taagang/1.webp", "caption": "1. Stå på tæerne, og hold let i bordet.", "w": 480, "h": 660}, {"src": "images/fod-3-taagang/2.webp", "caption": "2. Gå roligt på stedet på forfødderne.", "w": 480, "h": 660}, {"src": "images/fod-3-taagang/3.webp", "caption": "3. Hælene bliver oppe. Sænk dem, og hvil.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
+    name: 'Gå på tæerne',
+    equipment: 'Et køkkenbord at holde let i.',
+    dose: '2–3 sæt med 20–30 skridt. 3 gange om ugen.',
+    steps: ['Stå på tæerne, og hold let i bordet.', 'Gå roligt på stedet på forfødderne.', 'Hælene bliver oppe. Sænk dem, og hvil.'],
+    tips: ['Træner hele foden og læggen.', 'Ved slidgigt i storetåen kan det gøre ondt – spring den over, hvis det gør mere end 3.'],
+    progression: 'Sværere: gå frem og tilbage i køkkenet på tæerne.',
+    stop: LED_PAIN_RULE.fod
   }
 ];
 if (typeof RYG_PAIN_CHECK !== 'undefined') Object.assign(RYG_PAIN_CHECK, LED_PAIN_CHECK);

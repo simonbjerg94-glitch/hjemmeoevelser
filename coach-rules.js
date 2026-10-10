@@ -141,9 +141,13 @@ const CoachRules = (() => {
     'ankel-h-vaegtskift': pres('front', 60, 'vægtskiftet'), 'ankel-h-haandklaede': pres('side', 120, 'strækket med håndklædet'),
     'ankel-1-elastik-ned': pres('side', 90, 'foden mod elastikken'), 'ankel-1-elastik-ud': pres('front', 90, 'drejningen af foden'),
     'ankel-1-knae-mod-vaeg': pres('side', 90, 'knæet mod væggen'), 'ankel-2-haeloeft-et-ben': R.heelRaise,
-    'ankel-2-et-ben-raek': pres('side', 90, 'rækket med foden på ét ben'), 'ankel-3-sidehop': Object.assign({}, R.hop, { view: 'front' })
+    'ankel-2-et-ben-raek': pres('side', 90, 'rækket med foden på ét ben'), 'ankel-3-sidehop': Object.assign({}, R.hop, { view: 'front' }),
+    // Fod og tæer: tåbevægelser er for små til kameraet – tilstedeværelse + tid
+    'fod-h-taa-op-ned': pres('close', 90, 'tæerne'), 'fod-h-spred': pres('close', 90, 'tæerne'), 'fod-1-kort-fod': pres('close', 90, 'svangen'),
+    'fod-1-taa-yoga': pres('close', 90, 'tæerne'), 'fod-1-storetaa-ud': pres('close', 90, 'storetåen'), 'fod-2-taa-elastik': pres('close', 90, 'storetåen mod elastikken'),
+    'fod-2-kugle': pres('close', 90, 'tæerne om bolden'), 'fod-3-taagang': pres('side', 60, 'gangen på tæerne')
   };
-  const CATEGORY_DEFAULT = { knae: 'side', hofte: 'side', balance: 'front', haelspore: 'side', laend: 'lying', bryst: 'front', nakke: 'front', skulder: 'front', albue: 'front', haand: 'front', ankel: 'side' };
+  const CATEGORY_DEFAULT = { knae: 'side', hofte: 'side', balance: 'front', haelspore: 'side', laend: 'lying', bryst: 'front', nakke: 'front', skulder: 'front', albue: 'front', haand: 'front', ankel: 'side', fod: 'close' };
   function ruleFor(e) {
     const id = typeof e === 'string' ? e : e.id;
     return RULES[id] || pres(CATEGORY_DEFAULT[(e && e.category) || ''] || 'side', 60, 'øvelsen');

@@ -329,6 +329,10 @@ const VOICE_SETS = {
 "kvinde/0e774ba581.mp3",
 1.01
 ],
+"de små tæer op": [
+"kvinde/d47bf1b924.mp3",
+1.49
+],
 "den anden vej": [
 "kvinde/a3498c457e.mp3",
 1.15
@@ -457,9 +461,17 @@ const VOICE_SETS = {
 "kvinde/f043c8aa3a.mp3",
 1.7
 ],
+"grib": [
+"kvinde/9f4f3ef8fc.mp3",
+0.55
+],
 "gå lidt dybere": [
 "kvinde/3c6c462599.mp3",
 1.22
+],
+"gå på tæerne. stå på tæerne, og hold let i bordet. gå roligt på stedet på forfødderne – hælene bliver oppe. 20–30 skridt. sænk hælene, og hvil": [
+"kvinde/f96b317dd9.mp3",
+17.23
 ],
 "gå roligt": [
 "kvinde/f7a570ad3c.mp3",
@@ -629,6 +641,10 @@ const VOICE_SETS = {
 "kvinde/529356aeb5.mp3",
 12.74
 ],
+"kort fod. sid eller stå med foden fladt. træk forfoden mod hælen, så svangen løfter sig – uden at krølle tæerne (2 sek.). hold 5 sek., og slap af. 10 gange": [
+"kvinde/3b6fa82cda.mp3",
+16.94
+],
 "krog": [
 "kvinde/5f704132ed.mp3",
 0.58
@@ -640,6 +656,10 @@ const VOICE_SETS = {
 "krøl håndklædet med tæerne. ræk tæerne frem og spred dem · krøl dem og træk håndklædet ind under foden (ca. 1 sek. hver). hælen bliver i gulvet. 10–15 gange": [
 "kvinde/c94a016873.mp3",
 14.93
+],
+"krøl ned": [
+"kvinde/df1005092e.mp3",
+1.08
 ],
 "krøl og spred tæerne 10 gange": [
 "kvinde/21f49f6675.mp3",
@@ -664,6 +684,10 @@ const VOICE_SETS = {
 "langsomt ned": [
 "kvinde/7bcb66d248.mp3",
 1.39
+],
+"langsomt op": [
+"kvinde/23da942ae0.mp3",
+1.22
 ],
 "langsomt tilbage": [
 "kvinde/d446f1df2d.mp3",
@@ -748,6 +772,10 @@ const VOICE_SETS = {
 "løft over hovedet. stå rank med flaskerne i skulderhøjde. pres armene roligt op over hovedet (2 sek.), og sænk langsomt (3 sek.). spænd let i maven. 3 sæt × 8–12": [
 "kvinde/db370618ef.mp3",
 12.62
+],
+"løft svangen": [
+"kvinde/23b8c97b2d.mp3",
+1.13
 ],
 "minisquat ved køkkenbordet. ca. 2–3 sek. ned · 2 sek. op. bagdelen bagud, som mod en høj barstol": [
 "kvinde/279978151c.mp3",
@@ -837,6 +865,14 @@ const VOICE_SETS = {
 "kvinde/0dca73d0b1.mp3",
 1.54
 ],
+"pres ned": [
+"kvinde/a333b68a93.mp3",
+1.13
+],
+"pres storetåen ned mod elastikken. sid med foden i gulvet og en elastik om storetåen. hold elastikken op med hånden. pres storetåen ned mod gulvet (2 sek.), og lad den langsomt komme op (3 sek.). 3 sæt × 10–15": [
+"kvinde/9f36d138c6.mp3",
+19.13
+],
 "pres ud": [
 "kvinde/06db1ac5c4.mp3",
 0.86
@@ -909,6 +945,10 @@ const VOICE_SETS = {
 "kvinde/d8c746a4cc.mp3",
 0.84
 ],
+"saml en bold op med tæerne. sid med en lille, blød bold (eller en sok) foran tæerne. grib den med tæerne (1 sek.), løft foden lidt, og hold 3 sek. sæt ned, og slip. 10 gange": [
+"kvinde/92603c4bb4.mp3",
+18.82
+],
 "saml fødderne": [
 "kvinde/1432f10993.mp3",
 1.2
@@ -948,6 +988,10 @@ const VOICE_SETS = {
 "skift side": [
 "kvinde/3fab8e2654.mp3",
 1.25
+],
+"skridt": [
+"kvinde/2f436cc198.mp3",
+0.77
 ],
 "skridt bagud": [
 "kvinde/9ee8d62203.mp3",
@@ -1017,6 +1061,10 @@ const VOICE_SETS = {
 "kvinde/69fca65155.mp3",
 1.18
 ],
+"spred tæerne. sid med foden fladt på gulvet. spred tæerne så meget du kan (2 sek.), hold 3 sek., og slap af. 10 gange": [
+"kvinde/3f4e4bc1c9.mp3",
+13.2
+],
 "spænd": [
 "kvinde/c55a1dbb37.mp3",
 0.62
@@ -1036,6 +1084,18 @@ const VOICE_SETS = {
 "stil dig": [
 "kvinde/99d0b55afb.mp3",
 1.06
+],
+"storetåen op": [
+"kvinde/4b9d7e83a7.mp3",
+1.49
+],
+"storetåen ud": [
+"kvinde/989d9e7f41.mp3",
+1.37
+],
+"storetåen væk fra de andre tæer. sid med foden fladt på gulvet. før storetåen væk fra de andre tæer, ind mod den anden fod (2 sek.). hold 3 sek., og slap af. 10 gange. hjælp gerne med en finger i starten": [
+"kvinde/234a0b72ec.mp3",
+18.84
 ],
 "stræk": [
 "kvinde/a3817bfadb.mp3",
@@ -1188,6 +1248,18 @@ const VOICE_SETS = {
 "tungt hæløft på ét ben med håndklæde (rathleff-øvelsen). 3 sek. op · 2 sek. hold · 3 sek. ned. følg hælen i dit eget tempo": [
 "kvinde/ae89569f86.mp3",
 7.68
+],
+"tå-yoga. løft storetåen, mens de små tæer bliver i gulvet (hold 3 sek.). skift: pres storetåen ned, og løft de små tæer (hold 3 sek.). 10 gange": [
+"kvinde/2d0fb87d6c.mp3",
+15.74
+],
+"tæerne op": [
+"kvinde/20820714cb.mp3",
+1.08
+],
+"tæerne op og ned. sid med foden fladt på gulvet. løft alle tæerne op (2 sek.), og krøl dem roligt ned mod gulvet (2 sek.). 10–15 gange, gerne flere gange om dagen": [
+"kvinde/db20e2b3fb.mp3",
+13.58
 ],
 "ud": [
 "kvinde/e04f4497f2.mp3",
@@ -1591,6 +1663,10 @@ const VOICE_SETS = {
 "mand/a898d1dfe0.mp3",
 0.98
 ],
+"de små tæer op": [
+"mand/6826b68f9e.mp3",
+1.32
+],
 "den anden vej": [
 "mand/81f621a65d.mp3",
 1.15
@@ -1719,9 +1795,17 @@ const VOICE_SETS = {
 "mand/0c303959b2.mp3",
 1.63
 ],
+"grib": [
+"mand/ef162e78e1.mp3",
+0.53
+],
 "gå lidt dybere": [
 "mand/b4908d6aa2.mp3",
 1.25
+],
+"gå på tæerne. stå på tæerne, og hold let i bordet. gå roligt på stedet på forfødderne – hælene bliver oppe. 20–30 skridt. sænk hælene, og hvil": [
+"mand/e813d81e24.mp3",
+16.8
 ],
 "gå roligt": [
 "mand/b8925538ff.mp3",
@@ -1891,6 +1975,10 @@ const VOICE_SETS = {
 "mand/fc640378de.mp3",
 12.94
 ],
+"kort fod. sid eller stå med foden fladt. træk forfoden mod hælen, så svangen løfter sig – uden at krølle tæerne (2 sek.). hold 5 sek., og slap af. 10 gange": [
+"mand/55a55dc1da.mp3",
+16.25
+],
 "krog": [
 "mand/9b68112e2f.mp3",
 0.55
@@ -1902,6 +1990,10 @@ const VOICE_SETS = {
 "krøl håndklædet med tæerne. ræk tæerne frem og spred dem · krøl dem og træk håndklædet ind under foden (ca. 1 sek. hver). hælen bliver i gulvet. 10–15 gange": [
 "mand/a5bbd5dddc.mp3",
 14.57
+],
+"krøl ned": [
+"mand/cf78bfd832.mp3",
+1.08
 ],
 "krøl og spred tæerne 10 gange": [
 "mand/fa158b3772.mp3",
@@ -1926,6 +2018,10 @@ const VOICE_SETS = {
 "langsomt ned": [
 "mand/dffbd4a145.mp3",
 1.56
+],
+"langsomt op": [
+"mand/944b28ea09.mp3",
+1.2
 ],
 "langsomt tilbage": [
 "mand/7696977308.mp3",
@@ -2010,6 +2106,10 @@ const VOICE_SETS = {
 "løft over hovedet. stå rank med flaskerne i skulderhøjde. pres armene roligt op over hovedet (2 sek.), og sænk langsomt (3 sek.). spænd let i maven. 3 sæt × 8–12": [
 "mand/848d7760e1.mp3",
 12.34
+],
+"løft svangen": [
+"mand/a9a80111bd.mp3",
+1.15
 ],
 "minisquat ved køkkenbordet. ca. 2–3 sek. ned · 2 sek. op. bagdelen bagud, som mod en høj barstol": [
 "mand/6dc021b9e8.mp3",
@@ -2099,6 +2199,14 @@ const VOICE_SETS = {
 "mand/30ad1d5da7.mp3",
 1.49
 ],
+"pres ned": [
+"mand/0a57741d79.mp3",
+1.1
+],
+"pres storetåen ned mod elastikken. sid med foden i gulvet og en elastik om storetåen. hold elastikken op med hånden. pres storetåen ned mod gulvet (2 sek.), og lad den langsomt komme op (3 sek.). 3 sæt × 10–15": [
+"mand/e824bdb597.mp3",
+19.08
+],
 "pres ud": [
 "mand/54e4077451.mp3",
 0.89
@@ -2171,6 +2279,10 @@ const VOICE_SETS = {
 "mand/e016de2431.mp3",
 0.89
 ],
+"saml en bold op med tæerne. sid med en lille, blød bold (eller en sok) foran tæerne. grib den med tæerne (1 sek.), løft foden lidt, og hold 3 sek. sæt ned, og slip. 10 gange": [
+"mand/01025bee61.mp3",
+17.78
+],
 "saml fødderne": [
 "mand/2866812520.mp3",
 1.27
@@ -2210,6 +2322,10 @@ const VOICE_SETS = {
 "skift side": [
 "mand/f7b971a743.mp3",
 1.27
+],
+"skridt": [
+"mand/369e4da553.mp3",
+0.82
 ],
 "skridt bagud": [
 "mand/3139a102fc.mp3",
@@ -2279,6 +2395,10 @@ const VOICE_SETS = {
 "mand/d9b0755b21.mp3",
 1.22
 ],
+"spred tæerne. sid med foden fladt på gulvet. spred tæerne så meget du kan (2 sek.), hold 3 sek., og slap af. 10 gange": [
+"mand/959131e0cb.mp3",
+13.08
+],
 "spænd": [
 "mand/5864a90bbb.mp3",
 0.72
@@ -2298,6 +2418,18 @@ const VOICE_SETS = {
 "stil dig": [
 "mand/090886e128.mp3",
 1.01
+],
+"storetåen op": [
+"mand/65c55a215e.mp3",
+1.27
+],
+"storetåen ud": [
+"mand/e7c8173dde.mp3",
+1.32
+],
+"storetåen væk fra de andre tæer. sid med foden fladt på gulvet. før storetåen væk fra de andre tæer, ind mod den anden fod (2 sek.). hold 3 sek., og slap af. 10 gange. hjælp gerne med en finger i starten": [
+"mand/b858f7f2d5.mp3",
+19.08
 ],
 "stræk": [
 "mand/05bfc970ee.mp3",
@@ -2450,6 +2582,18 @@ const VOICE_SETS = {
 "tungt hæløft på ét ben med håndklæde (rathleff-øvelsen). 3 sek. op · 2 sek. hold · 3 sek. ned. følg hælen i dit eget tempo": [
 "mand/de6eaee540.mp3",
 7.82
+],
+"tå-yoga. løft storetåen, mens de små tæer bliver i gulvet (hold 3 sek.). skift: pres storetåen ned, og løft de små tæer (hold 3 sek.). 10 gange": [
+"mand/8dfed5c9a0.mp3",
+15.0
+],
+"tæerne op": [
+"mand/8a9fe03d8d.mp3",
+0.96
+],
+"tæerne op og ned. sid med foden fladt på gulvet. løft alle tæerne op (2 sek.), og krøl dem roligt ned mod gulvet (2 sek.). 10–15 gange, gerne flere gange om dagen": [
+"mand/c2c0ba9486.mp3",
+13.61
 ],
 "ud": [
 "mand/8d0569220e.mp3",

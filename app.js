@@ -628,7 +628,10 @@ function bodyAreas() {
   const A = [{ id: 'knae-hofte', name: 'Knæ, hofte og balance', progs: CATEGORIES.filter(c => !c.area && c.id !== 'haelspore') }];
   if (HAEL_ON) A.push({ id: 'fod', name: 'Fødder', progs: CATEGORIES.filter(c => c.id === 'haelspore') });
   if (typeof RYG_ON !== 'undefined' && RYG_ON) A.push({ id: 'ryg', name: 'Ryg og nakke', intro: RYG_AREA.intro, progs: CATEGORIES.filter(c => c.area === 'ryg') });
-  if (typeof LED_AREAS !== 'undefined') LED_AREAS.forEach(a => A.push({ id: a.id, name: a.name, intro: a.intro, progs: CATEGORIES.filter(c => c.area === a.id) }));
+  if (typeof LED_AREAS !== 'undefined') LED_AREAS.forEach(a => { // et led-område med samme id som et eksisterende (fx "fod" = Hælspore) lægges sammen med det
+    const progs = CATEGORIES.filter(c => c.area === a.id), had = A.find(x => x.id === a.id);
+    if (had) { had.progs = had.progs.concat(progs); had.name = a.name; had.intro = a.intro; } else A.push({ id: a.id, name: a.name, intro: a.intro, progs });
+  });
   return A.filter(a => a.progs.length);
 }
 /* Stor og enkel: højst 6 store knapper – kropsområderne samles i grupper, og trin 2 viser programmerne i gruppen */

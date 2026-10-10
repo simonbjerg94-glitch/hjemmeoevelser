@@ -634,4 +634,115 @@
       over: () => tag(8, 60, 'Land blødt på forfoden')
     }));
   })();
+
+  /* ================= FOD OG TÆER ================= */
+  const FCL = { W: 320, H: 230, floor: 230, view: 'custom' }, FFL = 202;
+  const floorBg = () => '<rect x="0" y="0" width="320" height="' + FFL + '" fill="' + C.wall + '"/><rect x="0" y="' + FFL + '" width="320" height="' + (230 - FFL) + '" fill="' + C.floor + '"/><rect x="0" y="' + FFL + '" width="320" height="2" fill="' + C.floorLine + '"/>';
+  const FANK = [128, FFL - 16 * KF];                     // foden står fladt; anklen 48 over gulvet
+  const footFlat = (toe, extra, arch) => shinKA(FANK, [FANK[0] - 18, -30]) + '<g transform="translate(' + P2(FANK) + ') scale(' + KF + ')">' + FF.footSide(false, toe || 0, extra || '', arch || '') + '</g>';
+  const toeTip = (toe, d) => add(FANK, mul(add([30, 11], FF.rot([d || 11, 0], toe || 0)), KF));
+  // Fod set forfra: tæerne nederst, storetåen til højre
+  const TB = [[100, 22, 22], [125, 24, 25], [151, 26, 27], [178, 28, 28], [215, 40, 32]]; // [x, bredde, længde]
+  function footFrontV(o) {
+    const lift = o.lift || [0, 0, 0, 0, 0], sp = o.spread || 0, out = o.out || 0, by = FFL - 32;
+    let g = floorBg();
+    g += '<rect x="126" y="-10" width="76" height="72" fill="' + C.pants + '"/><rect x="126" y="54" width="76" height="9" fill="' + C.cuff + '"/>';
+    g += '<path fill="' + C.skin + '" stroke="' + C.skinDark + '" stroke-width="1.2" d="M134,60 L196,60 C202,90 228,120 238,' + (by - 4) + ' C242,' + by + ' 240,' + (by + 8) + ' 232,' + (by + 8) + ' L94,' + (by + 8) + ' C86,' + (by + 8) + ' 84,' + by + ' 88,' + (by - 6) + ' C100,124 128,94 134,60 Z"/>';
+    g += '<path fill="none" stroke="' + C.skinMid + '" stroke-width="2" opacity=".7" d="M198,96 C210,118 220,134 224,' + (by - 8) + ' M140,100 C130,120 112,136 104,' + (by - 8) + '"/>';
+    TB.forEach((b, i) => {
+      const h = lift[i] || 0, ang = (i - 2.6) * sp * 9 + (i === 4 ? out * 24 : 0), len = b[2] * (1 - 0.3 * h), w = b[1];
+      g += '<ellipse cx="' + f1(b[0] + Math.sin(ang * Math.PI / 180) * b[2]) + '" cy="' + (FFL + 1) + '" rx="' + f1(w * 0.55) + '" ry="3" fill="#9fb0ab" opacity="' + f1(0.6 * (1 - h)) + '"/>';
+      g += '<g transform="translate(' + b[0] + ',' + f1(by - 12 * h) + ') rotate(' + f1(-ang) + ')"><rect x="' + f1(-w / 2) + '" y="-4" width="' + w + '" height="' + f1(len + 4) + '" rx="' + f1(w * 0.45) + '" fill="' + C.skin + '" stroke="' + C.skinDark + '" stroke-width="1.3"/>' +
+        '<rect x="' + f1(-w * 0.3) + '" y="' + f1(len * 0.25 - 4 * h) + '" width="' + f1(w * 0.6) + '" height="' + f1(len * 0.38 + 5 * h) + '" rx="' + f1(w * 0.2) + '" fill="' + C.nail + '" stroke="' + C.skinDark + '" stroke-width=".6"/></g>';
+    });
+    return g;
+  }
+  const fvFilm = (id, o) => define(id, Object.assign({}, FCL, { draw: footFrontV, back: () => '' }, o));
+  // Ondt nu: tæerne op og ned (foden fladt på gulvet)
+  define('fod-h-taa-op-ned', Object.assign({}, FCL, {
+    tempo: 'Sid med foden fladt på gulvet. Løft alle tæerne op (2 sek.), og krøl dem roligt ned mod gulvet (2 sek.). 10–15 gange, gerne flere gange om dagen.',
+    poses: { n: { toe: 0 }, up: { toe: -42 }, dn: { toe: 26 } }, start: 'n',
+    seq: [{ to: 'up', d: 1.6, k: 'op', l: 'Tæerne op', count: false }, { d: 0.6, k: 'hold', l: 'Hold', count: false }, { to: 'dn', d: 2, k: 'ned', l: 'Krøl ned', count: false }, { to: 'n', d: 1, k: 'pause', l: 'Slap af', count: false }],
+    still: 1.8, ghost: 'n', shots: [0, 1.8, 4.2],
+    back: floorBg, draw: P => footFlat(P.toe),
+    over: P => arcPath(add(FANK, [90, 33]), 46, -70, 30) + tag(10, 10, 'Hælen og forfoden bliver i gulvet')
+  }));
+  // Ondt nu: spred tæerne
+  fvFilm('fod-h-spred', {
+    tempo: 'Sid med foden fladt på gulvet. Spred tæerne så meget du kan (2 sek.), hold 3 sek., og slap af. 10 gange.',
+    poses: { a: { spread: 0 }, b: { spread: 1 } }, start: 'a',
+    seq: [{ to: 'b', d: 2, k: 'op', l: 'Spred', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'a', d: 1.5, k: 'ned', l: 'Slap af', count: false }, { d: 0.6, k: 'pause', l: 'Hvil', count: false }],
+    still: 3, ghost: 'a',
+    over: () => R.arrow([80, 216], [56, 216]) + R.arrow([248, 216], [272, 216]) + tag(10, 10, 'Set forfra · spred tæerne som en vifte')
+  });
+  // Niveau 1: tå-yoga (storetåen op, de små ned – og omvendt)
+  fvFilm('fod-1-taa-yoga', {
+    tempo: 'Løft storetåen, mens de små tæer bliver i gulvet (hold 3 sek.). Skift: pres storetåen ned, og løft de små tæer (hold 3 sek.). 10 gange.',
+    poses: { n: { lift: [0, 0, 0, 0, 0] }, big: { lift: [0, 0, 0, 0, 1] }, small: { lift: [1, 1, 1, 1, 0] } }, start: 'n',
+    seq: [{ to: 'big', d: 1.2, k: 'op', l: 'Storetåen op', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'n', d: 0.8, k: 'ned', l: 'Ned', count: false },
+      { to: 'small', d: 1.2, k: 'op', l: 'De små tæer op', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'n', d: 0.8, k: 'ned', l: 'Ned', count: false }],
+    still: 2, ghost: 'n', shots: [0, 2, 7],
+    over: (P, J, c) => tag(10, 10, 'Set forfra') + ((P.lift || [])[4] > 0.5 ? R.arrow([215, 140], [215, 110]) : (P.lift || [])[0] > 0.5 ? R.arrow([138, 140], [138, 110]) : '')
+  });
+  // Niveau 1: storetåen ud mod de andre tæers modsatte side
+  fvFilm('fod-1-storetaa-ud', {
+    tempo: 'Sid med foden fladt på gulvet. Før storetåen væk fra de andre tæer, ind mod den anden fod (2 sek.). Hold 3 sek., og slap af. 10 gange. Hjælp gerne med en finger i starten.',
+    poses: { a: { out: 0 }, b: { out: 1 } }, start: 'a',
+    seq: [{ to: 'b', d: 2, k: 'op', l: 'Storetåen ud', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'a', d: 1.5, k: 'ned', l: 'Slap af', count: false }, { d: 0.6, k: 'pause', l: 'Hvil', count: false }],
+    still: 3, ghost: 'a',
+    over: () => R.arrow([240, 216], [270, 216]) + tag(10, 10, 'Set forfra · storetåen væk fra de andre')
+  });
+  // Niveau 1: kort fod (hvælv svangen uden at krølle tæerne)
+  define('fod-1-kort-fod', Object.assign({}, FCL, {
+    tempo: 'Sid eller stå med foden fladt. Træk forfoden mod hælen, så svangen løfter sig – uden at krølle tæerne (2 sek.). Hold 5 sek., og slap af. 10 gange.',
+    poses: { a: { s: 0 }, b: { s: 1 } }, start: 'a',
+    seq: [{ to: 'b', d: 2, k: 'op', l: 'Løft svangen', count: false }, { d: 5, k: 'hold', l: 'Hold' }, { to: 'a', d: 1.5, k: 'ned', l: 'Slap af', count: false }, { d: 0.8, k: 'pause', l: 'Hvil', count: false }],
+    still: 4, ghost: 'a',
+    back: floorBg,
+    draw: P => { const s = P.s || 0;
+      const cut = '<path fill="' + C.floor + '" d="M-4,16.6 C2,' + f1(16.4 - 3.6 * s) + ' 14,' + f1(16 - 3.8 * s) + ' 22,16.6 Z"/>' +
+        '<path fill="none" stroke="#e8663c" stroke-width="1" opacity="' + f1(s) + '" d="M-3,' + f1(16.3 - 0.4 * s) + ' C2,' + f1(15.6 - 3.6 * s) + ' 14,' + f1(15.2 - 3.8 * s) + ' 21,16.2"/>';
+      return footFlat(0, '', cut); },
+    over: () => R.arrow([FANK[0] + 26, FFL + 22], [FANK[0] + 26, FFL - 2]) + tag(10, 10, 'Svangen løfter sig · tæerne er lige')
+  }));
+  // Niveau 2: pres storetåen ned mod elastikken
+  define('fod-2-taa-elastik', Object.assign({}, FCL, {
+    tempo: 'Sid med foden i gulvet og en elastik om storetåen. Hold elastikken op med hånden. Pres storetåen ned mod gulvet (2 sek.), og lad den langsomt komme op (3 sek.). 3 sæt × 10–15.',
+    poses: { up: { toe: -34 }, dn: { toe: 4 } }, start: 'up',
+    seq: [{ to: 'dn', d: 2, k: 'ned', l: 'Pres ned', count: false }, { to: 'up', d: 3, k: 'op', l: 'Langsomt op', count: false }, { d: 0.5, k: 'pause', l: 'Klar', count: false }],
+    still: 2, ghost: 'up',
+    back: floorBg,
+    draw: P => { const tp = toeTip(P.toe, 6); return footFlat(P.toe) + '<path fill="none" stroke="' + C.band + '" stroke-width="6" stroke-linecap="round" d="M' + P2(add(tp, [-6, 0])) + ' L' + f1(tp[0] - 30) + ',-10 M' + P2(add(tp, [6, 0])) + ' L' + f1(tp[0] - 14) + ',-10"/>'; },
+    over: () => arcPath(add(FANK, [90, 33]), 46, -60, 10) + tag(10, 10, 'Hånden holder elastikken')
+  }));
+  // Niveau 2: saml en bold op med tæerne
+  define('fod-2-kugle', Object.assign({}, FCL, {
+    tempo: 'Sid med en lille, blød bold (eller en sok) foran tæerne. Grib den med tæerne (1 sek.), løft foden lidt, og hold 3 sek. Sæt ned, og slip. 10 gange.',
+    poses: { n: { toe: 0, lift: 0 }, grab: { toe: 34, lift: 0 }, up: { toe: 34, lift: 1 } }, start: 'n',
+    seq: [{ to: 'grab', d: 1.2, k: 'op', l: 'Grib', count: false }, { to: 'up', d: 1.2, k: 'op', l: 'Løft', count: false }, { d: 3, k: 'hold', l: 'Hold' }, { to: 'grab', d: 1.2, k: 'ned', l: 'Ned', count: false }, { to: 'n', d: 1, k: 'pause', l: 'Slip', count: false }],
+    still: 4, ghost: 'n', shots: [0, 1.2, 4],
+    back: floorBg,
+    draw: P => { const L = 22 * (P.lift || 0), base = '<g transform="translate(0,' + f1(-L) + ')">' + footFlat(P.toe) + '</g>';
+      const tp = add(toeTip(P.toe, 11), [0, -L]), bx = 30 * KF + FANK[0] + 30, br = 13;
+      const ballP = P.lift > 0.02 || P.toe > 25 ? [tp[0] - 4, tp[1] + 6] : [bx, FFL - br];
+      const ball = '<circle cx="' + f1(Math.max(ballP[0], 0)) + '" cy="' + f1(Math.min(ballP[1], FFL - br)) + '" r="' + br + '" fill="' + C.ball + '" stroke="' + C.ballDark + '" stroke-width="2"/>';
+      return ball + base; },
+    over: () => tag(10, 10, 'Tæerne griber bolden')
+  }));
+  // Niveau 3: gå på tæerne på stedet (ved køkkenbordet)
+  (() => {
+    const bx = 170;
+    const P = side => { const a = onBallBareA(bx, 34), up = { th: 18, kn: 46, pf: 18 };
+      const st = { ank: a, fa: 34, toe: -34 }; return { hip: [a[0] + 2, a[1] - 176], trunk: 2, legN: side ? st : up, legF: side ? up : Object.assign({}, st, { ank: [a[0] - 6, a[1]] }), armN: { sa: 6, ef: 20, rel: 1 } }; };
+    define('fod-3-taagang', Object.assign(S(), {
+      tempo: 'Stå på tæerne, og hold let i bordet. Gå roligt på stedet på forfødderne – hælene bliver oppe. 20–30 skridt. Sænk hælene, og hvil.',
+      repLabel: 'Skridt', poses: { a: P(1), b: P(0) }, start: 'a',
+      seq: [{ to: 'b', d: 0.8, k: 'op', l: 'Skridt', count: false }, { to: 'a', d: 0.8, k: 'op', l: 'Skridt', count: false }],
+      still: 0.4, ghost: 'b', shots: [0, 0.4, 0.8],
+      mod: P => { const sx = P.hip[0] + Math.sin((P.trunk || 0) * Math.PI / 180) * 100 + 12; P.armF = { hand: [sx, 220] }; return P; },
+      figOpt: () => ({ bare: true }),
+      back: () => R.counterBack(320, 227, FLOOR),
+      over: () => tag(8, 60, 'Hælene bliver oppe')
+    }));
+  })();
 })();
