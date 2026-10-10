@@ -639,7 +639,7 @@ const AREA_GROUPS = [
 ];
 function areaGroups() {
   const A = bodyAreas(), used = new Set();
-  const G = AREA_GROUPS.map(g => { const as = A.filter(a => g.areas.includes(a.id)); as.forEach(a => used.add(a.id)); return Object.assign({}, g, { progs: as.flatMap(a => a.progs) }); });
+  const G = AREA_GROUPS.map(g => { const as = g.areas.map(id => A.find(a => a.id === id)).filter(Boolean); as.forEach(a => used.add(a.id)); return Object.assign({}, g, { progs: as.flatMap(a => a.progs) }); });
   A.filter(a => !used.has(a.id)).forEach(a => G.push({ id: a.id, name: a.name, areas: [a.id], progs: a.progs })); // nye områder uden gruppe får egen knap
   return G.filter(g => g.progs.length);
 }

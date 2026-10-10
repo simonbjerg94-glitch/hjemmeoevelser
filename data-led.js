@@ -10,13 +10,17 @@
    Peterson m.fl. 2014 (excentrisk/koncentrisk træning); Vicenzino/Coombes 2015 (isometrisk smertelindring, belastningsstyring); NICE CKS Tennis elbow (2024).
    Hånd: EULAR-anbefalinger for håndartrose (Kloppenburg m.fl. 2019); Østerås m.fl. Cochrane 2017 (træning ved håndartrose);
    Kjeken m.fl. 2021 og Wouters m.fl. 2019 (træning, skinne og hjælpemidler ved tommelfingerrodsartrose); NICE NG226 Osteoarthritis (2022);
-   AAOS CPG Carpal tunnel syndrome (2016: natskinne; sene- og nerveglid kun svag evidens); Page m.fl. Cochrane 2012 (nerveglid). */
+   AAOS CPG Carpal tunnel syndrome (2016: natskinne; sene- og nerveglid kun svag evidens); Page m.fl. Cochrane 2012 (nerveglid).
+   Ankel: Vuurberg m.fl. BJSM 2018 (international guideline for ankelforstuvning: tidlig belastning og træning, bandage frem for gips);
+   Doherty m.fl. BJSM 2017; Bleakley m.fl. BMJ 2010 (tidlig træning); Hupperets m.fl. BMJ 2009 (balancetræning hjemme: ca. ⅓ færre nye forstuvninger);
+   Stiell m.fl. JAMA 1993 og Bachmann m.fl. BMJ 2003 (Ottawa ankle rules); Dubois & Esculier BJSM 2020 (PEACE & LOVE); NICE CKS Sprains and strains. */
 'use strict';
 
 const LED_AREAS = [
   { id: 'skulder', name: 'Skulder', icon: '💪', intro: 'Slidgigt i skulderen, frossen skulder og "klemt sene" (smerter, når du løfter armen).' },
   { id: 'albue', name: 'Albue', icon: '🎾', intro: 'Tennisalbue (ondt på ydersiden) og golfalbue (ondt på indersiden) – ondt, når du griber, løfter eller vrider.' },
-  { id: 'haand', name: 'Hånd og håndled', icon: '✋', intro: 'Slidgigt i tommelfinger og fingre, ondt i håndleddet og karpaltunnelsyndrom (sovende fingre).' }
+  { id: 'haand', name: 'Hånd og håndled', icon: '✋', intro: 'Slidgigt i tommelfinger og fingre, ondt i håndleddet og karpaltunnelsyndrom (sovende fingre).' },
+  { id: 'ankel', name: 'Ankel', icon: '🦶', intro: 'Forstuvet ankel – de første dage og genoptræningen – stiv ankel og balance, så du ikke vrider om igen.' }
 ];
 
 const LED_PAIN_RULE = {
@@ -29,7 +33,10 @@ const LED_PAIN_RULE = {
   haand: 'Det må gerne gøre lidt ondt eller føles stift, mens du træner: 0–2 er fint, og 3–5 er i orden, hvis det er faldet til ro igen næste morgen. ' +
     'Er fingrene mere hævede eller ømme næste dag, så skru ned: færre gentagelser, blødere bold eller lettere elastik. ' +
     'Nerveglid må give en let snurren, men den skal forsvinde igen inden for et par minutter. ' +
-    'Stop og kontakt læge, hvis følelsesløsheden bliver ved, hvis hånden bliver svag, eller hvis noget i "Hvornår skal du til læge?" passer på dig.'
+    'Stop og kontakt læge, hvis følelsesløsheden bliver ved, hvis hånden bliver svag, eller hvis noget i "Hvornår skal du til læge?" passer på dig.',
+  ankel: 'Det må gerne gøre lidt ondt eller føles stramt, mens du træner: 0–2 er fint, og 3–5 er i orden, hvis det er faldet til ro igen næste morgen. ' +
+    'Er anklen mere hævet eller øm næste dag, så skru ned: færre gentagelser, mere støtte eller et lettere niveau. ' +
+    'Stop og kontakt læge, hvis du ikke kan støtte på foden, hvis anklen giver efter igen og igen, eller hvis noget i "Hvornår skal du til læge?" passer på dig.'
 };
 
 const LED_PROGRAMS = [
@@ -191,13 +198,67 @@ const LED_PROGRAMS = [
       today: ['Et led i hånden eller en finger er rødt, varmt og hævet, og du har feber – især efter et sår, en rift eller et bid.', 'Du er faldet på hånden og har ondt på tommelfingersiden af håndleddet (kan være et brud, der ikke ses udefra).', 'Du kan pludselig ikke strække eller bøje en finger efter et uheld (kan være en sene).'],
       weeks: ['Fingrene er følelsesløse hele tiden – ikke kun om natten – eller følelsen bliver dårligere.', 'Hånden bliver svag og klodset: du taber ting, eller musklen ved tommelfingerroden bliver tyndere.', 'Du har snurren i begge hænder, eller også i fødderne.', 'Mange led i begge hænder er hævede og stive i mere end en time om morgenen (kan være leddegigt).', 'Det er slet ikke blevet bedre efter 1–2 uger, eller smerten er der hele tiden, også om natten.']
     }
+  },
+  {
+    id: 'ankel', area: 'ankel', name: 'Ankel', long: 'Ankel – forstuvning og stiv ankel', icon: 'ankel', word: 'Niveau', holdLabel: 'Lige forstuvet', fbLabel: 'Genoptræning', aboutTitle: 'Gode råd om anklen',
+    intro: 'En forstuvet ankel er en af de mest almindelige skader. De fleste bliver gode igen – og træning af styrke og balance er det, der virker bedst, også for at undgå at vride om igen.',
+    tabs: { hold: ['🆘 Lige forstuvet', 'De første dage – eller når anklen er stiv og øm'], forebyg: ['💪 Genoptræning', 'Styrke, balance og tilbage til det, du plejer'] },
+    hold: {
+      title: 'Forstuvet ankel – de første dage',
+      calm: 'Ved en forstuvning er båndene på ydersiden af anklen strakt eller revet lidt. Det hæver og bliver blåt, og det gør ondt – men det er sjældent farligt. Kan du gå fire skridt og er knoglerne ikke ømme at trykke på (se "Hvornår skal du til læge?"), er der sjældent brud.',
+      course: 'En let forstuvning er ofte meget bedre efter 1–2 uger, en større efter 3–6 uger. Båndene heler over 6–12 uger. Hos nogle bliver anklen ved med at være lidt øm eller ustabil – derfor er balancetræningen vigtig. Den mindsker risikoen for at vride om igen med cirka en tredjedel.',
+      advice: [
+        'De første 1–3 dage: læg benet højt, så tit du kan, gerne over hjertehøjde. Et elastikbind kan mindske hævelsen.',
+        'Is i 10–15 minutter ad gangen kan lindre smerten (med et viskestykke imellem). Det heler ikke hurtigere, men det kan føles godt.',
+        'Gå på foden, så snart du kan – også selvom du halter lidt. Brug evt. krykker de første dage. At gå tidligt heler bedre end at holde foden i ro.',
+        'Bevæg anklen blidt flere gange om dagen fra dag 1: vip foden op og ned og tegn cirkler.',
+        'En ankelbandage eller tape kan give tryghed de første 4–6 uger, især når du går på ujævnt underlag eller dyrker sport.'
+      ],
+      positions: [
+        'I sofaen: benet på to puder, så foden er højere end knæet.',
+        'Om natten: en pude under læggen de første nætter.',
+        'Brug faste sko med god støtte – ikke klipklapper eller høje hæle de første uger.'
+      ],
+      exercises: ['ankel-h-pump', 'ankel-h-cirkler', 'ankel-h-vaegtskift', 'ankel-h-haandklaede']
+    },
+    phases: [
+      { n: 1, name: 'Niveau 1: Bevægelse og styrke', weeks: 'Ca. uge 1–3', color: '#5b8def', goal: 'Få bevægeligheden tilbage, vække musklerne om anklen og begynde balancen med støtte.',
+        exercises: ['ankel-1-elastik-ned', 'ankel-1-elastik-ud', 'ankel-1-knae-mod-vaeg', 'hael-2-haeloeft-begge', 'balance-3-et-ben', 'hael-1-laeg-straek-strakt'],
+        criteria: ['Jeg kan gå normalt uden at halte.', 'Jeg kan lave 15 hæløft på begge ben uden smerte over 3.', 'Jeg kan stå på det onde ben i 20 sekunder med let støtte.'] },
+      { n: 2, name: 'Niveau 2: Styrke og balance på ét ben', weeks: 'Ca. uge 3–6', color: '#3aa17e', goal: 'Gør læggen og musklerne om anklen stærke, og træn balancen på ét ben.',
+        exercises: ['ankel-2-haeloeft-et-ben', 'ankel-2-et-ben-raek', 'balance-3-et-ben', 'ankel-1-elastik-ud', 'knae-2-minisquat'],
+        criteria: ['Jeg kan lave 15 hæløft på det onde ben.', 'Jeg kan stå på det onde ben i 30 sekunder uden at holde fast.', 'Jeg kan gå på trapper og ujævnt underlag uden at anklen giver efter.'] },
+      { n: 3, name: 'Niveau 3: Tilbage til aktivitet', weeks: 'Fra ca. uge 6', color: '#e0913a', goal: 'Gør anklen klar til hop, hurtige vendinger, sport, havearbejde og ture i skoven.',
+        exercises: ['ankel-3-sidehop', 'hael-4-smaa-hop', 'ankel-2-et-ben-raek', 'ankel-2-haeloeft-et-ben', 'knae-3-udfald-frem'],
+        criteria: ['Jeg kan hoppe 20 gange fra side til side uden smerte eller usikkerhed.', 'Jeg kan hoppe på det onde ben 10 gange.', 'Jeg kan løbe eller gå hurtigt i 10 minutter uden at få mere ondt bagefter.'] }
+    ],
+    everyday: [
+      'Bliv ved med balancetræningen 2–3 gange om ugen i mindst 3 måneder – det er den, der forebygger nye forstuvninger.',
+      'Stå på ét ben, når du børster tænder eller venter på kaffen.',
+      'Brug ankelbandage eller tape til sport de første måneder, hvis anklen føles usikker.',
+      'Varm op, før du dyrker sport, og vær ekstra forsigtig på ujævnt underlag.',
+      'Giver anklen efter igen? Gå et par trin tilbage i programmet, og byg op igen.'
+    ],
+    about: [
+      ['Forstuvet ankel', 'Du vrider foden indad, og båndene på ydersiden af anklen bliver strakt eller revet lidt. Det hæver, bliver blåt og gør ondt. Blå mærker kan sive ned i foden de første dage – det er normalt.'],
+      ['Skal den røntgenfotograferes?', 'Ofte ikke. Lægerne bruger "Ottawa-reglerne": kan du gå fire skridt, og gør knoglerne ikke ondt, når man trykker på dem, er der sjældent brud. Se "Hvornår skal du til læge?".'],
+      ['Stiv ankel', 'Efter en forstuvning, et brud eller en periode med gips bliver anklen ofte stiv – især når du skal bøje den, så knæet kommer frem over tæerne (fx på trapper og når du sætter dig på hug). Øvelsen "knæ mod væggen" og stræk af læggen hjælper.'],
+      ['Balance efter forstuvning', 'Båndene i anklen fortæller hjernen, hvordan foden står. Efter en forstuvning virker den "føler" dårligere, så det er lettere at vride om igen. Balancetræning genopbygger den.'],
+      ['Må det gøre ondt?', 'Ja, lidt. Det er normalt, at anklen gør lidt ondt og hæver lidt under genoptræningen. Det vigtige er, at det er faldet til ro igen næste morgen. Se smertereglen nederst.']
+    ],
+    redFlags: {
+      now: ['Foden er skæv, anklen er gået af led, eller der er et åbent sår ned til knoglen.', 'Foden bliver kold, hvid eller blå, eller du mister følelsen i foden.', 'Du får pludselig åndenød eller smerter i brystet – især hvis læggen også er hævet og øm (kan være en blodprop).'],
+      today: ['Du kan ikke gå fire skridt (selvom du halter) – hverken lige efter skaden eller nu. Så skal anklen undersøges for brud (Ottawa-reglerne).', 'Det gør ondt, når du trykker på knoglen bag på eller lige under en af ankelknoerne (Ottawa-reglerne).', 'Det gør ondt, når du trykker på knoglen midt på ydersiden af foden (bag lilletåen) eller på den lille knude midt på indersiden af foden (Ottawa-reglerne).', 'Det gav et smæld bag på hælen, som et spark, og du kan ikke stå på tæer (kan være akillessenen).', 'Læggen er hævet, varm og øm, eller anklen er rød, varm og hævet uden at du har slået den – især med feber.'],
+      weeks: ['Du kan stadig ikke gå normalt efter 1–2 uger, eller hævelsen og smerten bliver ikke mindre.', 'Anklen giver efter igen og igen, også efter 6 ugers træning.', 'Der er en øm plet inde i leddet, anklen låser, eller den klikker og gør ondt.', 'Du har snurren eller følelsesløshed i foden.']
+    }
   }
 ];
 
 const LED_PAIN_CHECK = {
   skulder: { beforeQuestion: 'Hvor ondt har du i skulderen lige nu?', afterQuestion: 'Hvor ondt har du i skulderen nu, efter øvelserne?' },
   albue: { beforeQuestion: 'Hvor ondt har du i albuen lige nu?', afterQuestion: 'Hvor ondt har du i albuen nu, efter øvelserne?' },
-  haand: { beforeQuestion: 'Hvor ondt har du i hånden lige nu?', afterQuestion: 'Hvor ondt har du i hånden nu, efter øvelserne?' }
+  haand: { beforeQuestion: 'Hvor ondt har du i hånden lige nu?', afterQuestion: 'Hvor ondt har du i hånden nu, efter øvelserne?' },
+  ankel: { beforeQuestion: 'Hvor ondt har du i anklen lige nu?', afterQuestion: 'Hvor ondt har du i anklen nu, efter øvelserne?' }
 };
 const LED_READY_TEXT = {
   allChecked: 'Flot! Du er klar til næste niveau. Start roligt, og hold øje med, hvordan skulderen har det næste morgen.',
@@ -540,6 +601,117 @@ const LED_EXERCISES = [
     tips: ['Tommelen må ikke knække bagud i leddet – så er det for hårdt.', 'Skift til langfinger, ringfinger og lillefinger.'],
     progression: 'Lettere: en blødere bold. Sværere: træningsler eller tøjklemmer.',
     stop: LED_PAIN_RULE.haand
+  },
+  /* ================= ANKEL ================= */
+  {
+    id: 'ankel-h-pump', category: 'ankel', track: 'hold', level: 1, phases: [1],
+    images: [{"src": "images/ankel-h-pump/1.webp", "caption": "1. Læg dig eller sid med benet højt på en pude, så foden er højere end knæet.", "w": 720, "h": 518}, {"src": "images/ankel-h-pump/2.webp", "caption": "2. Træk tæerne op mod dig.", "w": 720, "h": 518}, {"src": "images/ankel-h-pump/3.webp", "caption": "3. Pres dem væk fra dig. Roligt frem og tilbage.", "w": 720, "h": 518}], /* auto: tools/sync_images.py */
+    name: 'Vip foden op og ned med benet højt',
+    equipment: 'En pude eller to.',
+    dose: '1–2 minutter. Hver time de første dage.',
+    steps: ['Læg dig eller sid med benet højt på en pude, så foden er højere end knæet.', 'Træk tæerne op mod dig.', 'Pres dem væk fra dig. Roligt frem og tilbage.'],
+    tips: ['Musklerne pumper hævelsen væk – jo oftere, jo bedre.', 'Det må stramme lidt, men ikke gøre rigtig ondt.'],
+    progression: 'Sværere: lav det siddende med foden i gulvet, når hævelsen er mindre.',
+    stop: LED_PAIN_RULE.ankel
+  },
+  {
+    id: 'ankel-h-cirkler', category: 'ankel', track: 'hold', level: 1, phases: [1],
+    images: [{"src": "images/ankel-h-cirkler/1.webp", "caption": "1. Læg benet højt på en pude.", "w": 720, "h": 518}, {"src": "images/ankel-h-cirkler/2.webp", "caption": "2. Tegn store, rolige cirkler med tæerne.", "w": 720, "h": 518}, {"src": "images/ankel-h-cirkler/3.webp", "caption": "3. Skift retning efter 10 cirkler.", "w": 720, "h": 518}], /* auto: tools/sync_images.py */
+    name: 'Tegn cirkler med foden',
+    equipment: 'En pude.',
+    dose: '10 cirkler hver vej. 3–4 gange om dagen.',
+    steps: ['Læg benet højt på en pude.', 'Tegn store, rolige cirkler med tæerne.', 'Skift retning efter 10 cirkler.'],
+    tips: ['Bevægelsen kommer fra anklen – benet ligger stille.', 'Du kan også skrive alfabetet med tæerne.'],
+    progression: 'Sværere: lav det siddende med foden lige over gulvet.',
+    stop: LED_PAIN_RULE.ankel
+  },
+  {
+    id: 'ankel-h-vaegtskift', category: 'ankel', track: 'hold', level: 1, phases: [1],
+    images: [{"src": "images/ankel-h-vaegtskift/1.webp", "caption": "1. Stå ved køkkenbordet med fødderne i hoftebredde.", "w": 480, "h": 660}, {"src": "images/ankel-h-vaegtskift/2.webp", "caption": "2. Flyt roligt vægten over på den onde fod, og hold lidt.", "w": 480, "h": 660}, {"src": "images/ankel-h-vaegtskift/3.webp", "caption": "3. Flyt vægten tilbage.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
+    name: 'Flyt vægten over på foden',
+    equipment: 'Et køkkenbord at holde i.',
+    dose: '10 gange. 2–3 gange om dagen.',
+    steps: ['Stå ved køkkenbordet med fødderne i hoftebredde.', 'Flyt roligt vægten over på den onde fod, og hold lidt.', 'Flyt vægten tilbage.'],
+    tips: ['Tryghed først: hold fast i bordet.', 'Når det er let, så prøv at løfte den raske fod en smule.'],
+    progression: 'Sværere: stå længere tid på den onde fod.',
+    stop: LED_PAIN_RULE.ankel
+  },
+  {
+    id: 'ankel-h-haandklaede', category: 'ankel', track: 'hold', level: 1, phases: [1, 2],
+    images: [{"src": "images/ankel-h-haandklaede/1.webp", "caption": "1. Sid med strakte ben, og læg et håndklæde om forfoden.", "w": 720, "h": 412}, {"src": "images/ankel-h-haandklaede/2.webp", "caption": "2. Træk roligt i håndklædet, så tæerne kommer mod dig.", "w": 720, "h": 412}, {"src": "images/ankel-h-haandklaede/3.webp", "caption": "3. Hold 30 sekunder, når du mærker et stræk i læggen.", "w": 720, "h": 412}], /* auto: tools/sync_images.py */
+    name: 'Stræk læggen med et håndklæde',
+    equipment: 'Et håndklæde og en måtte eller sengen.',
+    dose: '3 gange 30 sekunder. 2 gange om dagen.',
+    steps: ['Sid med strakte ben, og læg et håndklæde om forfoden.', 'Træk roligt i håndklædet, så tæerne kommer mod dig.', 'Hold 30 sekunder, når du mærker et stræk i læggen.'],
+    tips: ['Godt mod stivhed – især efter nogle dage med hævelse.', 'Knæet holdes strakt.'],
+    progression: 'Sværere: lægstræk stående mod væggen.',
+    stop: LED_PAIN_RULE.ankel
+  },
+  {
+    id: 'ankel-1-elastik-ned', category: 'ankel', track: 'forebyg', level: 1, phases: [1, 2],
+    images: [{"src": "images/ankel-1-elastik-ned/1.webp", "caption": "1. Sid med benet strakt, og læg elastikken om forfoden. Hold i enderne.", "w": 720, "h": 518}, {"src": "images/ankel-1-elastik-ned/2.webp", "caption": "2. Træd foden ned mod elastikken.", "w": 720, "h": 518}, {"src": "images/ankel-1-elastik-ned/3.webp", "caption": "3. Før den langsomt tilbage.", "w": 720, "h": 518}], /* auto: tools/sync_images.py */
+    name: 'Træd ned mod elastikken',
+    equipment: 'En træningselastik.',
+    dose: '3 sæt med 15 gentagelser. Hver dag.',
+    steps: ['Sid med benet strakt, og læg elastikken om forfoden. Hold i enderne.', 'Træd foden ned mod elastikken.', 'Før den langsomt tilbage.'],
+    tips: ['Træner læggen, før du kan lave hæløft.', 'Hold knæet strakt.'],
+    progression: 'Sværere: en hårdere elastik.',
+    stop: LED_PAIN_RULE.ankel
+  },
+  {
+    id: 'ankel-1-elastik-ud', category: 'ankel', track: 'forebyg', level: 1, phases: [1, 2],
+    images: [{"src": "images/ankel-1-elastik-ud/1.webp", "caption": "1. Sid med strakte ben, og sæt elastikken om begge forfødder.", "w": 720, "h": 675}, {"src": "images/ankel-1-elastik-ud/2.webp", "caption": "2. Drej den onde fod ud til siden mod elastikken. Hælen bliver liggende.", "w": 720, "h": 675}, {"src": "images/ankel-1-elastik-ud/3.webp", "caption": "3. Før den langsomt tilbage.", "w": 720, "h": 675}], /* auto: tools/sync_images.py */
+    name: 'Drej foden ud mod elastikken',
+    equipment: 'En træningselastik bundet i en ring.',
+    dose: '3 sæt med 15 gentagelser. Hver dag.',
+    steps: ['Sid med strakte ben, og sæt elastikken om begge forfødder.', 'Drej den onde fod ud til siden mod elastikken. Hælen bliver liggende.', 'Før den langsomt tilbage.'],
+    tips: ['Træner de muskler på ydersiden af anklen, der beskytter mod at vride om.', 'Bevægelsen sker i anklen – ikke ved at dreje hele benet.'],
+    progression: 'Sværere: en hårdere elastik, eller lav det siddende på en stol med elastikken om en bordfod.',
+    stop: LED_PAIN_RULE.ankel
+  },
+  {
+    id: 'ankel-1-knae-mod-vaeg', category: 'ankel', track: 'forebyg', level: 1, phases: [1, 2],
+    images: [{"src": "images/ankel-1-knae-mod-vaeg/1.webp", "caption": "1. Stå med den onde fod lidt fra væggen og den anden fod bagved.", "w": 480, "h": 660}, {"src": "images/ankel-1-knae-mod-vaeg/2.webp", "caption": "2. Bøj knæet frem mod væggen, mens hælen bliver i gulvet.", "w": 480, "h": 660}, {"src": "images/ankel-1-knae-mod-vaeg/3.webp", "caption": "3. Hold 2 sekunder, og gå tilbage. Ryk foden lidt længere væk, når det er let.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
+    name: 'Knæ mod væggen',
+    equipment: 'En væg.',
+    dose: '10–15 gange. Hver dag.',
+    steps: ['Stå med den onde fod lidt fra væggen og den anden fod bagved.', 'Bøj knæet frem mod væggen, mens hælen bliver i gulvet.', 'Hold 2 sekunder, og gå tilbage. Ryk foden lidt længere væk, når det er let.'],
+    tips: ['Den bedste øvelse til en stiv ankel.', 'Knæet peger frem over 2.–3. tå.'],
+    progression: 'Sværere: ryk foden længere væk fra væggen.',
+    stop: LED_PAIN_RULE.ankel
+  },
+  {
+    id: 'ankel-2-haeloeft-et-ben', category: 'ankel', track: 'forebyg', level: 2, phases: [2, 3],
+    images: [{"src": "images/ankel-2-haeloeft-et-ben/1.webp", "caption": "1. Stå på det onde ben med hænderne let mod væggen.", "w": 480, "h": 660}, {"src": "images/ankel-2-haeloeft-et-ben/2.webp", "caption": "2. Løft hælen roligt så højt du kan.", "w": 480, "h": 660}, {"src": "images/ankel-2-haeloeft-et-ben/3.webp", "caption": "3. Sænk langsomt ned igen.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
+    name: 'Hæløft på ét ben',
+    equipment: 'En væg at støtte let mod.',
+    dose: '3 sæt med 10–15 gentagelser. Hver anden dag.',
+    steps: ['Stå på det onde ben med hænderne let mod væggen.', 'Løft hælen roligt så højt du kan.', 'Sænk langsomt ned igen.'],
+    tips: ['Anklen skal holde lige – ikke vippe ud til siden.', 'Langsomt ned er det vigtigste.'],
+    progression: 'Lettere: begge ben. Sværere: på et trin, eller med en rygsæk.',
+    stop: LED_PAIN_RULE.ankel
+  },
+  {
+    id: 'ankel-2-et-ben-raek', category: 'ankel', track: 'forebyg', level: 2, phases: [2, 3],
+    images: [{"src": "images/ankel-2-et-ben-raek/1.webp", "caption": "1. Stå på det onde ben med let bøjet knæ, og hold let i bordet.", "w": 480, "h": 600}, {"src": "images/ankel-2-et-ben-raek/2.webp", "caption": "2. Ræk med den anden fod frem, og rør gulvet let.", "w": 480, "h": 600}, {"src": "images/ankel-2-et-ben-raek/3.webp", "caption": "3. Ræk bagud. Hold balancen på standbenet hele tiden.", "w": 480, "h": 600}], /* auto: tools/sync_images.py */
+    name: 'Stå på ét ben og ræk med foden',
+    equipment: 'Et køkkenbord at holde let i.',
+    dose: '10 gange frem og tilbage. 2 sæt. Hver dag.',
+    steps: ['Stå på det onde ben med let bøjet knæ, og hold let i bordet.', 'Ræk med den anden fod frem, og rør gulvet let.', 'Ræk bagud. Hold balancen på standbenet hele tiden.'],
+    tips: ['Træner balance og "føleren" i anklen.', 'Kun så langt, du kan holde balancen.'],
+    progression: 'Sværere: slip bordet, ræk længere, eller ræk også ud til siden.',
+    stop: LED_PAIN_RULE.ankel
+  },
+  {
+    id: 'ankel-3-sidehop', category: 'ankel', track: 'forebyg', level: 3, phases: [3],
+    images: [{"src": "images/ankel-3-sidehop/1.webp", "caption": "1. Stå med samlede fødder ved siden af stregen.", "w": 480, "h": 660}, {"src": "images/ankel-3-sidehop/2.webp", "caption": "2. Hop roligt over stregen og tilbage.", "w": 480, "h": 660}, {"src": "images/ankel-3-sidehop/3.webp", "caption": "3. Land blødt på forfødderne med let bøjede knæ.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
+    name: 'Hop fra side til side',
+    equipment: 'En streg på gulvet (fx tape) og gode sko.',
+    dose: '2–3 sæt med 10–20 hop. 2–3 gange om ugen.',
+    steps: ['Stå med samlede fødder ved siden af stregen.', 'Hop roligt over stregen og tilbage.', 'Land blødt på forfødderne med let bøjede knæ.'],
+    tips: ['Start med små hop, og gør dem større, når det føles trygt.', 'Først når du kan stå på ét ben i 30 sekunder.'],
+    progression: 'Sværere: hop frem og tilbage, eller på ét ben.',
+    stop: LED_PAIN_RULE.ankel
   }
 ];
 if (typeof RYG_PAIN_CHECK !== 'undefined') Object.assign(RYG_PAIN_CHECK, LED_PAIN_CHECK);

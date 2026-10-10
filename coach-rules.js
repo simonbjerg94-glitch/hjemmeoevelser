@@ -135,9 +135,15 @@ const CoachRules = (() => {
     'haand-h-nerveglid': pres('front', 60, 'bevægelsen af hånd og hoved'), 'haand-h-haandled': pres('front', 60, 'håndleddets bevægelse'),
     'haand-1-tommel-fingre': pres('front', 90, 'tommelen mod fingerspidserne'), 'haand-1-spred': pres('front', 60, 'fingrenes spredning'),
     'haand-2-klem-bold': pres('front', 120, 'klemmet om bolden'), 'haand-2-elastik-spred': pres('front', 90, 'fingrenes spredning mod elastikken'),
-    'haand-2-tommel-elastik': pres('front', 90, 'tommelen mod elastikken'), 'haand-3-knib': pres('front', 90, 'knibet med tommel og pegefinger')
+    'haand-2-tommel-elastik': pres('front', 90, 'tommelen mod elastikken'), 'haand-3-knib': pres('front', 90, 'knibet med tommel og pegefinger'),
+    // Ankel: små ankelbevægelser kan ikke bedømmes; stående øvelser tælles, hvor hælen/kroppen bevæger sig tydeligt
+    'ankel-h-pump': pres('lying', 120, 'vippet med foden'), 'ankel-h-cirkler': pres('lying', 90, 'cirklerne med foden'),
+    'ankel-h-vaegtskift': pres('front', 60, 'vægtskiftet'), 'ankel-h-haandklaede': pres('side', 120, 'strækket med håndklædet'),
+    'ankel-1-elastik-ned': pres('side', 90, 'foden mod elastikken'), 'ankel-1-elastik-ud': pres('front', 90, 'drejningen af foden'),
+    'ankel-1-knae-mod-vaeg': pres('side', 90, 'knæet mod væggen'), 'ankel-2-haeloeft-et-ben': R.heelRaise,
+    'ankel-2-et-ben-raek': pres('side', 90, 'rækket med foden på ét ben'), 'ankel-3-sidehop': Object.assign({}, R.hop, { view: 'front' })
   };
-  const CATEGORY_DEFAULT = { knae: 'side', hofte: 'side', balance: 'front', haelspore: 'side', laend: 'lying', bryst: 'front', nakke: 'front', skulder: 'front', albue: 'front', haand: 'front' };
+  const CATEGORY_DEFAULT = { knae: 'side', hofte: 'side', balance: 'front', haelspore: 'side', laend: 'lying', bryst: 'front', nakke: 'front', skulder: 'front', albue: 'front', haand: 'front', ankel: 'side' };
   function ruleFor(e) {
     const id = typeof e === 'string' ? e : e.id;
     return RULES[id] || pres(CATEGORY_DEFAULT[(e && e.category) || ''] || 'side', 60, 'øvelsen');

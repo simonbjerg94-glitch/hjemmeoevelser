@@ -491,4 +491,147 @@
       over: () => tag(150, 60, 'Håndfladen op · armen ud')
     }));
   })();
+
+  /* ================= ANKEL ================= */
+  const KF = 3, onBallA = (x, fa) => sub([x, FLOOR + 1], FF.rot([30, 15], fa)), onBallBareA = (x, fa) => sub([x, FLOOR], FF.rot([28, 16], fa));
+  const footKA = (ank, fa, o) => { o = o || {}; const c = o.roll ? 1 - 0.28 * Math.abs(o.roll) : 1;
+    return '<g transform="translate(' + P2(ank) + ') rotate(' + f1(fa) + ') scale(' + f1(KF * c) + ',' + KF + ')">' + FF.footSide(false, o.toe || 0, '', '') + '</g>'; };
+  const shinKA = (ank, top) => FF.limb(FF.lerp(ank, top, 0.08), top, 38, 46, C.skin) + FF.limb(FF.lerp(ank, top, 0.62), top, 62, 66, C.pants) + FF.limb(FF.lerp(ank, top, 0.6), FF.lerp(ank, top, 0.68), 62, 62, C.cuff);
+  const ACL = { W: 320, H: 230, floor: 230, view: 'custom' };
+  const ANK_L = [204, 150], KNEE_L = [-30, 192];        // benet ligger på en pude, foden lidt højere end knæet
+  const sofa = () => '<rect x="0" y="196" width="320" height="34" fill="#c9b8a6"/><rect x="0" y="196" width="320" height="6" fill="#d8c9b8"/><ellipse cx="96" cy="194" rx="92" ry="22" fill="#fff" stroke="#d3d8dc" stroke-width="2"/>';
+  const toePt = (fa, loc) => add(ANK_L, FF.rot(mul(loc || [30, 6], KF), fa));
+  // Vip foden op og ned med benet højt
+  define('ankel-h-pump', Object.assign({}, ACL, {
+    tempo: 'Læg benet højt på en pude. Træk tæerne op mod dig (1 sek.), og pres dem væk (1 sek.). Roligt i 1–2 minutter, flere gange om dagen.',
+    poses: { up: { fa: -124 }, down: { fa: -62 } }, start: 'up',
+    seq: [{ to: 'down', d: 1.2, k: 'ned', l: 'Pres væk', count: false }, { to: 'up', d: 1.2, k: 'op', l: 'Træk op', count: false }],
+    still: 0.6, ghost: 'down', shots: [0, 0.6, 1.15],
+    back: sofa, draw: P => shinKA(ANK_L, KNEE_L) + footKA(ANK_L, P.fa),
+    over: P => arcPath(ANK_L, 116, -150, -55) + tag(10, 10, 'Benet højt – hævelsen pumpes væk')
+  }));
+  // Tegn cirkler med foden
+  define('ankel-h-cirkler', Object.assign({}, ACL, {
+    tempo: 'Læg benet højt på en pude. Tegn store, rolige cirkler med tæerne – 10 gange den ene vej og 10 gange den anden vej.',
+    poses: { a: { fa: -122, roll: 0 }, b: { fa: -92, roll: 1 }, c: { fa: -64, roll: 0 }, d: { fa: -92, roll: -1 } }, start: 'a',
+    seq: [{ to: 'b', d: 0.9, k: 'op', l: 'Rundt', count: false, lin: true }, { to: 'c', d: 0.9, k: 'op', l: 'Rundt', count: false, lin: true }, { to: 'd', d: 0.9, k: 'op', l: 'Rundt', count: false, lin: true }, { to: 'a', d: 0.9, k: 'op', l: 'Rundt', count: false, lin: true }],
+    still: 0.9, ghost: 'c', shots: [0, 0.9, 1.8],
+    back: sofa, draw: P => shinKA(ANK_L, KNEE_L) + footKA(ANK_L, P.fa, { roll: P.roll }),
+    over: () => { const c = toePt(-93, [32, 4]); return '<ellipse cx="' + f1(c[0]) + '" cy="' + f1(c[1] - 10) + '" rx="44" ry="20" fill="none" stroke="' + C.guide + '" stroke-width="2.5" stroke-dasharray="5 5" opacity=".75"/>' + R.arrow([c[0] + 40, c[1] - 2], [c[0] + 26, c[1] + 8]) + tag(10, 10, 'Tegn store cirkler med tæerne'); }
+  }));
+  // Træd ned mod elastikken
+  define('ankel-1-elastik-ned', Object.assign({}, ACL, {
+    tempo: 'Sid med benet strakt og en elastik om forfoden. Træd foden ned mod elastikken (2 sek.), og før den langsomt tilbage (3 sek.). 3 sæt × 15.',
+    poses: { up: { fa: -112 }, down: { fa: -56 } }, start: 'up',
+    seq: [{ to: 'down', d: 2, k: 'ned', l: 'Træd ned', count: false }, { to: 'up', d: 3, k: 'op', l: 'Tilbage', count: false }, { d: 0.5, k: 'pause', l: 'Klar', count: false }],
+    still: 2, ghost: 'up',
+    back: () => '<rect x="0" y="196" width="320" height="34" fill="' + C.mat + '"/>',
+    draw: P => { const b1 = toePt(P.fa, [30, 2]), b2 = toePt(P.fa, [26, 15]);
+      return '<path fill="none" stroke="' + C.bandDark + '" stroke-width="6" stroke-linecap="round" d="M' + P2(b2) + ' L-10,40"/>' + shinKA(ANK_L, KNEE_L) + footKA(ANK_L, P.fa) +
+        '<path fill="none" stroke="' + C.band + '" stroke-width="6" stroke-linecap="round" d="M' + P2(b1) + ' L-10,26 M' + P2(b1) + ' L' + P2(b2) + '"/>'; },
+    over: () => arcPath(ANK_L, 116, -140, -50) + tag(10, 10, 'Hænderne holder elastikken')
+  }));
+  // Drej foden ud mod elastikken (set ovenfra)
+  (() => {
+    const HL = [110, 214], HR = [204, 214], S = 2.6;
+    const fTop = (h, a, col) => '<g transform="translate(' + P2(h) + ') rotate(' + f1(-90 + a) + ') scale(' + S + ')"><path fill="' + col + '" stroke="#9aa3aa" stroke-width=".6" d="M0,0 c0,-5 3,-7 8,-7.5 c8,-0.5 18,-2 24,-2.5 c6,-0.4 9,3 9,10 c0,7 -3,10.4 -9,10 c-6,-0.5 -16,-2 -24,-2.5 c-5,-0.5 -8,-2.5 -8,-7.5 z"/></g>';
+    const fore = (h, a) => add(h, FF.rot([0, -30 * S], a));
+    define('ankel-1-elastik-ud', Object.assign({}, { W: 320, H: 300, floor: 300, view: 'custom' }, {
+      tempo: 'Sid med strakte ben og en elastik om begge forfødder. Drej den onde fod ud til siden mod elastikken (2 sek.), og før den langsomt tilbage (3 sek.). Hælen bliver liggende. 3 sæt × 15.',
+      poses: { a: { a: 0 }, b: { a: 28 } }, start: 'a',
+      seq: [{ to: 'b', d: 2, k: 'op', l: 'Ud', count: false }, { to: 'a', d: 3, k: 'ned', l: 'Tilbage', count: false }, { d: 0.5, k: 'pause', l: 'Klar', count: false }],
+      still: 2, ghost: 'a',
+      back: () => '<rect x="0" y="0" width="320" height="300" fill="' + C.mat + '"/>',
+      draw: P => { const a = P.a || 0, p1 = fore(HL, -4), p2 = fore(HR, a);
+        const leg = h => '<rect x="' + (h[0] - 22) + '" y="' + (h[1] - 4) + '" width="44" height="40" rx="14" fill="' + C.skin + '"/><rect x="' + (h[0] - 30) + '" y="' + (h[1] + 30) + '" width="60" height="80" rx="12" fill="' + C.pants + '"/><rect x="' + (h[0] - 30) + '" y="' + (h[1] + 30) + '" width="60" height="8" fill="' + C.cuff + '"/>';
+        let s = leg(HL) + leg(HR);
+        s += fTop(HL, -4, '#ffffff') + fTop(HR, a, '#ffffff');
+        s += '<path fill="none" stroke="' + C.band + '" stroke-width="6" stroke-linecap="round" d="M' + P2(add(p1, [0, -14])) + ' L' + P2(add(p2, [0, -14])) + ' Q' + P2(add(p2, [30, 0])) + ' ' + P2(add(p2, [0, 14])) + ' L' + P2(add(p1, [0, 14])) + ' Q' + P2(add(p1, [-30, 0])) + ' ' + P2(add(p1, [0, -14])) + '"/>';
+        return s; },
+      over: () => arcPath(HR, 100, -92, -58) + tag(10, 10, 'Set ovenfra · hælen ligger stille') + tag(176, 272, 'Den onde fod')
+    }));
+  })();
+  // Vægtskift fra side til side (set bagfra ved køkkenbordet)
+  (() => {
+    const hx = 160, P = sh => ({ hip: [hx + sh, 224], back: true, tilt: -sh * 0.25, legR: { ank: [hx + 22, ANK] }, legL: { ank: [hx - 22, ANK] }, armR: { hand: [hx + 30 + sh * 0.3, 222] }, armL: { hand: [hx - 30 + sh * 0.3, 222] } });
+    define('ankel-h-vaegtskift', Object.assign({ W: 320, H: 440, floor: FLOOR, view: 'front' }, {
+      tempo: 'Stå ved køkkenbordet med fødderne i hoftebredde. Flyt roligt vægten over på den onde fod (2 sek.), hold lidt, og flyt den tilbage (2 sek.). 10 gange.',
+      poses: { m: P(0), r: P(17), l: P(-12) }, start: 'm',
+      seq: [{ to: 'r', d: 2, k: 'op', l: 'Over på foden', count: false }, { d: 1.5, k: 'hold', l: 'Hold' }, { to: 'l', d: 2.2, k: 'ned', l: 'Tilbage', count: false }, { to: 'm', d: 1, k: 'pause', l: 'Slap af', count: false }],
+      still: 2, ghost: 'm', shots: [0, 2, 5.5],
+      back: () => R.counterBack(320, 227, FLOOR),
+      over: (P, J) => tag(196, 300, 'Den onde fod') + R.arrow([hx - 4, 160], [hx + 30, 160])
+    }));
+  })();
+  // Stræk læggen med et håndklæde (langsiddende)
+  (() => {
+    const fl = 262, mat = fl - 4, hip = [130, mat - 15];
+    const base = (pf, tr) => ({ hip, trunk: tr, nod: -6, legF: { th: 92, kn: 3, pf: 10 }, legN: { th: 92, kn: 2, pf }, armF: { hand: [hip[0] + 92 + tr, mat - 82] }, armN: { hand: [hip[0] + 96 + tr, mat - 78] } });
+    define('ankel-h-haandklaede', Object.assign(L(440, 290), {
+      floor: fl, vb: [0, 38, 440, 252],
+      tempo: 'Sid med strakte ben og et håndklæde om forfoden. Træk roligt i håndklædet, så tæerne kommer mod dig, til du mærker et stræk i læggen. Hold 30 sek. 3 gange.',
+      poses: { a: base(14, 14), b: base(-18, 20) }, start: 'a',
+      seq: [{ to: 'b', d: 2, k: 'op', l: 'Træk', count: false }, { d: 30, k: 'hold', l: 'Hold' }, { to: 'a', d: 2, k: 'ned', l: 'Slip', count: false }, { d: 2, k: 'pause', l: 'Hvil', count: false }],
+      still: 6, ghost: 'a',
+      under: () => R.mat(30, 430, mat + 4),
+      figOpt: () => ({ front: J => { const g = J.legs.N, tp = add(g.ank, FF.rot([30, 4], g.fa)), h = J.arms.N.hd;
+        return '<path fill="none" stroke="' + C.towelDark + '" stroke-width="7" stroke-linecap="round" d="M' + P2(h) + ' L' + P2(add(tp, [6, -8])) + ' Q' + P2(add(tp, [16, 2])) + ' ' + P2(add(tp, [4, 12])) + '"/><path fill="none" stroke="' + C.towel + '" stroke-width="4" stroke-linecap="round" d="M' + P2(h) + ' L' + P2(add(tp, [6, -8])) + '"/>'; } }),
+      over: () => tag(10, 46, 'Benet strakt · træk tæerne mod dig')
+    }));
+  })();
+  // Knæ mod væggen (stiv ankel): hælen i gulvet, knæet frem over tæerne
+  (() => {
+    const wall = 262, P = (hx, hy, tr) => ({ hip: [hx, hy], trunk: tr, legN: { ank: [212, ANK] }, legF: { ank: [104, ANK], fa: 18, toe: -18 }, armF: { hand: [wall - 4, 196] }, armN: { hand: [wall - 2, 202] } });
+    define('ankel-1-knae-mod-vaeg', Object.assign(S(), {
+      tempo: 'Stå med den onde fod lidt fra væggen og den anden bagved. Bøj knæet frem mod væggen (2 sek.), mens hælen bliver i gulvet. Hold 2 sek., og gå tilbage. 10–15 gange. Ryk foden lidt længere væk, når det er let.',
+      poses: { a: P(148, 230, 4), b: P(176, 252, 6) }, start: 'a',
+      seq: [{ to: 'b', d: 2, k: 'op', l: 'Knæet frem', count: false }, { d: 2, k: 'hold', l: 'Hold' }, { to: 'a', d: 2, k: 'ned', l: 'Tilbage', count: false }, { d: 0.6, k: 'pause', l: 'Klar', count: false }],
+      still: 3, ghost: 'a',
+      mod: P => { const d = { th: 0 }; return P; },
+      back: () => R.wall(wall + 6, 320, 0, FLOOR),
+      over: (P, J) => R.arrow(add(J.legs.N.knee, [-30, -18]), add(J.legs.N.knee, [-2, -18])) + tag(8, 60, 'Hælen bliver i gulvet') +
+        '<circle cx="' + f1(J.legs.N.ank[0] - 4) + '" cy="' + (FLOOR - 4) + '" r="9" fill="none" stroke="' + C.accent + '" stroke-width="3"/>'
+    }));
+  })();
+  // Hæløft på ét ben (hånden mod væggen)
+  (() => {
+    const wall = 252, bx = 214;
+    const P = fa => { const a = onBallBareA(bx, fa); return { hip: [a[0] + 4, a[1] - 176], trunk: 3, legN: { ank: a, fa, toe: -fa }, legF: { th: 18, kn: 48, pf: 10 }, armF: { hand: [wall - 4, 196 - (ANK - a[1])] }, armN: { hand: [wall - 2, 202 - (ANK - a[1])] } }; };
+    define('ankel-2-haeloeft-et-ben', Object.assign(S(), {
+      tempo: 'Stå på det onde ben med hænderne let mod væggen. Løft hælen roligt op (2 sek.), hold 1 sek., og sænk langsomt (3 sek.). 3 sæt × 10–15.',
+      poses: { down: P(0), up: P(36) }, start: 'down',
+      seq: [{ to: 'up', d: 2, k: 'op', l: 'Op' }, { d: 1, k: 'hold', l: 'Hold', count: false }, { to: 'down', d: 3, k: 'ned', l: 'Ned', count: false }, { d: 0.8, k: 'pause', l: 'Hvil', count: false }],
+      still: 2.5, ghost: 'down',
+      figOpt: () => ({ bare: true }),
+      back: () => R.wall(wall + 6, 320, 0, FLOOR)
+    }));
+  })();
+  // Stå på ét ben og ræk med den anden fod frem og tilbage (ved køkkenbordet)
+  (() => {
+    const P = (hy, tr, ln) => ({ hip: [150, hy], trunk: tr, legF: { ank: [150, ANK] }, legN: ln, armN: { sa: 6, ef: 18, rel: 1 } });
+    const ch = P => { const sx = P.hip[0] + Math.sin((P.trunk || 0) * Math.PI / 180) * 100 + 12; P.armF = { hand: [sx, 220] }; return P; };
+    define('ankel-2-et-ben-raek', Object.assign(S(), {
+      vb: [0, 40, 320, 400],
+      tempo: 'Stå på det onde ben med let bøjet knæ, og hold let i bordet. Ræk roligt med den anden fod frem og rør gulvet let (2 sek.), og ræk så bagud (2 sek.). 10 gange. Skift ben.',
+      poses: { n: P(232, 2, { th: 8, kn: 22, pf: 0 }), f: P(240, -2, { ank: [228, ANK - 3], fa: -14 }), b: P(240, 8, { ank: [74, ANK - 3], fa: 22, toe: -22 }) }, start: 'n',
+      seq: [{ to: 'f', d: 2, k: 'op', l: 'Frem', count: false, arc: { legN: 10 } }, { to: 'n', d: 1.2, k: 'ned', l: 'Tilbage', count: false }, { to: 'b', d: 2, k: 'op', l: 'Bagud', count: false, arc: { legN: 10 } }, { to: 'n', d: 1.2, k: 'ned', l: 'Tilbage', count: false }],
+      still: 2, ghost: 'n', shots: [0, 2, 5.2],
+      mod: ch,
+      back: () => R.counterBack(320, 227, FLOOR),
+      over: () => tag(8, 60, 'Standbenet: let bøjet knæ')
+    }));
+  })();
+  // Hop fra side til side over en streg (set bagfra)
+  (() => {
+    const P = (x, hy, ay) => ({ hip: [x, hy], back: true, tilt: 0, legR: { ank: [x + 11, ay] }, legL: { ank: [x - 11, ay] }, armR: { hand: [x + 34, hy + 10] }, armL: { hand: [x - 34, hy + 10] } });
+    define('ankel-3-sidehop', Object.assign({ W: 320, H: 440, floor: FLOOR, view: 'front' }, {
+      tempo: 'Stå med samlede fødder ved siden af en streg på gulvet. Hop roligt over stregen og tilbage, og land blødt med bøjede knæ. 10–20 hop. Start med små hop.',
+      repLabel: 'Hop', poses: { a: P(124, 232, ANK), up1: P(160, 208, ANK - 30), b: P(196, 232, ANK), up2: P(160, 208, ANK - 30) }, start: 'a',
+      seq: [{ to: 'up1', d: 0.35, k: 'op', l: 'Hop', count: false }, { to: 'b', d: 0.35, k: 'ned', l: 'Land blødt', count: false }, { d: 0.5, k: 'pause', l: 'Land blødt', count: false },
+        { to: 'up2', d: 0.35, k: 'op', l: 'Hop', count: false }, { to: 'a', d: 0.35, k: 'ned', l: 'Land blødt', count: false }, { d: 0.5, k: 'pause', l: 'Land blødt', count: false }],
+      still: 0.35, ghost: 'a', shots: [0, 0.35, 0.7],
+      under: () => '<path fill="' + C.accent + '" opacity=".85" d="M157,' + (FLOOR - 4) + ' L163,' + (FLOOR - 4) + ' L166,440 L154,440 Z"/>',
+      over: () => tag(8, 60, 'Land blødt på forfoden')
+    }));
+  })();
 })();
