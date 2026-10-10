@@ -4,17 +4,24 @@
    Kilder (kort), skulder: Sundhedsstyrelsen NKR for udvalgte skulderlidelser (2013) og NKR for skulderartrose (2022);
    JOSPT CPG frossen skulder (Kelley m.fl. 2013) og CPG subakromiale smerter/rotator cuff (Desmeules m.fl. 2025 / Diercks 2014);
    Holmgren m.fl. BMJ 2012 (specifik træning mindsker behov for operation); Littlewood m.fl. 2016 (selvstyret træning med belastning);
-   Pieters m.fl. 2020 (systematisk review: træning er førstevalg ved skuldersmerter); NICE CKS Shoulder pain (2023). */
+   Pieters m.fl. 2020 (systematisk review: træning er førstevalg ved skuldersmerter); NICE CKS Shoulder pain (2023).
+   Albue: JOSPT CPG Lateral elbow pain (Lucado m.fl. 2022); Karanasios m.fl. BJSM 2021 (træning med belastning af håndledsstrækkerne virker bedst);
+   Coombes m.fl. JAMA 2013 og Bisset m.fl. BMJ 2006 (blokade hjælper kort, men dårligere efter 6–12 mdr.; fysioterapi med øvelser bedre end vent og se);
+   Peterson m.fl. 2014 (excentrisk/koncentrisk træning); Vicenzino/Coombes 2015 (isometrisk smertelindring, belastningsstyring); NICE CKS Tennis elbow (2024). */
 'use strict';
 
 const LED_AREAS = [
-  { id: 'skulder', name: 'Skulder', icon: '💪', intro: 'Slidgigt i skulderen, frossen skulder og "klemt sene" (smerter, når du løfter armen).' }
+  { id: 'skulder', name: 'Skulder', icon: '💪', intro: 'Slidgigt i skulderen, frossen skulder og "klemt sene" (smerter, når du løfter armen).' },
+  { id: 'albue', name: 'Albue', icon: '🎾', intro: 'Tennisalbue (ondt på ydersiden) og golfalbue (ondt på indersiden) – ondt, når du griber, løfter eller vrider.' }
 ];
 
 const LED_PAIN_RULE = {
   skulder: 'Det må gerne gøre lidt ondt eller føles stramt, mens du træner: 0–2 er fint, og 3–5 er i orden, hvis det er faldet til ro igen næste morgen. ' +
     'Gør skulderen mere ondt næste dag, eller sover du dårligere, så skru ned: færre gentagelser, lavere løft eller lettere elastik. ' +
-    'Stop og kontakt læge, hvis du får snurren, føleforstyrrelser eller kraftnedsættelse i armen, eller hvis noget i "Hvornår skal du til læge?" passer på dig.'
+    'Stop og kontakt læge, hvis du får snurren, føleforstyrrelser eller kraftnedsættelse i armen, eller hvis noget i "Hvornår skal du til læge?" passer på dig.',
+  albue: 'Det må gerne gøre lidt ondt i albuen, mens du træner: 0–2 er fint, og 3–5 er i orden, hvis det er faldet til ro igen næste morgen. ' +
+    'Gør albuen mere ondt næste dag, eller får du svært ved at gribe om en kop, så skru ned: lettere vægt, færre gentagelser eller kortere tid. ' +
+    'Stop og kontakt læge, hvis du får snurren eller føleforstyrrelser i fingrene, hvis hånden bliver svag, eller hvis noget i "Hvornår skal du til læge?" passer på dig.'
 };
 
 const LED_PROGRAMS = [
@@ -70,11 +77,65 @@ const LED_PROGRAMS = [
       today: ['Skulderen er rød, varm og hævet, og du har feber eller føler dig syg.', 'Du kan pludselig ikke løfte armen efter et fald eller et tungt løft.', 'Du har så stærke smerter, at du slet ikke kan bevæge armen, selv med smertestillende.', 'Du får snurren, føleforstyrrelser eller kraftnedsættelse ned i armen og hånden, der bliver værre.'],
       weeks: ['Det er ikke blevet bedre efter 1–2 uger, trods øvelserne.', 'Skulderen bliver mere og mere stiv, så du ikke kan løfte armen eller tage tøj på.', 'Smerten er værst om natten og bliver ikke bedre af at skifte stilling.', 'Du har eller har haft kræft, eller du taber dig uden at ville det.']
     }
+  },
+  {
+    id: 'albue', area: 'albue', name: 'Albue', long: 'Tennis- og golfalbue', icon: 'albue', word: 'Niveau', holdLabel: 'Ondt nu', fbLabel: 'Styrke', aboutTitle: 'Gode råd om albuen',
+    intro: 'Tennisalbue og golfalbue er irriterede sener ved albuen – oftest fra hånd og underarm, der har arbejdet meget. Det går næsten altid over, og rolig styrketræning af underarmen er den bedste behandling.',
+    tabs: { hold: ['🆘 Ondt nu', 'Når albuen gør ondt, især når du griber'], forebyg: ['💪 Styrke', 'Når det er blevet lidt bedre'] },
+    hold: {
+      title: 'Ondt i albuen – de første uger',
+      calm: 'Tennis- og golfalbue er ikke farligt, og senen går ikke i stykker af, at du bruger armen. Senen er overbelastet og skal have lidt mindre af det, der irriterer den – og lidt mere rolig træning.',
+      course: 'De fleste bliver meget bedre i løbet af 3–6 måneder, og 9 ud af 10 er raske inden for et år. Øvelser og lidt mindre belastning i hverdagen gør vejen kortere. Blokader (binyrebarkhormon) giver kun kort lindring og kan gøre det værre på længere sigt.',
+      advice: [
+        'Skær ned på det, der gør ondt – fx tunge løft med strakt arm, hårde greb og mange vrid – men brug gerne armen til lette ting.',
+        'Løft med håndfladen opad og albuen tæt ind til kroppen. Det skåner senen ved tennisalbue.',
+        'Lav pres-øvelserne (hånden står stille) hver dag. De dæmper ofte smerten i en time eller to.',
+        'En albuerem (rem om underarmen lige under albuen) kan lindre, når du skal bruge armen. Den er ikke nødvendig.',
+        'Smertestillende gel eller håndkøbsmedicin kan hjælpe i en periode. Følg pakningen, og spørg apoteket eller lægen.'
+      ],
+      positions: [
+        'Når du sidder: lad underarmen hvile på et bord eller en pude, så hånden ikke hænger.',
+        'Ved computeren: musen tæt på kroppen og underarmen støttet på bordet.',
+        'Om natten: hold albuen lidt bøjet. Undgå at sove med armen strakt over hovedet eller under puden.'
+      ],
+      exercises: ['albue-h-iso-strak', 'albue-h-iso-boej', 'albue-h-straek-strak', 'albue-h-straek-boej']
+    },
+    phases: [
+      { n: 1, name: 'Niveau 1: Let vægt', weeks: 'Ca. uge 1–4', color: '#5b8def', goal: 'Vænne senen til at blive brugt igen – med en let vandflaske og roligt tempo.',
+        exercises: ['albue-1-loeft-op', 'albue-1-loeft-boej', 'albue-1-drej', 'albue-h-iso-strak', 'albue-h-straek-strak'],
+        criteria: ['Jeg kan lave 3 sæt med 15 løft med en ½-liters flaske uden smerte over 3.', 'Albuen gør ikke mere ondt næste morgen efter træning.', 'Jeg kan løfte en fyldt kaffekop uden at det gør meget ondt.'] },
+      { n: 2, name: 'Niveau 2: Tungere og langsomt', weeks: 'Ca. uge 4–8', color: '#3aa17e', goal: 'Gør senen stærkere med tungere vægt og langsomme bevægelser ned.',
+        exercises: ['albue-2-kun-ned', 'albue-2-haandklaede-vrid', 'albue-1-loeft-op', 'albue-1-loeft-boej', 'albue-1-drej'],
+        criteria: ['Jeg kan sænke en 1-liters flaske (eller 1–2 kg) langsomt 15 gange.', 'Jeg kan vride et håndklæde uden smerte over 3.', 'Jeg kan bære en fyldt indkøbspose et stykke vej.'] },
+      { n: 3, name: 'Niveau 3: Greb og hverdag', weeks: 'Fra ca. uge 8 – og så 1–2 gange om ugen', color: '#e0913a', goal: 'Gør hånd, underarm og skulder klar til tunge greb, havearbejde, værktøj og sport.',
+        exercises: ['albue-3-baere', 'albue-2-kun-ned', 'albue-2-haandklaede-vrid', 'albue-1-drej', 'bryst-2-roning-elastik'],
+        criteria: ['Jeg kan bære en tung pose i hver hånd i et minut uden smerte over 3.', 'Jeg kan bruge værktøj eller spille igen i kort tid uden at få mere ondt næste dag.', 'Jeg træner underarmen 1–2 gange om ugen.'] }
+    ],
+    everyday: [
+      'Bliv ved med øvelserne 1–2 gange om ugen, også når albuen er god igen.',
+      'Løft med begge hænder, håndfladerne opad og tingene tæt ind til kroppen.',
+      'Brug et tykkere greb på værktøj, havesaks og ketsjer – så skal du ikke klemme så hårdt.',
+      'Hold små pauser, når du arbejder med mus, skruetrækker, strikketøj eller i haven.',
+      'Kommer smerten igen? Gå tilbage til "Ondt nu" og Niveau 1 i et par uger, og byg op igen.'
+    ],
+    about: [
+      ['Tennisalbue', 'Ondt på ydersiden af albuen, især når du griber, løfter med håndfladen nedad eller vrider (fx åbner et syltetøjsglas). Det er de sener, der løfter hånden op, som er overbelastede. Du behøver ikke at spille tennis for at få det.'],
+      ['Golfalbue', 'Ondt på indersiden af albuen, når du griber, bøjer hånden eller løfter med håndfladen opad. Det er de sener, der bøjer hånd og fingre. Træningen er den samme – bare med håndfladen opad.'],
+      ['Hvilke øvelser skal jeg lave?', 'Tennisalbue: lav især øvelserne med håndfladen nedad. Golfalbue: lav især dem med håndfladen opad. De andre øvelser er gode for begge.'],
+      ['Må det gøre ondt?', 'Ja, lidt. Senen bliver stærkere af at blive belastet, og det må gerne gøre lidt ondt undervejs. Det vigtige er, at smerten er faldet til ro igen næste morgen. Se smertereglen nederst.'],
+      ['Blokade eller operation?', 'Blokader dæmper smerten i nogle uger, men de fleste har det dårligere efter et halvt år end dem, der kun har trænet. Operation er sjældent nødvendig – tal med lægen, hvis det ikke er bedre efter et halvt til et helt år.']
+    ],
+    redFlags: {
+      now: ['Du får pludselig smerter eller trykken i brystet, der stråler ud i armen, især med åndenød, sved eller kvalme (kan være hjertet).', 'Albuen ser forkert ud, er gået af led eller er meget hævet efter et fald.', 'Du får pludselig lammelse eller føleforstyrrelser i armen sammen med skæv mund eller besvær med at tale (kan være en blodprop i hjernen).'],
+      today: ['Albuen er rød, varm og hævet, og du har feber eller føler dig syg – især hvis der er en hævelse eller et sår på albuespidsen.', 'Du kan ikke strække eller bøje albuen helt efter et fald.', 'Det gav et smæld foran i albuen ved et tungt løft, og nu er der blå mærker og armen er svag (kan være en sene, der er revet over).'],
+      weeks: ['Det er slet ikke blevet bedre efter 1–2 uger med mindre belastning og øvelser.', 'Du får snurren eller prikken i ring- og lillefinger, eller hånden bliver svag og klodset.', 'Albuen bliver mere og mere stiv, så du ikke kan strække eller bøje den.', 'Smerten er der hele tiden, også om natten og i hvile, eller du har haft kræft eller taber dig uden at ville det.']
+    }
   }
 ];
 
 const LED_PAIN_CHECK = {
-  skulder: { beforeQuestion: 'Hvor ondt har du i skulderen lige nu?', afterQuestion: 'Hvor ondt har du i skulderen nu, efter øvelserne?' }
+  skulder: { beforeQuestion: 'Hvor ondt har du i skulderen lige nu?', afterQuestion: 'Hvor ondt har du i skulderen nu, efter øvelserne?' },
+  albue: { beforeQuestion: 'Hvor ondt har du i albuen lige nu?', afterQuestion: 'Hvor ondt har du i albuen nu, efter øvelserne?' }
 };
 const LED_READY_TEXT = {
   allChecked: 'Flot! Du er klar til næste niveau. Start roligt, og hold øje med, hvordan skulderen har det næste morgen.',
@@ -195,6 +256,117 @@ const LED_EXERCISES = [
     tips: ['Albuerne peger skråt ned – ikke ud til siden.', 'Jo længere fødderne er fra væggen, jo sværere.'],
     progression: 'Lettere: stå tættere på væggen. Sværere: brug en køkkenbordkant i stedet for væggen.',
     stop: LED_PAIN_RULE.skulder
+  },
+  /* ================= ALBUE ================= */
+  {
+    id: 'albue-h-iso-strak', category: 'albue', track: 'hold', level: 1, phases: [1],
+    images: [{"src": "images/albue-h-iso-strak/1.webp", "caption": "1. Læg underarmen på bordet med håndfladen nedad og hånden ud over kanten. Læg den anden hånd oven på.", "w": 720, "h": 393}, {"src": "images/albue-h-iso-strak/2.webp", "caption": "2. Pres hånden op mod den anden hånd med cirka halv kraft. Hånden står stille.", "w": 720, "h": 393}, {"src": "images/albue-h-iso-strak/3.webp", "caption": "3. Hold 30–45 sekunder, slap af, og hvil et minut.", "w": 720, "h": 393}], /* auto: tools/sync_images.py */
+    name: 'Pres hånden op – den står stille',
+    equipment: 'Et bord og evt. et foldet håndklæde under underarmen.',
+    dose: '5 gange. Hold 30–45 sekunder. 1–2 gange om dagen, gerne flere.',
+    steps: ['Læg underarmen på bordet med håndfladen nedad og hånden ud over kanten. Læg den anden hånd oven på.', 'Pres hånden op mod den anden hånd med cirka halv kraft. Hånden står stille.', 'Hold 30–45 sekunder, slap af, og hvil et minut.'],
+    tips: ['Især til tennisalbue (ondt på ydersiden).', 'Det må gerne trække lidt, men ikke gøre mere ondt end 3. Smerten dæmpes ofte bagefter.'],
+    progression: 'Lettere: pres svagere, eller hold kortere. Sværere: pres lidt hårdere, eller hold albuen strakt.',
+    stop: LED_PAIN_RULE.albue
+  },
+  {
+    id: 'albue-h-iso-boej', category: 'albue', track: 'hold', level: 1, phases: [1],
+    images: [{"src": "images/albue-h-iso-boej/1.webp", "caption": "1. Læg underarmen på bordet med håndfladen opad og hånden ud over kanten. Læg den anden hånd i håndfladen.", "w": 720, "h": 393}, {"src": "images/albue-h-iso-boej/2.webp", "caption": "2. Pres håndfladen op mod den anden hånd med cirka halv kraft. Hånden står stille.", "w": 720, "h": 393}, {"src": "images/albue-h-iso-boej/3.webp", "caption": "3. Hold 30–45 sekunder, slap af, og hvil et minut.", "w": 720, "h": 393}], /* auto: tools/sync_images.py */
+    name: 'Pres håndfladen op – den står stille',
+    equipment: 'Et bord og evt. et foldet håndklæde under underarmen.',
+    dose: '5 gange. Hold 30–45 sekunder. 1–2 gange om dagen, gerne flere.',
+    steps: ['Læg underarmen på bordet med håndfladen opad og hånden ud over kanten. Læg den anden hånd i håndfladen.', 'Pres håndfladen op mod den anden hånd med cirka halv kraft. Hånden står stille.', 'Hold 30–45 sekunder, slap af, og hvil et minut.'],
+    tips: ['Især til golfalbue (ondt på indersiden).', 'Træk vejret roligt – hold ikke vejret.'],
+    progression: 'Lettere: pres svagere, eller hold kortere. Sværere: pres lidt hårdere.',
+    stop: LED_PAIN_RULE.albue
+  },
+  {
+    id: 'albue-h-straek-strak', category: 'albue', track: 'hold', level: 1, phases: [1],
+    images: [{"src": "images/albue-h-straek-strak/1.webp", "caption": "1. Stræk armen frem med håndfladen nedad.", "w": 720, "h": 393}, {"src": "images/albue-h-straek-strak/2.webp", "caption": "2. Bøj roligt hånden ned med den anden hånd, til du mærker et stræk på oversiden af underarmen.", "w": 720, "h": 393}, {"src": "images/albue-h-straek-strak/3.webp", "caption": "3. Hold 30 sekunder, og slip langsomt.", "w": 720, "h": 393}], /* auto: tools/sync_images.py */
+    name: 'Stræk oversiden af underarmen',
+    equipment: 'Ingen.',
+    dose: '3 gange. Hold 30 sekunder. 2–3 gange om dagen.',
+    steps: ['Stræk armen frem med håndfladen nedad.', 'Bøj roligt hånden ned med den anden hånd, til du mærker et stræk på oversiden af underarmen.', 'Hold 30 sekunder, og slip langsomt.'],
+    tips: ['Især til tennisalbue.', 'Stræk skal være behageligt – ikke gøre ondt.'],
+    progression: 'Lettere: bøj albuen lidt. Sværere: knyt hånden let, mens du bøjer den ned.',
+    stop: LED_PAIN_RULE.albue
+  },
+  {
+    id: 'albue-h-straek-boej', category: 'albue', track: 'hold', level: 1, phases: [1],
+    images: [{"src": "images/albue-h-straek-boej/1.webp", "caption": "1. Stræk armen frem med håndfladen opad.", "w": 720, "h": 393}, {"src": "images/albue-h-straek-boej/2.webp", "caption": "2. Bøj roligt hånd og fingre ned og bagud med den anden hånd, til du mærker et stræk på undersiden af underarmen.", "w": 720, "h": 393}, {"src": "images/albue-h-straek-boej/3.webp", "caption": "3. Hold 30 sekunder, og slip langsomt.", "w": 720, "h": 393}], /* auto: tools/sync_images.py */
+    name: 'Stræk undersiden af underarmen',
+    equipment: 'Ingen.',
+    dose: '3 gange. Hold 30 sekunder. 2–3 gange om dagen.',
+    steps: ['Stræk armen frem med håndfladen opad.', 'Bøj roligt hånd og fingre ned og bagud med den anden hånd, til du mærker et stræk på undersiden af underarmen.', 'Hold 30 sekunder, og slip langsomt.'],
+    tips: ['Især til golfalbue.', 'Stræk skal være behageligt – ikke gøre ondt.'],
+    progression: 'Lettere: bøj albuen lidt. Sværere: stræk albuen helt.',
+    stop: LED_PAIN_RULE.albue
+  },
+  {
+    id: 'albue-1-loeft-op', category: 'albue', track: 'forebyg', level: 1, phases: [1, 2],
+    images: [{"src": "images/albue-1-loeft-op/1.webp", "caption": "1. Læg underarmen på bordet med håndfladen nedad og hånden ud over kanten. Hold flasken.", "w": 720, "h": 393}, {"src": "images/albue-1-loeft-op/2.webp", "caption": "2. Løft hånden roligt op, så langt du kan (3 sekunder).", "w": 720, "h": 393}, {"src": "images/albue-1-loeft-op/3.webp", "caption": "3. Sænk den langsomt ned igen (3 sekunder).", "w": 720, "h": 393}], /* auto: tools/sync_images.py */
+    name: 'Løft hånden op med en flaske',
+    equipment: 'En ½-liters vandflaske eller en lille håndvægt (½–1 kg). Et bord og et håndklæde.',
+    dose: '3 sæt med 15 gentagelser. Hver anden dag.',
+    steps: ['Læg underarmen på bordet med håndfladen nedad og hånden ud over kanten. Hold flasken.', 'Løft hånden roligt op, så langt du kan (3 sekunder).', 'Sænk den langsomt ned igen (3 sekunder).'],
+    tips: ['Især til tennisalbue.', 'Underarmen bliver liggende – kun hånden bevæger sig.'],
+    progression: 'Lettere: uden flaske. Sværere: en større flaske eller 1–2 kg.',
+    stop: LED_PAIN_RULE.albue
+  },
+  {
+    id: 'albue-1-loeft-boej', category: 'albue', track: 'forebyg', level: 1, phases: [1, 2],
+    images: [{"src": "images/albue-1-loeft-boej/1.webp", "caption": "1. Læg underarmen på bordet med håndfladen opad og hånden ud over kanten. Hold flasken.", "w": 720, "h": 393}, {"src": "images/albue-1-loeft-boej/2.webp", "caption": "2. Bøj hånden roligt op (3 sekunder).", "w": 720, "h": 393}, {"src": "images/albue-1-loeft-boej/3.webp", "caption": "3. Sænk den langsomt ned igen (3 sekunder).", "w": 720, "h": 393}], /* auto: tools/sync_images.py */
+    name: 'Bøj hånden op med en flaske',
+    equipment: 'En ½-liters vandflaske eller en lille håndvægt (½–1 kg). Et bord og et håndklæde.',
+    dose: '3 sæt med 15 gentagelser. Hver anden dag.',
+    steps: ['Læg underarmen på bordet med håndfladen opad og hånden ud over kanten. Hold flasken.', 'Bøj hånden roligt op (3 sekunder).', 'Sænk den langsomt ned igen (3 sekunder).'],
+    tips: ['Især til golfalbue.', 'Underarmen bliver liggende – kun hånden bevæger sig.'],
+    progression: 'Lettere: uden flaske. Sværere: en større flaske eller 1–2 kg.',
+    stop: LED_PAIN_RULE.albue
+  },
+  {
+    id: 'albue-1-drej', category: 'albue', track: 'forebyg', level: 1, phases: [1, 2, 3],
+    images: [{"src": "images/albue-1-drej/1.webp", "caption": "1. Læg underarmen på bordet, og hold albuen ind til kroppen. Hold flasken i den ene ende, så den peger op.", "w": 720, "h": 393}, {"src": "images/albue-1-drej/2.webp", "caption": "2. Drej roligt hånden, så håndfladen vender op (3 sekunder).", "w": 720, "h": 393}, {"src": "images/albue-1-drej/3.webp", "caption": "3. Drej den langsomt tilbage, så håndfladen vender ned (3 sekunder).", "w": 720, "h": 393}], /* auto: tools/sync_images.py */
+    name: 'Drej underarmen med en flaske',
+    equipment: 'En vandflaske, en hammer eller et kosteskaft. Et bord.',
+    dose: '3 sæt med 10–15 gentagelser. Hver anden dag.',
+    steps: ['Læg underarmen på bordet, og hold albuen ind til kroppen. Hold flasken i den ene ende, så den peger op.', 'Drej roligt hånden, så håndfladen vender op (3 sekunder).', 'Drej den langsomt tilbage, så håndfladen vender ned (3 sekunder).'],
+    tips: ['Godt til både tennis- og golfalbue.', 'Jo længere ude du holder, jo tungere er det.'],
+    progression: 'Lettere: hold tættere på enden med vægten. Sværere: en hammer, og hold længere nede på skaftet.',
+    stop: LED_PAIN_RULE.albue
+  },
+  {
+    id: 'albue-2-kun-ned', category: 'albue', track: 'forebyg', level: 2, phases: [2, 3],
+    images: [{"src": "images/albue-2-kun-ned/1.webp", "caption": "1. Læg underarmen på bordet med håndfladen nedad og hånden ud over kanten. Hold vægten.", "w": 720, "h": 393}, {"src": "images/albue-2-kun-ned/2.webp", "caption": "2. Løft hånden op med hjælp fra den anden hånd.", "w": 720, "h": 393}, {"src": "images/albue-2-kun-ned/3.webp", "caption": "3. Slip hjælpen, og sænk hånden langsomt alene (4 sekunder).", "w": 720, "h": 393}], /* auto: tools/sync_images.py */
+    name: 'Hjælp op – sænk langsomt',
+    equipment: 'En 1-liters flaske eller en håndvægt (1–3 kg). Et bord og et håndklæde.',
+    dose: '3 sæt med 15 gentagelser. Hver anden dag.',
+    steps: ['Læg underarmen på bordet med håndfladen nedad og hånden ud over kanten. Hold vægten.', 'Løft hånden op med hjælp fra den anden hånd.', 'Slip hjælpen, og sænk hånden langsomt alene (4 sekunder).'],
+    tips: ['Den langsomme bevægelse ned gør senen stærkere.', 'Golfalbue: lav den med håndfladen opad.'],
+    progression: 'Lettere: let vægt. Sværere: tungere vægt, eller sænk endnu langsommere.',
+    stop: LED_PAIN_RULE.albue
+  },
+  {
+    id: 'albue-2-haandklaede-vrid', category: 'albue', track: 'forebyg', level: 2, phases: [2, 3],
+    images: [{"src": "images/albue-2-haandklaede-vrid/1.webp", "caption": "1. Rul et håndklæde sammen, og hold det med begge hænder foran dig.", "w": 720, "h": 393}, {"src": "images/albue-2-haandklaede-vrid/2.webp", "caption": "2. Vrid roligt, som når du vrider en karklud (3 sekunder).", "w": 720, "h": 393}, {"src": "images/albue-2-haandklaede-vrid/3.webp", "caption": "3. Vrid derefter den anden vej (3 sekunder).", "w": 720, "h": 393}], /* auto: tools/sync_images.py */
+    name: 'Vrid et håndklæde',
+    equipment: 'Et håndklæde, rullet sammen.',
+    dose: '3 sæt med 10 vrid hver vej. Hver anden dag.',
+    steps: ['Rul et håndklæde sammen, og hold det med begge hænder foran dig.', 'Vrid roligt, som når du vrider en karklud (3 sekunder).', 'Vrid derefter den anden vej (3 sekunder).'],
+    tips: ['Træner greb og drej på én gang – som i hverdagen.', 'Vrid kun så hårdt, at smerten holder sig under 3–4.'],
+    progression: 'Lettere: et tyndt håndklæde og løst greb. Sværere: et tykt håndklæde, eller vrid hårdere.',
+    stop: LED_PAIN_RULE.albue
+  },
+  {
+    id: 'albue-3-baere', category: 'albue', track: 'forebyg', level: 3, phases: [3],
+    images: [{"src": "images/albue-3-baere/1.webp", "caption": "1. Tag en tung pose i hånden med strakt arm.", "w": 480, "h": 588}, {"src": "images/albue-3-baere/2.webp", "caption": "2. Stå rank, og gå roligt rundt i 30–60 sekunder.", "w": 480, "h": 588}, {"src": "images/albue-3-baere/3.webp", "caption": "3. Sæt posen ned, og skift hånd.", "w": 480, "h": 588}], /* auto: tools/sync_images.py */
+    name: 'Bær en tung pose',
+    equipment: 'En indkøbspose eller taske med noget tungt i (2–8 kg).',
+    dose: '3 gange med hver hånd. 30–60 sekunder ad gangen. 2 gange om ugen.',
+    steps: ['Tag en tung pose i hånden med strakt arm.', 'Stå rank, og gå roligt rundt i 30–60 sekunder.', 'Sæt posen ned, og skift hånd.'],
+    tips: ['Hold et fast greb, og lad skulderen være nede.', 'Godt til både tennis- og golfalbue – og til hverdagen.'],
+    progression: 'Lettere: en let pose og kortere tid. Sværere: tungere pose, eller gå længere.',
+    stop: LED_PAIN_RULE.albue
   }
 ];
 if (typeof RYG_PAIN_CHECK !== 'undefined') Object.assign(RYG_PAIN_CHECK, LED_PAIN_CHECK);

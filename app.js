@@ -95,10 +95,18 @@ let levels = loadLevels();
 let exercises = loadExercises();
 let log = loadLog();
 
-function doneToday(id) { return (log[dateKey()] || []).includes(id); }
-function toggleDone(id) {
+/* Øvelser, der bruges i flere programmer (fx skulderbladsklem i både Brystryg og Skulder), krydses af i det program,
+   de blev lavet fra: "id@program" i loggen, når programmet ikke er øvelsens eget. Uden program = øvelsens eget. */
+function doneKey(id, prog) { const e = prog ? exercises.find(x => x.id === id) : null; return e && prog !== e.category ? id + '@' + prog : id; }
+function exCtx(e) { // hvilket program øvelsessiden blev åbnet fra
+  let c = null; try { c = sessionStorage.getItem(KEY_GUIDE) || localStorage.getItem(KEY_LASTCAT); } catch (err) { /* ignore */ }
+  return c && c !== e.category && programExercises(c).some(x => x.id === e.id) ? c : e.category;
+}
+function doneToday(id, prog) { return (log[dateKey()] || []).includes(doneKey(id, prog)); }
+function toggleDone(id, prog) {
   const k = dateKey();
   const arr = log[k] || [];
+  id = doneKey(id, prog);
   const i = arr.indexOf(id);
   if (i >= 0) arr.splice(i, 1); else arr.push(id);
   if (arr.length) log[k] = arr; else delete log[k];
@@ -107,7 +115,7 @@ function toggleDone(id) {
 }
 function countDone(k) {
   const ids = new Set(exercises.map(e => e.id)); ids.add('hael-morgenrutine');
-  return (log[k] || []).filter(id => ids.has(id)).length;
+  return (log[k] || []).filter(id => ids.has(String(id).split('@')[0])).length;
 }
 
 
@@ -575,7 +583,7 @@ function programName(cid) { const c = CATEGORIES.find(x => x.id === cid); if (!c
 function startTraining(cid) {
   localStorage.setItem(KEY_LASTCAT, cid);
   const go = () => {
-    const list = programExercises(cid), next = list.find(e => !doneToday(e.id));
+    const list = programExercises(cid), next = list.find(e => !doneToday(e.id, cid));
     if (isSimple() && next) { sessionStorage.setItem(KEY_GUIDE, cid); location.hash = '#/oevelse/' + encodeURIComponent(next.id); }
     else location.hash = '#/kategori/' + cid;
   };
@@ -584,8 +592,8 @@ function startTraining(cid) {
 function viewHome() {
   setHeader('Hjemmeøvelser'); setTab('home');
   const now = new Date(), cid = lastCategory(), todays = programExercises(cid);
-  const doneN = todays.filter(e => doneToday(e.id)).length, allDone = todays.length > 0 && doneN === todays.length;
-  const next = todays.find(e => !doneToday(e.id));
+  const doneN = todays.filter(e => doneToday(e.id, cid)).length, allDone = todays.length > 0 && doneN === todays.length;
+  const next = todays.find(e => !doneToday(e.id, cid));
   let h = '<section class="hello"><p class="date">' + WEEKDAYS[now.getDay()].replace(/^./, c => c.toUpperCase()) + ' ' + now.getDate() + '. ' + MONTHS_LONG[now.getMonth()] + '</p>' +
     '<h2>' + greeting() + '! 👋</h2></section>';
   h += remindBannerHtml();
@@ -610,7 +618,7 @@ function viewHome() {
 
 /* ---------- Øvelser: vælg program ---------- */
 function progCard(c) {
-  const cur = lastCategory() === c.id, list = programExercises(c.id), d = list.filter(e => doneToday(e.id)).length;
+  const cur = lastCategory() === c.id, list = programExercises(c.id), d = list.filter(e => doneToday(e.id, c.id)).length;
   return '<a class="prog-card' + (cur ? ' cur' : '') + '" href="#/kategori/' + c.id + '" data-prog="' + c.id + '">' + catThumb(c) +
     '<span class="cat-txt"><strong>' + esc(c.name) + '</strong><span class="count">' + esc(programLevelLabel(c.id)) + (d ? ' · ' + d + ' ✓' : '') + '</span>' +
     (cur ? '<span class="cur-tag">Dit program nu</span>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>';
@@ -700,12 +708,12 @@ function viewCategory(id) {
     '<b>' + L.name + '</b><span>' + L.sub + '</span></button>').join('') + '</div>';
   if (!list.length) html += '<div class="card">Der er ingen øvelser på dette niveau endnu.</div>';
   list.forEach(e => {
-    const d = doneToday(e.id);
+    const d = doneToday(e.id, id);
     html += '<a class="ex-item' + (d ? ' done' : '') + '" href="#/oevelse/' + encodeURIComponent(e.id) + '">' + thumbHtml(e) +
       '<div class="txt"><strong>' + esc(e.name) + '</strong><span>' + esc(shortDose(e.dose)) + '</span></div>' +
       (d ? '<span class="check" aria-label="Lavet i dag">✓</span>' : '<span class="check" aria-hidden="true" style="color:#b9b4a8">›</span>') + '</a>';
   });
-  if (needsAfter(id) && list.some(e => doneToday(e.id))) html += '<button type="button" class="btn finish" id="finishBtn">✓ ' + esc(PAIN_CHECK.finishButton) + '</button>';
+  if (needsAfter(id) && list.some(e => doneToday(e.id, id))) html += '<button type="button" class="btn finish" id="finishBtn">✓ ' + esc(PAIN_CHECK.finishButton) + '</button>';
   const hasNext = all.some(e => (Number(e.level) || 1) === lv + 1);
   html += '<div class="card hint-card"><h3>' + (lv < 3 ? '🎯 Føles øvelserne lette?' : '🎯 Godt gået – du er på højeste niveau') + '</h3><p style="margin:0">' +
     (lv < 3
@@ -723,17 +731,17 @@ function shortDose(s) { return String(s || '').split('.')[0]; }
 
 /* Hvor er øvelsen i dagens program? (til "Øvelse 2 af 5" og "Næste øvelse") */
 function programNav(e) {
-  const list = programExercises(e.category), i = list.findIndex(x => x.id === e.id);
+  const ctx = exCtx(e), list = programExercises(ctx), i = list.findIndex(x => x.id === e.id);
   if (i < 0) return null;
-  const next = list.slice(i + 1).find(x => !doneToday(x.id)) || list.find(x => x.id !== e.id && !doneToday(x.id));
-  return { i: i + 1, n: list.length, next, allDone: list.every(x => doneToday(x.id)) };
+  const next = list.slice(i + 1).find(x => !doneToday(x.id, ctx)) || list.find(x => x.id !== e.id && !doneToday(x.id, ctx));
+  return { i: i + 1, n: list.length, next, allDone: list.every(x => doneToday(x.id, ctx)) };
 }
 function viewExercise(id) {
   const e = exercises.find(x => x.id === id);
   if (!e) { location.hash = '#/'; return; }
-  const cat = CATEGORIES.find(c => c.id === e.category);
-  setHeader(cat ? cat.name : 'Øvelse', '#/kategori/' + e.category); setTab('prog');
-  const d = doneToday(e.id), lv = Number(e.level) || 1, L = LEVELS.find(x => x.n === lv) || LEVELS[0];
+  const ctx = exCtx(e), cat = CATEGORIES.find(c => c.id === ctx);
+  setHeader(cat ? cat.name : 'Øvelse', '#/kategori/' + ctx); setTab('prog');
+  const d = doneToday(e.id, ctx), lv = Number(e.level) || 1, L = LEVELS.find(x => x.n === lv) || LEVELS[0];
   const isHael = e.category === 'haelspore' && HAEL_ON, ryg = typeof isRyg === 'function' && isRyg(e.category);
   const nav = programNav(e), simple = isSimple();
   let html = '<div class="ex-head">' + (isHael
@@ -751,12 +759,12 @@ function viewExercise(id) {
   html += '<div class="dose"><span aria-hidden="true">🔁</span><span>' + esc(e.dose) + '</span></div>';
   html += '<button id="doneBtn" class="btn ' + (d ? 'done' : '') + '" type="button">' + (d ? '✓ Lavet i dag – tryk for at fortryde' : 'Markér som lavet i dag') + '</button>';
   if (d && nav && nav.next) html += '<a class="btn next-btn" id="nextBtn" href="#/oevelse/' + encodeURIComponent(nav.next.id) + '">Næste øvelse: ' + esc(nav.next.name) + ' ›</a>';
-  if (needsAfter(e.category) && d && !nav) html += '<button type="button" class="btn secondary" id="finishBtn">' + esc(PAIN_CHECK.finishButton) + '</button>';
+  if (needsAfter(ctx) && d && !nav) html += '<button type="button" class="btn secondary" id="finishBtn">' + esc(PAIN_CHECK.finishButton) + '</button>';
   const steps = e.steps || [], first = steps.slice(0, 3), rest = steps.slice(3);
   html += '<div class="card"><h3>Sådan gør du</h3><ol class="steps">' + first.map(s => '<li>' + esc(s) + '</li>').join('') + '</ol>' +
     (rest.length ? '<details class="more-steps"><summary>Vis ' + (rest.length === 1 ? 'det sidste trin' : 'de sidste ' + rest.length + ' trin') + '</summary><ol class="steps" start="4">' + rest.map(s => '<li>' + esc(s) + '</li>').join('') + '</ol></details>' : '') + '</div>';
   if (e.equipment) html += '<p class="equip"><span aria-hidden="true">🧰</span> <b>Udstyr:</b> ' + esc(e.equipment) + '</p>';
-  if (ryg) html += rygDoctorLink(e.category);
+  if (ryg) html += rygDoctorLink(isRyg(ctx) ? ctx : e.category);
   const fold = (cls, title, body, open) => '<details class="card fold ' + cls + '"' + (open ? ' open' : '') + '><summary>' + title + '</summary>' + body + '</details>';
   if (imagesFor(e).length || (e.photos && e.photos.length)) html += fold('gal-fold', '🖼️ Billeder', galleryHtml(e), !simple);
   if (e.tips && e.tips.length) html += fold('', '✅ Gør det rigtigt', '<ul class="tips">' + e.tips.map(s => '<li>' + esc(s) + '</li>').join('') + '</ul>', !simple);
@@ -767,19 +775,19 @@ function viewExercise(id) {
   if (typeof initHaelTrinFilm === 'function') initHaelTrinFilm($app);
   if (typeof initFigFilm === 'function') initFigFilm($app);
   if (typeof Coach !== 'undefined') Coach.bind($app, e);
-  const fin = document.getElementById('finishBtn'); if (fin) fin.onclick = () => painAfter(e.category, () => checkBadges());
+  const fin = document.getElementById('finishBtn'); if (fin) fin.onclick = () => painAfter(ctx, () => checkBadges());
   document.getElementById('doneBtn').onclick = () => {
-    const nowDone = toggleDone(e.id);
+    const nowDone = toggleDone(e.id, ctx);
     toast(nowDone ? 'Godt gået! Øvelsen er krydset af.' : 'Afkrydsning fjernet.');
     const y = window.scrollY; viewExercise(id); window.scrollTo(0, y);
     if (nowDone) { const nb = document.getElementById('nextBtn'); if (nb) nb.scrollIntoView({ block: 'nearest' }); }
     if (!nowDone) return;
-    const prog = programExercises(e.category);
-    if (needsAfter(e.category) && prog.some(x => x.id === e.id) && prog.every(x => doneToday(x.id))) painAfter(e.category, () => { checkBadges(); if (sessionStorage.getItem(KEY_GUIDE)) { sessionStorage.removeItem(KEY_GUIDE); location.hash = '#/'; } });
+    const prog = programExercises(ctx);
+    if (needsAfter(ctx) && prog.some(x => x.id === e.id) && prog.every(x => doneToday(x.id, ctx))) painAfter(ctx, () => { checkBadges(); if (sessionStorage.getItem(KEY_GUIDE)) { sessionStorage.removeItem(KEY_GUIDE); location.hash = '#/'; } });
     else checkBadges();
   };
   // Stor og enkel: smerte spørges kun én gang – når man trykker "Start dagens træning" (samme før-måling som i Fuld oversigt)
-  if (!d && !beforeAsked(e.category) && !isSimple()) painBefore(e.category);
+  if (!d && !beforeAsked(ctx) && !isSimple()) painBefore(ctx);
 }
 
 function viewWeek() {

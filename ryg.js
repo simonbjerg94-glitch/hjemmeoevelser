@@ -30,9 +30,9 @@ function rygLabel(id) { const s = rygState(id), P = rygProg(id); return s.spor =
 function rygPhaseSteps(P, f) {
   return '<div class="phase-steps" aria-label="' + pWord(P) + ' ' + f + ' af 3">' + P.phases.map(x => '<span class="ps' + (x.n === f ? ' cur' : x.n < f ? ' done' : '') + '" style="--pc:' + x.color + '"><b>' + x.n + '</b></span>').join('') + '</div>';
 }
-function exListHtml(list) {
+function exListHtml(list, prog) {
   return list.map(e => {
-    const d = doneToday(e.id);
+    const d = doneToday(e.id, prog);
     return '<a class="ex-item' + (d ? ' done' : '') + '" href="#/oevelse/' + encodeURIComponent(e.id) + '">' + thumbHtml(e) +
       '<div class="txt"><strong>' + esc(e.name) + '</strong><span>' + esc(shortDose(e.dose)) + '</span></div>' +
       (d ? '<span class="check" aria-label="Lavet i dag">✓</span>' : '<span class="check" aria-hidden="true" style="color:#b9b4a8">›</span>') + '</a>';
@@ -56,15 +56,15 @@ function viewRyg(id) {
   if (st.spor === 'hold') {
     h += '<div class="card calm-card"><h3>💚 ' + esc(P.hold.title) + '</h3><p>' + esc(P.hold.calm) + '</p></div>';
     h += rygDoctorLink(id, true);
-    h += '<h2>Dine øvelser</h2>' + exListHtml(list);
+    h += '<h2>Dine øvelser</h2>' + exListHtml(list, id);
   } else {
     const F = P.phases[st.fase - 1];
     h += '<div class="card phase-card" style="--pc:' + F.color + '"><div class="row-between"><b>' + esc(F.name) + '</b><span class="muted small">' + esc(F.weeks) + '</span></div>' + rygPhaseSteps(P, st.fase) +
       '<p class="small" style="margin:8px 0 0">🎯 ' + esc(F.goal) + '</p>' +
       '<details class="phase-pick"><summary>Skift ' + pword(P) + '</summary><div class="levels">' + P.phases.map(x => '<button type="button" class="lvl' + (x.n === st.fase ? ' sel' : '') + '" data-rfase="' + x.n + '"><b>' + pWord(P) + ' ' + x.n + '</b><span>' + esc(x.name.split(': ')[1] || '') + '</span></button>').join('') + '</div></details></div>';
-    h += '<h2>Dine øvelser på ' + pword(P) + ' ' + st.fase + '</h2>' + exListHtml(list);
+    h += '<h2>Dine øvelser på ' + pword(P) + ' ' + st.fase + '</h2>' + exListHtml(list, id);
   }
-  if (needsAfter(id) && list.some(e => doneToday(e.id))) h += '<button type="button" class="btn finish" id="finishBtn">✓ ' + esc(PAIN_CHECK.finishButton) + '</button>';
+  if (needsAfter(id) && list.some(e => doneToday(e.id, id))) h += '<button type="button" class="btn finish" id="finishBtn">✓ ' + esc(PAIN_CHECK.finishButton) + '</button>';
   if (st.spor === 'hold') {
     h += '<div class="card"><h3>👍 Det hjælper</h3><ul class="tips">' + P.hold.advice.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul></div>';
     h += '<div class="card"><h3>🛋️ Stillinger, der kan lindre</h3><ul class="tips">' + P.hold.positions.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul></div>';

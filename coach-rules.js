@@ -123,9 +123,15 @@ const CoachRules = (() => {
     'skulder-h-pendul': pres('side', 60, 'pendulsvinget'), 'skulder-h-bordglid': pres('side', 90, 'glidet frem på bordet'),
     'skulder-h-stok-liggende': pres('lying', 90, 'armløftet med stokken'), 'skulder-h-udadrot-stok': pres('front', 90, 'drejningen af armen udad'),
     'skulder-1-loeft-frem': R.armFwd, 'skulder-1-isometrisk-udad': R.shoulderIso, 'skulder-2-udadrot-elastik': pres('front', 90, 'drejningen af armen udad mod elastikken'),
-    'skulder-2-sideloeft': R.armSide, 'skulder-3-armstraek-op': R.press, 'skulder-3-vaegpres': R.wallPush
+    'skulder-2-sideloeft': R.armSide, 'skulder-3-armstraek-op': R.press, 'skulder-3-vaegpres': R.wallPush,
+    // Albue: håndleddets små bevægelser kan kameraet ikke bedømme pålideligt → tilstedeværelse + tid
+    'albue-h-iso-strak': pres('front', 180, 'presset med hånden'), 'albue-h-iso-boej': pres('front', 180, 'presset med håndfladen'),
+    'albue-h-straek-strak': pres('front', 90, 'strækket af underarmen'), 'albue-h-straek-boej': pres('front', 90, 'strækket af underarmen'),
+    'albue-1-loeft-op': pres('front', 120, 'løftet med hånden'), 'albue-1-loeft-boej': pres('front', 120, 'løftet med hånden'),
+    'albue-1-drej': pres('front', 120, 'drejningen af underarmen'), 'albue-2-kun-ned': pres('front', 150, 'den langsomme sænkning'),
+    'albue-2-haandklaede-vrid': pres('front', 90, 'vridet med håndklædet'), 'albue-3-baere': pres('side', 60, 'turen med posen')
   };
-  const CATEGORY_DEFAULT = { knae: 'side', hofte: 'side', balance: 'front', haelspore: 'side', laend: 'lying', bryst: 'front', nakke: 'front', skulder: 'front' };
+  const CATEGORY_DEFAULT = { knae: 'side', hofte: 'side', balance: 'front', haelspore: 'side', laend: 'lying', bryst: 'front', nakke: 'front', skulder: 'front', albue: 'front' };
   function ruleFor(e) {
     const id = typeof e === 'string' ? e : e.id;
     return RULES[id] || pres(CATEGORY_DEFAULT[(e && e.category) || ''] || 'side', 60, 'øvelsen');

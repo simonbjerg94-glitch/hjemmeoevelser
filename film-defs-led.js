@@ -183,4 +183,156 @@
       back: () => R.wall(WALL, 340, 0, FLOOR)
     }));
   })();
+
+  /* ================= ALBUE (tennis- og golfalbue) =================
+     Nærbilleder af underarm og hånd (set fra siden). w = håndleddets vinkel (+ = op, − = ned). */
+  const CU = { W: 440, H: 270, floor: 270, view: 'custom' };
+  const TY = 176, EDGE = 292;                                   // bordets overflade og kant
+  const sleeveC = C.tealDark;
+  // Hånd set fra siden; håndleddet i (0,0), fingrene mod +x. kind: 'flat' | 'fist' | 'weight'. palm: 'ned' | 'op'
+  function handSide(kind, palm, far) {
+    const s = far ? C.skinMid : C.skin, d = C.skinDark;
+    if (kind === 'flat') return '<path fill="' + s + '" d="M-4,-13 C10,-15 26,-15 40,-12 C52,-11 64,-10 74,-7 C80,-5 80,3 74,4 C62,6 50,8 40,9 C26,11 10,13 -4,13 Z"/>' +
+      '<path fill="none" stroke="' + d + '" stroke-width="1.3" opacity=".7" d="M42,-2 L72,-2 M42,3 L70,2"/>' +
+      (palm === 'op' ? '<path fill="' + C.nail + '" opacity=".0" d=""/><path fill="' + s + '" stroke="' + d + '" stroke-width="1" d="M12,-12 C18,-22 30,-26 38,-22 C40,-19 34,-15 26,-12 Z"/>' :
+        '<path fill="' + (far ? C.skinDark : C.skinMid) + '" d="M12,10 C18,18 30,22 38,18 C40,15 34,11 26,9 Z"/><path fill="' + C.nail + '" d="M70,-6 C76,-6 78,-3 77,0 L71,-1 Z"/>');
+    const fist = '<path fill="' + s + '" d="M-4,-13 C8,-15 22,-16 34,-15 C46,-14 52,-8 52,0 C52,8 46,14 34,15 C22,16 8,15 -4,13 Z"/><path fill="none" stroke="' + d + '" stroke-width="1.3" opacity=".7" d="M38,-12 C44,-6 44,6 38,12 M46,-9 C49,-3 49,3 46,9"/>' +
+      (palm === 'op' ? '<path fill="' + C.skinMid + '" d="M6,-15 C14,-24 26,-24 30,-16 Z"/>' : '<path fill="' + C.skinMid + '" d="M6,15 C14,24 26,24 30,16 Z"/>');
+    if (kind === 'weight') return fist + '<circle cx="28" cy="0" r="13" fill="#5c646d"/><circle cx="28" cy="0" r="9.5" fill="#737c86"/><circle cx="28" cy="0" r="2.5" fill="#5c646d"/>';
+    return fist;
+  }
+  const tagW = (txt) => txt.length * 6.6 + 16;
+  // Tegner arm: mode 'table' (underarmen på bordet, hånden ud over kanten) eller 'straight' (strakt arm frem, uden bord)
+  function armCU(P) {
+    const st = P.mode === 'straight', E = st ? [150, 128] : [96, TY - 16], Wr = st ? [292, 128] : [EDGE + 4, TY - 16];
+    let s = '';
+    if (!st) s += '<rect x="0" y="' + TY + '" width="' + EDGE + '" height="' + (270 - TY) + '" fill="' + C.wood + '"/><rect x="0" y="' + TY + '" width="' + EDGE + '" height="8" fill="' + C.woodLight + '"/><rect x="' + (EDGE - 6) + '" y="' + TY + '" width="6" height="' + (270 - TY) + '" fill="' + C.woodDark + '"/>';
+    if (!st && P.towel) s += '<rect x="' + (EDGE - 64) + '" y="' + (TY - 10) + '" width="66" height="12" rx="5" fill="' + C.towel + '" stroke="' + C.towelDark + '" stroke-width="1"/>';
+    // overarm + ærme
+    const Sh = st ? [10, 128] : [40, 20];
+    s += FF.limb(Sh, E, 34, 30, C.skin) + FF.limb(Sh, FF.lerp(Sh, E, 0.55), 46, 40, sleeveC);
+    if (st) s += '<rect x="-20" y="60" width="42" height="150" rx="16" fill="' + C.teal + '"/>';
+    s += FF.limb(E, Wr, 30, 22, C.skin) + '<ellipse cx="' + f1(E[0] - 4) + '" cy="' + f1(E[1] + 2) + '" rx="10" ry="8" fill="' + C.skinDark + '" opacity=".35"/>';
+    // smertested (ydersiden = tennis, indersiden = golf)
+    if (P.spot) s += '<circle cx="' + f1(E[0] + 14) + '" cy="' + f1(E[1] + (P.spot === 'in' ? 7 : -7)) + '" r="9" fill="' + C.accent + '" opacity=".55"/>';
+    s += '<g transform="translate(' + P2(Wr) + ') rotate(' + f1(-(P.w || 0)) + ') scale(1.6)">' + handSide(P.kind || 'flat', P.palm || 'ned') + '</g>';
+    if (P.help) { // den anden hånd: oven på (+1) eller under (−1) den arbejdende hånd
+      const r = -(P.w || 0) * Math.PI / 180, along = [Math.cos(r), Math.sin(r)], nrm = [Math.sin(r), -Math.cos(r)], side = P.help;
+      const c = FF.add(Wr, FF.add(FF.mul(along, 70), FF.mul(nrm, side * 24))), a = (-(P.w || 0) + 180) + (side > 0 ? 6 : -6);
+      const arm0 = FF.add(c, side > 0 ? [70, -150] : [90, 140]);
+      s += FF.limb(arm0, FF.add(c, FF.mul([Math.cos(a * Math.PI / 180), Math.sin(a * Math.PI / 180)], 40)), 30, 24, C.skinMid) +
+        '<g transform="translate(' + P2(c) + ') rotate(' + f1(a + 180) + ') scale(1.6,' + (side > 0 ? -1.6 : 1.6) + ') translate(-30,0)">' + handSide('flat', 'ned', true) + '</g>';
+    }
+    return { svg: s, Wr, E };
+  }
+  const cuFilm = (extra) => Object.assign({}, CU, { vb: [0, 20, 440, 240], draw: P => armCU(P).svg }, extra);
+  const wristArrow = (P, up) => { const st = P.mode === 'straight', Wr = st ? [292, 128] : [EDGE + 4, TY - 16]; return arcPath(Wr, 118, up ? -8 : 8, up ? -48 : 58); };
+
+  // Isometrisk pres – tennisalbue (håndfladen nedad, den anden hånd holder igen ovenpå)
+  define('albue-h-iso-strak', cuFilm({
+    tempo: 'Underarmen på bordet, håndfladen nedad. Pres hånden op mod den anden hånd, der holder igen – hånden står stille. Hold 30–45 sek. med cirka halv kraft, og slap af. 5 gange.',
+    poses: { rest: { w: 0, help: 1, palm: 'ned', spot: 'out', q: 0, towel: 1 }, push: { w: 6, help: 1, palm: 'ned', spot: 'out', q: 1, towel: 1 } }, start: 'rest',
+    seq: [{ to: 'push', d: 1.5, k: 'op', l: 'Pres', count: false }, { d: 30, k: 'hold', l: 'Hold' }, { to: 'rest', d: 1.5, k: 'ned', l: 'Slap af', count: false }, { d: 3, k: 'pause', l: 'Hvil', count: false }],
+    still: 6, ghost: null,
+    over: P => ((P.q || 0) > 0.3 ? R.arrow([EDGE + 62, TY + 30], [EDGE + 62, TY - 2], C.accent) : '') + tag(14, 30, 'Håndfladen nedad · hånden står stille') + tag(14, 228, 'Ondt på ydersiden af albuen (tennisalbue)')
+  }));
+  // Isometrisk pres – golfalbue (håndfladen opad)
+  define('albue-h-iso-boej', cuFilm({
+    tempo: 'Underarmen på bordet, håndfladen opad. Pres håndfladen op mod den anden hånd, der holder igen – hånden står stille. Hold 30–45 sek. med cirka halv kraft, og slap af. 5 gange.',
+    poses: { rest: { w: 0, help: 1, palm: 'op', spot: 'in', q: 0, towel: 1 }, push: { w: 6, help: 1, palm: 'op', spot: 'in', q: 1, towel: 1 } }, start: 'rest',
+    seq: [{ to: 'push', d: 1.5, k: 'op', l: 'Pres', count: false }, { d: 30, k: 'hold', l: 'Hold' }, { to: 'rest', d: 1.5, k: 'ned', l: 'Slap af', count: false }, { d: 3, k: 'pause', l: 'Hvil', count: false }],
+    still: 6, ghost: null,
+    over: P => ((P.q || 0) > 0.3 ? R.arrow([EDGE + 62, TY + 30], [EDGE + 62, TY - 2], C.accent) : '') + tag(14, 30, 'Håndfladen opad · hånden står stille') + tag(14, 228, 'Ondt på indersiden af albuen (golfalbue)')
+  }));
+  // Stræk – strakt arm, håndfladen nedad, bøj hånden ned (tennis)
+  define('albue-h-straek-strak', cuFilm({
+    tempo: 'Stræk armen frem med håndfladen nedad. Bøj hånden roligt ned med den anden hånd (3 sek.), til du mærker et stræk på oversiden af underarmen. Hold 30 sek., og slip. 3 gange.',
+    poses: { a: { mode: 'straight', w: 0, help: 1, palm: 'ned', spot: 'out' }, b: { mode: 'straight', w: -58, help: 1, palm: 'ned', spot: 'out' } }, start: 'a',
+    seq: [{ to: 'b', d: 3, k: 'ned', l: 'Bøj ned', count: false }, { d: 30, k: 'hold', l: 'Hold' }, { to: 'a', d: 2, k: 'op', l: 'Slip', count: false }, { d: 2, k: 'pause', l: 'Hvil', count: false }],
+    still: 6, ghost: 'a',
+    over: P => wristArrow(P, false) + tag(14, 30, 'Strakt arm · håndfladen nedad')
+  }));
+  // Stræk – strakt arm, håndfladen opad, bøj hånden ned/bagud (golf)
+  define('albue-h-straek-boej', cuFilm({
+    tempo: 'Stræk armen frem med håndfladen opad. Bøj hånden og fingrene roligt ned og bagud med den anden hånd (3 sek.), til du mærker et stræk på undersiden af underarmen. Hold 30 sek., og slip. 3 gange.',
+    poses: { a: { mode: 'straight', w: 0, help: 1, palm: 'op', spot: 'in' }, b: { mode: 'straight', w: -52, help: 1, palm: 'op', spot: 'in' } }, start: 'a',
+    seq: [{ to: 'b', d: 3, k: 'ned', l: 'Bøj ned', count: false }, { d: 30, k: 'hold', l: 'Hold' }, { to: 'a', d: 2, k: 'op', l: 'Slip', count: false }, { d: 2, k: 'pause', l: 'Hvil', count: false }],
+    still: 6, ghost: 'a',
+    over: P => wristArrow(P, false) + tag(14, 30, 'Strakt arm · håndfladen opad')
+  }));
+  // Løft hånden op med vægt (håndfladen nedad) – tennis
+  define('albue-1-loeft-op', cuFilm({
+    tempo: 'Underarmen på bordet, håndfladen nedad, en vandflaske eller lille vægt i hånden. Løft hånden op (3 sek.), og sænk den langsomt (3 sek.). 3 sæt × 15.',
+    poses: { down: { w: -45, kind: 'weight', palm: 'ned', towel: 1 }, up: { w: 42, kind: 'weight', palm: 'ned', towel: 1 } }, start: 'down',
+    seq: [{ to: 'up', d: 3, k: 'op', l: 'Op', count: false }, { to: 'down', d: 3, k: 'ned', l: 'Ned', count: false }, { d: 0.6, k: 'pause', l: 'Klar', count: false }],
+    still: 3, ghost: 'down',
+    over: P => wristArrow(P, true) + tag(14, 30, 'Håndfladen nedad')
+  }));
+  // Bøj hånden op med vægt (håndfladen opad) – golf
+  define('albue-1-loeft-boej', cuFilm({
+    tempo: 'Underarmen på bordet, håndfladen opad, en vandflaske eller lille vægt i hånden. Bøj hånden op (3 sek.), og sænk den langsomt (3 sek.). 3 sæt × 15.',
+    poses: { down: { w: -45, kind: 'weight', palm: 'op', towel: 1 }, up: { w: 42, kind: 'weight', palm: 'op', towel: 1 } }, start: 'down',
+    seq: [{ to: 'up', d: 3, k: 'op', l: 'Op', count: false }, { to: 'down', d: 3, k: 'ned', l: 'Ned', count: false }, { d: 0.6, k: 'pause', l: 'Klar', count: false }],
+    still: 3, ghost: 'down',
+    over: P => wristArrow(P, true) + tag(14, 30, 'Håndfladen opad')
+  }));
+  // Kun ned (excentrisk): den anden hånd løfter op, den onde hånd sænker langsomt alene – tennis
+  define('albue-2-kun-ned', cuFilm({
+    tempo: 'Underarmen på bordet, håndfladen nedad, vægten i hånden. Løft hånden op med hjælp fra den anden hånd, og sænk den så langsomt alene (4 sek.). 3 sæt × 15.',
+    poses: { down: { w: -38, kind: 'weight', palm: 'ned', help: 0, towel: 1 }, helpDown: { w: -38, kind: 'weight', palm: 'ned', help: -1, towel: 1 }, helpUp: { w: 34, kind: 'weight', palm: 'ned', help: -1, towel: 1 }, up: { w: 34, kind: 'weight', palm: 'ned', help: 0, towel: 1 } }, start: 'down',
+    seq: [{ to: 'helpDown', d: 0.6, k: 'pause', l: 'Hjælp op', count: false }, { to: 'helpUp', d: 1.5, k: 'op', l: 'Hjælp op', count: false }, { to: 'up', d: 0.6, k: 'hold', l: 'Slip hjælpen', count: false },
+      { to: 'down', d: 4, k: 'ned', l: 'Langsomt ned', lin: true }, { d: 0.6, k: 'pause', l: 'Klar', count: false }],
+    still: 3.2, ghost: 'down', shots: [0.6, 2.1, 5.2],
+    over: (P, J, c) => (c.key === 'ned' ? arcPath([EDGE + 4, TY - 16], 118, -48, 58, C.accent) : '') + tag(14, 30, 'Den anden hånd løfter · du sænker langsomt')
+  }));
+  // Drej underarmen (set forfra mod knyttet hånd, flasken drejer)
+  (() => {
+    const c = [220, 140];
+    define('albue-1-drej', Object.assign({}, CU, {
+      vb: [0, 20, 440, 240],
+      tempo: 'Underarmen på bordet, albuen ind til kroppen. Hold en vandflaske i den ene ende. Drej roligt håndfladen op (3 sek.), og drej den ned (3 sek.). 3 sæt × 10–15.',
+      poses: { up: { a: -80 }, down: { a: 80 } }, start: 'down',
+      seq: [{ to: 'up', d: 3, k: 'op', l: 'Drej op', count: false }, { to: 'down', d: 3, k: 'ned', l: 'Drej ned', count: false }, { d: 0.6, k: 'pause', l: 'Klar', count: false }],
+      still: 1.5, ghost: 'down',
+      back: () => '<rect x="0" y="196" width="440" height="80" fill="' + C.wood + '"/><rect x="0" y="196" width="440" height="8" fill="' + C.woodLight + '"/>',
+      draw: P => { const a = P.a || 0;
+        return '<ellipse cx="' + c[0] + '" cy="198" rx="40" ry="12" fill="' + C.skinDark + '" opacity=".35"/><rect x="' + (c[0] - 26) + '" y="140" width="52" height="58" rx="18" fill="' + C.skin + '"/>' +
+          '<g transform="translate(' + c[0] + ' ' + c[1] + ') rotate(' + f1(a) + ')"><rect x="-13" y="-110" width="26" height="80" rx="9" fill="' + C.bottle + '" stroke="#5c94bf" stroke-width="2"/><rect x="-7" y="-122" width="14" height="13" rx="3" fill="#5c94bf"/>' +
+          '<rect x="-30" y="-34" width="60" height="62" rx="22" fill="' + C.skin + '"/><path fill="none" stroke="' + C.skinDark + '" stroke-width="1.6" d="M-18,-26 L-18,20 M-4,-28 L-4,22 M10,-26 L10,20"/>' +
+          '<path fill="' + C.skinMid + '" d="M-30,-6 C-40,-10 -42,6 -30,10 Z"/></g>'; },
+      over: P => arcPath(c, 150, -170, -10) + tag(14, 30, 'Set forfra: hånden drejer') + tag(300, 226, (P.a || 0) < 0 ? 'Håndfladen op' : 'Håndfladen ned')
+    }));
+  })();
+  // Vrid et håndklæde (set forfra: to knyttede hænder, håndklædet vrides)
+  (() => {
+    const L0 = [150, 140], R0 = [290, 140];
+    const fistF = (p, a) => '<g transform="translate(' + P2(p) + ') rotate(' + f1(a) + ')"><rect x="-26" y="-30" width="52" height="60" rx="20" fill="' + C.skin + '"/><path fill="none" stroke="' + C.skinDark + '" stroke-width="1.5" d="M-14,-22 L-14,22 M0,-24 L0,24 M14,-22 L14,22"/></g>';
+    define('albue-2-haandklaede-vrid', Object.assign({}, CU, {
+      vb: [0, 20, 440, 240],
+      tempo: 'Hold et sammenrullet håndklæde med begge hænder foran dig. Vrid roligt, som når du vrider en karklud (3 sek.), og vrid så den anden vej (3 sek.). 3 sæt × 10.',
+      poses: { a: { t: -1 }, b: { t: 1 } }, start: 'a',
+      seq: [{ to: 'b', d: 3, k: 'op', l: 'Vrid', count: false }, { to: 'a', d: 3, k: 'ned', l: 'Den anden vej', count: false }, { d: 0.5, k: 'pause', l: 'Klar', count: false }],
+      still: 1.5, ghost: null,
+      draw: P => { const t = P.t || 0; let s = '<rect x="20" y="124" width="400" height="32" rx="14" fill="' + C.towel + '" stroke="' + C.towelDark + '" stroke-width="1.5"/>';
+        for (let i = 0; i < 6; i++) { const x = 172 + i * 20; s += '<path fill="none" stroke="' + C.towelDark + '" stroke-width="2" d="M' + f1(x - 8 * t) + ',126 L' + f1(x + 8 * t) + ',154"/>'; }
+        s += FF.limb([110, 270], L0, 40, 34, C.skin) + FF.limb([330, 270], R0, 40, 34, C.skin) + fistF(L0, -40 * t) + fistF(R0, 40 * t);
+        return s; },
+      over: P => arcPath(L0, 52, -150, -30) + arcPath(R0, 52, -150, -30) + tag(14, 30, 'Set forfra')
+    }));
+  })();
+  // Bær en tung taske (stående, set fra siden; går roligt på stedet)
+  (() => {
+    const P = k => stand({ legF: { th: 10 * k, kn: 22 * Math.max(0, k) }, legN: { th: -10 * k, kn: 22 * Math.max(0, -k) }, armF: { sa: 2, ef: 6 }, armN: { sa: 0, ef: 0 }, k });
+    define('albue-3-baere', Object.assign(S(), {
+      vb: [10, 40, 310, 380],
+      tempo: 'Hold en tung indkøbspose i hånden med strakt arm. Stå rank, og gå roligt i 30–60 sek. Skift hånd. 3 gange med hver hånd.',
+      poses: { a: P(-1), m: P(0), b: P(1) }, start: 'm',
+      seq: [{ to: 'a', d: 0.8, k: 'op', l: 'Gå roligt', count: false }, { to: 'm', d: 0.6, k: 'op', l: 'Gå roligt', count: false }, { to: 'b', d: 0.8, k: 'op', l: 'Gå roligt', count: false }, { to: 'm', d: 0.6, k: 'op', l: 'Gå roligt', count: false }],
+      still: 0, ghost: null,
+      mod: P => { P.legF.ank = null; P.legN.ank = null; delete P.legF.ank; delete P.legN.ank; return P; },
+      figOpt: () => ({ front: J => { const h = J.arms.N.hd; return '<path fill="#e7b75f" stroke="#b98a35" stroke-width="2" d="M' + f1(h[0] - 24) + ',' + f1(h[1] + 10) + ' L' + f1(h[0] + 24) + ',' + f1(h[1] + 10) + ' L' + f1(h[0] + 20) + ',' + f1(h[1] + 66) + ' L' + f1(h[0] - 20) + ',' + f1(h[1] + 66) + ' Z"/>' +
+        '<path fill="none" stroke="#b98a35" stroke-width="3" d="M' + f1(h[0] - 12) + ',' + f1(h[1] + 12) + ' Q' + f1(h[0]) + ',' + f1(h[1] - 10) + ' ' + f1(h[0] + 12) + ',' + f1(h[1] + 12) + '"/>' + FF.limb(h, h, 12.4, 12.4, C.skin); } }),
+      over: () => tag(170, 60, 'Strakt arm · rank')
+    }));
+  })();
 })();

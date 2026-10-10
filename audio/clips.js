@@ -277,6 +277,10 @@ const VOICE_SETS = {
 "kvinde/cf48a0856e.mp3",
 10.9
 ],
+"bær en tung pose. hold en tung indkøbspose i hånden med strakt arm. stå rank, og gå roligt i 30–60 sek. skift hånd. 3 gange med hver hånd": [
+"kvinde/0e55d0fed1.mp3",
+16.78
+],
 "bøj": [
 "kvinde/3b2906cd67.mp3",
 0.62
@@ -284,6 +288,10 @@ const VOICE_SETS = {
 "bøj albuerne lidt mere": [
 "kvinde/ee3b3ce5cb.mp3",
 1.75
+],
+"bøj hånden op med en flaske. underarmen på bordet, håndfladen opad, en vandflaske eller lille vægt i hånden. bøj hånden op (3 sek.), og sænk den langsomt (3 sek.). 3 sæt × 15": [
+"kvinde/ce6dd98e0c.mp3",
+18.12
 ],
 "bøj i hofterne med ret ryg (med kosteskaft). ca. 2–3 sek. ned · 2 sek. op. bøj i hofterne med ret ryg – skaftet rører baghoved, skulderblade og haleben hele vejen": [
 "kvinde/4e602753f0.mp3",
@@ -341,6 +349,14 @@ const VOICE_SETS = {
 "kvinde/95a7e4efec.mp3",
 1.18
 ],
+"drej ned": [
+"kvinde/147f7c6306.mp3",
+1.06
+],
+"drej op": [
+"kvinde/4f005cdef4.mp3",
+0.91
+],
 "drej til den anden side": [
 "kvinde/27cadffbda.mp3",
 1.7
@@ -352,6 +368,10 @@ const VOICE_SETS = {
 "drej ud": [
 "kvinde/e3de387eea.mp3",
 0.77
+],
+"drej underarmen med en flaske. underarmen på bordet, albuen ind til kroppen. hold en vandflaske i den ene ende. drej roligt håndfladen op (3 sek.), og drej den ned (3 sek.). 3 sæt × 10–15": [
+"kvinde/ac9354766b.mp3",
+20.38
 ],
 "en gang til": [
 "kvinde/e963124074.mp3",
@@ -425,6 +445,10 @@ const VOICE_SETS = {
 "kvinde/3c6c462599.mp3",
 1.22
 ],
+"gå roligt": [
+"kvinde/f7a570ad3c.mp3",
+1.06
+],
 "hagen tilbage": [
 "kvinde/7229febdad.mp3",
 1.2
@@ -440,6 +464,14 @@ const VOICE_SETS = {
 "hej. jeg hjælper dig gennem øvelserne, roligt og i dit eget tempo": [
 "kvinde/d26a9f72e6.mp3",
 5.93
+],
+"hjælp op": [
+"kvinde/301288e63a.mp3",
+1.03
+],
+"hjælp op – sænk langsomt. underarmen på bordet, håndfladen nedad, vægten i hånden. løft hånden op med hjælp fra den anden hånd, og sænk den så langsomt alene (4 sek.). 3 sæt × 15": [
+"kvinde/b0f9139fea.mp3",
+18.72
 ],
 "hoftehængsel (bøj i hofterne med rank ryg). ca. 2–3 sek. ned · 2 sek. op. skaftet rører baghoved, skulderblade og haleben hele vejen": [
 "kvinde/7dfc0df54f.mp3",
@@ -553,6 +585,10 @@ const VOICE_SETS = {
 "kvinde/4f377f6975.mp3",
 1.06
 ],
+"langsomt ned": [
+"kvinde/7bcb66d248.mp3",
+1.39
+],
 "langsomt tilbage": [
 "kvinde/d446f1df2d.mp3",
 1.44
@@ -620,6 +656,10 @@ const VOICE_SETS = {
 "løft hoften igen": [
 "kvinde/aa9b73ad1c.mp3",
 1.42
+],
+"løft hånden op med en flaske. underarmen på bordet, håndfladen nedad, en vandflaske eller lille vægt i hånden. løft hånden op (3 sek.), og sænk den langsomt (3 sek.). 3 sæt × 15": [
+"kvinde/81c75c86b3.mp3",
+18.53
 ],
 "løft lidt højere": [
 "kvinde/0bf55a0077.mp3",
@@ -692,6 +732,14 @@ const VOICE_SETS = {
 "pres hovedet mod hånden. sid ret. læg hånden mod panden, og pres hovedet let frem mod hånden uden at bevæge det (ca. halv kraft). hold 8 sek., slip, og hvil. 5 gange. gør det også bagud og til siderne": [
 "kvinde/2ce52bbe7e.mp3",
 16.3
+],
+"pres hånden op – den står stille. underarmen på bordet, håndfladen nedad. pres hånden op mod den anden hånd, der holder igen – hånden står stille. hold 30–45 sek. med cirka halv kraft, og slap af. 5 gange": [
+"kvinde/71362e60c0.mp3",
+23.23
+],
+"pres håndfladen op – den står stille. underarmen på bordet, håndfladen opad. pres håndfladen op mod den anden hånd, der holder igen – hånden står stille. hold 30–45 sek. med cirka halv kraft, og slap af. 5 gange": [
+"kvinde/09a5b9144a.mp3",
+23.71
 ],
 "pres lænden ned": [
 "kvinde/0dca73d0b1.mp3",
@@ -817,6 +865,10 @@ const VOICE_SETS = {
 "kvinde/1a83c0ac5e.mp3",
 0.7
 ],
+"slip hjælpen": [
+"kvinde/6a969db812.mp3",
+1.15
+],
 "slip langsomt": [
 "kvinde/aadc5447a9.mp3",
 1.34
@@ -881,9 +933,17 @@ const VOICE_SETS = {
 "kvinde/7ad4930f70.mp3",
 13.34
 ],
+"stræk oversiden af underarmen. stræk armen frem med håndfladen nedad. bøj hånden roligt ned med den anden hånd (3 sek.), til du mærker et stræk på oversiden af underarmen. hold 30 sek., og slip. 3 gange": [
+"kvinde/626a2d4ddd.mp3",
+19.56
+],
 "stræk ud": [
 "kvinde/6bceb87883.mp3",
 0.94
+],
+"stræk undersiden af underarmen. stræk armen frem med håndfladen opad. bøj hånden og fingrene roligt ned og bagud med den anden hånd (3 sek.), til du mærker et stræk på undersiden af underarmen. hold 30 sek., og slip. 3 gange": [
+"kvinde/e54528a186.mp3",
+20.54
 ],
 "stå": [
 "kvinde/f0229956da.mp3",
@@ -992,6 +1052,14 @@ const VOICE_SETS = {
 "vip foden op og ned 20 gange. det vækker læggen og fodsålen": [
 "kvinde/a7e5d00deb.mp3",
 5.78
+],
+"vrid": [
+"kvinde/aa24edf0b0.mp3",
+0.53
+],
+"vrid et håndklæde. hold et sammenrullet håndklæde med begge hænder foran dig. vrid roligt, som når du vrider en karklud (3 sek.), og vrid så den anden vej (3 sek.). 3 sæt × 10": [
+"kvinde/f882bd7582.mp3",
+15.29
 ],
 "vægengle. stå med ryggen og baghovedet mod væggen. arme og albuer mod væggen i w. glid langsomt armene op (3 sek.) og ned igen (3 sek.) uden at ryggen svajer. 8–10 gange": [
 "kvinde/739b8d118e.mp3",
@@ -1307,6 +1375,10 @@ const VOICE_SETS = {
 "mand/d796e18cbc.mp3",
 10.68
 ],
+"bær en tung pose. hold en tung indkøbspose i hånden med strakt arm. stå rank, og gå roligt i 30–60 sek. skift hånd. 3 gange med hver hånd": [
+"mand/7e27953d59.mp3",
+16.58
+],
 "bøj": [
 "mand/a2877646b4.mp3",
 0.6
@@ -1314,6 +1386,10 @@ const VOICE_SETS = {
 "bøj albuerne lidt mere": [
 "mand/1039b3adc4.mp3",
 2.02
+],
+"bøj hånden op med en flaske. underarmen på bordet, håndfladen opad, en vandflaske eller lille vægt i hånden. bøj hånden op (3 sek.), og sænk den langsomt (3 sek.). 3 sæt × 15": [
+"mand/ffbf9fc967.mp3",
+18.48
 ],
 "bøj i hofterne med ret ryg (med kosteskaft). ca. 2–3 sek. ned · 2 sek. op. bøj i hofterne med ret ryg – skaftet rører baghoved, skulderblade og haleben hele vejen": [
 "mand/0fb6658825.mp3",
@@ -1371,6 +1447,14 @@ const VOICE_SETS = {
 "mand/2a122d32f1.mp3",
 1.13
 ],
+"drej ned": [
+"mand/5c4daa300a.mp3",
+1.01
+],
+"drej op": [
+"mand/148b2c648d.mp3",
+0.82
+],
 "drej til den anden side": [
 "mand/641d15a36e.mp3",
 1.8
@@ -1382,6 +1466,10 @@ const VOICE_SETS = {
 "drej ud": [
 "mand/6c76cd39ba.mp3",
 0.79
+],
+"drej underarmen med en flaske. underarmen på bordet, albuen ind til kroppen. hold en vandflaske i den ene ende. drej roligt håndfladen op (3 sek.), og drej den ned (3 sek.). 3 sæt × 10–15": [
+"mand/b926be3a43.mp3",
+20.57
 ],
 "en gang til": [
 "mand/4978d137aa.mp3",
@@ -1455,6 +1543,10 @@ const VOICE_SETS = {
 "mand/b4908d6aa2.mp3",
 1.25
 ],
+"gå roligt": [
+"mand/b8925538ff.mp3",
+0.98
+],
 "hagen tilbage": [
 "mand/33bbbaac77.mp3",
 1.2
@@ -1470,6 +1562,14 @@ const VOICE_SETS = {
 "hej. jeg hjælper dig gennem øvelserne, roligt og i dit eget tempo": [
 "mand/72f1c5a423.mp3",
 6.02
+],
+"hjælp op": [
+"mand/3e142f2ef1.mp3",
+0.79
+],
+"hjælp op – sænk langsomt. underarmen på bordet, håndfladen nedad, vægten i hånden. løft hånden op med hjælp fra den anden hånd, og sænk den så langsomt alene (4 sek.). 3 sæt × 15": [
+"mand/266c3549de.mp3",
+18.65
 ],
 "hoftehængsel (bøj i hofterne med rank ryg). ca. 2–3 sek. ned · 2 sek. op. skaftet rører baghoved, skulderblade og haleben hele vejen": [
 "mand/746ecfd2c6.mp3",
@@ -1583,6 +1683,10 @@ const VOICE_SETS = {
 "mand/9e4fd1882f.mp3",
 1.15
 ],
+"langsomt ned": [
+"mand/dffbd4a145.mp3",
+1.56
+],
 "langsomt tilbage": [
 "mand/7696977308.mp3",
 1.54
@@ -1650,6 +1754,10 @@ const VOICE_SETS = {
 "løft hoften igen": [
 "mand/d2962cebe7.mp3",
 1.54
+],
+"løft hånden op med en flaske. underarmen på bordet, håndfladen nedad, en vandflaske eller lille vægt i hånden. løft hånden op (3 sek.), og sænk den langsomt (3 sek.). 3 sæt × 15": [
+"mand/8ef78ac986.mp3",
+18.43
 ],
 "løft lidt højere": [
 "mand/d809897735.mp3",
@@ -1722,6 +1830,14 @@ const VOICE_SETS = {
 "pres hovedet mod hånden. sid ret. læg hånden mod panden, og pres hovedet let frem mod hånden uden at bevæge det (ca. halv kraft). hold 8 sek., slip, og hvil. 5 gange. gør det også bagud og til siderne": [
 "mand/55aef2c50b.mp3",
 15.77
+],
+"pres hånden op – den står stille. underarmen på bordet, håndfladen nedad. pres hånden op mod den anden hånd, der holder igen – hånden står stille. hold 30–45 sek. med cirka halv kraft, og slap af. 5 gange": [
+"mand/f65dfa4b7b.mp3",
+22.51
+],
+"pres håndfladen op – den står stille. underarmen på bordet, håndfladen opad. pres håndfladen op mod den anden hånd, der holder igen – hånden står stille. hold 30–45 sek. med cirka halv kraft, og slap af. 5 gange": [
+"mand/1e6bcb6f3f.mp3",
+23.35
 ],
 "pres lænden ned": [
 "mand/30ad1d5da7.mp3",
@@ -1847,6 +1963,10 @@ const VOICE_SETS = {
 "mand/2b0a6d043c.mp3",
 0.6
 ],
+"slip hjælpen": [
+"mand/3587c54a07.mp3",
+1.1
+],
 "slip langsomt": [
 "mand/099a811f2b.mp3",
 1.3
@@ -1911,9 +2031,17 @@ const VOICE_SETS = {
 "mand/a9d69e52fb.mp3",
 13.54
 ],
+"stræk oversiden af underarmen. stræk armen frem med håndfladen nedad. bøj hånden roligt ned med den anden hånd (3 sek.), til du mærker et stræk på oversiden af underarmen. hold 30 sek., og slip. 3 gange": [
+"mand/f21f9ea386.mp3",
+19.39
+],
 "stræk ud": [
 "mand/4adc2e4a31.mp3",
 0.94
+],
+"stræk undersiden af underarmen. stræk armen frem med håndfladen opad. bøj hånden og fingrene roligt ned og bagud med den anden hånd (3 sek.), til du mærker et stræk på undersiden af underarmen. hold 30 sek., og slip. 3 gange": [
+"mand/1e10d4acbf.mp3",
+20.74
 ],
 "stå": [
 "mand/d6d2de994c.mp3",
@@ -2022,6 +2150,14 @@ const VOICE_SETS = {
 "vip foden op og ned 20 gange. det vækker læggen og fodsålen": [
 "mand/d0f5f5015b.mp3",
 5.9
+],
+"vrid": [
+"mand/bc876179e2.mp3",
+0.65
+],
+"vrid et håndklæde. hold et sammenrullet håndklæde med begge hænder foran dig. vrid roligt, som når du vrider en karklud (3 sek.), og vrid så den anden vej (3 sek.). 3 sæt × 10": [
+"mand/42162daa30.mp3",
+15.38
 ],
 "vægengle. stå med ryggen og baghovedet mod væggen. arme og albuer mod væggen i w. glid langsomt armene op (3 sek.) og ned igen (3 sek.) uden at ryggen svajer. 8–10 gange": [
 "mand/f8e5a9649a.mp3",
