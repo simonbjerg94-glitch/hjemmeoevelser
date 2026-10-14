@@ -550,7 +550,7 @@ function viewOnboarding(then) {
   $app.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => {
     setMode(b.dataset.mode);
     toast(MODE_INFO[b.dataset.mode].name + ' er valgt.');
-    if (typeof Voice !== 'undefined' && Voice.WHO) viewOnboardingVoice(); else finishOnboarding();
+    if (typeof Voice !== 'undefined' && Voice.WHO) viewOnboardingVoice(); else if (typeof QS !== 'undefined') QS.choice(); else finishOnboarding();
   });
 }
 function finishOnboarding() {
@@ -575,7 +575,7 @@ function viewOnboardingVoice() {
   h += voiceChoiceHtml(null) + '<button type="button" class="btn secondary" data-who="fra">Uden stemme</button>';
   h += '<p class="hint" style="text-align:center">Du kan altid skifte under <b>☰ Mere</b> › Stemme.</p>';
   $app.innerHTML = h;
-  bindVoiceChoice($app, () => finishOnboarding());
+  bindVoiceChoice($app, () => (typeof QS !== 'undefined' ? QS.choice() : finishOnboarding()));
 }
 
 /* ---------- I dag (forside): én stor knap + "Hvad skal jeg gøre nu?" ---------- */
@@ -597,9 +597,10 @@ function viewHome() {
   let h = '<section class="hello"><p class="date">' + WEEKDAYS[now.getDay()].replace(/^./, c => c.toUpperCase()) + ' ' + now.getDate() + '. ' + MONTHS_LONG[now.getMonth()] + '</p>' +
     '<h2>' + greeting() + '! 👋</h2></section>';
   h += remindBannerHtml();
+  if (typeof QS !== 'undefined' && !QS.load() && !localStorage.getItem('hjo_svar_v1_skip')) h += '<a class="card more-row q-invite" href="#/spoergsmaal/valg"><span class="mi">' + icon('clipboard') + '</span><span><b>Find de rigtige øvelser til dig</b><small>Svar på et par spørgsmål – få tre forslag</small></span><span class="chev">›</span></a>';
   h += '<div class="card now-card"><p class="now-q">Hvad skal jeg gøre nu?</p>' +
     '<a class="btn start' + (allDone ? ' done' : '') + '" id="startBtn" href="#/kategori/' + cid + '">' +
-    '<span class="start-main">' + (allDone ? '✓ Dagens træning er lavet' : (doneN ? '▶ Fortsæt dagens træning' : '▶ Start dagens træning')) + '</span>' +
+    '<span class="start-main">' + (allDone ? icon('check') + 'Dagens træning er lavet' : icon('play') + (doneN ? 'Fortsæt dagens træning' : 'Start dagens træning')) + '</span>' +
     '<span class="start-sub">' + esc(programName(cid)) + ' · ' + programLevelLabel(cid) + ' · ' + doneN + ' af ' + todays.length + ' øvelser</span></a>' +
     (allDone ? '<p class="now-next">Godt gået! Hvil dig, og træn igen i morgen eller i overmorgen.</p>' : next ? '<p class="now-next">Næste øvelse: <b>' + esc(next.name) + '</b></p>' : '') + '</div>';
   if (HAEL_ON && haelUsed() && now.getHours() < 11 && !haelRoutineDoneToday()) h += '<button type="button" class="btn routine-btn" id="homeRoutine">🌅 Morgenrutine – 2 min <small>(hælspore)</small></button>';
@@ -649,7 +650,7 @@ function areaGroups() {
 function groupCard(g) {
   const cur = g.progs.some(c => c.id === lastCategory()), one = g.progs.length === 1, href = one ? '#/kategori/' + g.progs[0].id : '#/gruppe/' + g.id;
   const pc = g.progs.find(c => c.id === lastCategory()) || g.progs[0];
-  return '<a class="prog-card area-card' + (cur ? ' cur' : '') + '" href="' + href + '" data-area="' + g.id + '"' + (one ? ' data-prog="' + g.progs[0].id + '"' : '') + '>' + catThumb(pc) +
+  return '<a class="prog-card area-card' + (cur ? ' cur' : '') + '" href="' + href + '" data-area="' + g.id + '"' + (one ? ' data-prog="' + g.progs[0].id + '"' : '') + '>' + (typeof bodyIcon === 'function' ? bodyIcon(g.id) : catThumb(pc)) +
     '<span class="cat-txt"><strong>' + esc(g.name) + '</strong><span class="count">' + esc(one ? programLevelLabel(g.progs[0].id) : g.progs.map(c => c.name).join(' · ')) + '</span>' +
     (cur ? '<span class="cur-tag">Dit program nu</span>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>';
 }
@@ -663,7 +664,7 @@ function viewGroup(id) {
 }
 function areaCard(a) {
   const cur = a.progs.some(c => c.id === lastCategory()), href = a.progs.length === 1 ? '#/kategori/' + a.progs[0].id : '#/omraade/' + a.id;
-  return '<a class="prog-card area-card' + (cur ? ' cur' : '') + '" href="' + href + '" data-area="' + a.id + '">' + catThumb(a.progs[0]) +
+  return '<a class="prog-card area-card' + (cur ? ' cur' : '') + '" href="' + href + '" data-area="' + a.id + '">' + (typeof bodyIcon === 'function' ? bodyIcon(a.id) : catThumb(a.progs[0])) +
     '<span class="cat-txt"><strong>' + esc(a.name) + '</strong><span class="count">' + esc(a.progs.length === 1 ? (a.progs[0].name !== a.name ? a.progs[0].name + ' · ' : '') + programLevelLabel(a.progs[0].id) : a.progs.map(c => c.name).join(' · ')) + '</span>' +
     (cur ? '<span class="cur-tag">Dit program nu</span>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>';
 }
@@ -704,6 +705,8 @@ function viewMore() {
       '<button type="button" role="radio" class="seg-b' + (Voice.choice() === k ? ' sel' : '') + '" aria-checked="' + (Voice.choice() === k) + '" data-vchoice="' + k + '"><b>' + n + '</b></button>').join('') + '</div>' +
       '<div class="voice-listen"><button type="button" class="btn small secondary" data-listen="kvinde">▶ Lyt: kvinde</button><button type="button" class="btn small secondary" data-listen="mand">▶ Lyt: mand</button></div>' +
       (Voice.note() ? '<p class="hint">' + Voice.note() + '</p>' : '') : '') + '</div>';
+  h += '<h2>Dig og din træning</h2>' + row('#/mine-svar', icon('clipboard'), 'Mine svar', typeof QS !== 'undefined' && QS.load() ? 'Se, ret eller slet dine svar · se forslag' : 'Svar på spørgsmål og få tre forslag', 'mineSvar') +
+    row('#/analyse', icon('walk'), 'Gang- og squat-analyse', 'Kameraet ser på, hvordan du går og bøjer knæene', 'analyseRow');
   h += '<h2>Mere i appen</h2>' +
     row('#/raad', '📖', 'Gode råd', 'Om artrose, hælspore og træning') +
     row('#/smerte', '📈', 'Min smerte', 'Graf over din smerte uge for uge') +
@@ -971,7 +974,7 @@ function viewStats() {
       (HAEL_ON ? 'I hælsporet spørger appen også om morgensmerten: <i>"' + esc(HAEL_PAIN_CHECK.morningQuestion) + '"</i> ' : '') +
       'Dine svar fra 0 til 10 bliver til en graf her, så du kan følge udviklingen uge for uge.</p>' +
       '<p class="muted small" style="margin:0">Tallene gemmes kun på denne telefon. Du kan altid springe vurderingen over.</p></div>' +
-      '<a class="btn" href="#/kategori/' + lastCategory() + '">▶ Start dagens træning</a>';
+      '<a class="btn" href="#/kategori/' + lastCategory() + '">' + icon('play') + 'Start dagens træning</a>';
     return;
   }
   let period = readJson(KEY_STATS_PERIOD, '4u'); if (!['4u', '3m', 'alt'].includes(period)) period = '4u';
@@ -1370,6 +1373,9 @@ function route() {
     case 'velkommen': return viewOnboarding();
     case 'programmer': return viewPrograms();
     case 'mere': return viewMore();
+    case 'spoergsmaal': return QS.routeQ(parts);
+    case 'mine-svar': return QS.mine();
+    case 'analyse': return Analyse.view(parts[1]);
     case 'ryg': case 'led': return viewRygSub(parts[1], parts[2]);
     case 'omraade': return viewArea(parts[1]); case 'gruppe': return viewGroup(parts[1]);
     case 'kategori': return viewCategory(parts[1]);
