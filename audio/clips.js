@@ -517,6 +517,10 @@ const VOICE_SETS = {
 "kvinde/025580322d.mp3",
 1.61
 ],
+"hold hælene oppe (til dårlige dage). løft hælene 3–5 cm · hold stille 30–45 sek. · sænk langsomt. 1 minuts pause mellem gentagelserne": [
+"kvinde/8308d81177.mp3",
+15.02
+],
 "hold lidt længere": [
 "kvinde/b2fdc77cb1.mp3",
 1.2
@@ -552,6 +556,10 @@ const VOICE_SETS = {
 "hånden bagud": [
 "kvinde/80bc09fd75.mp3",
 1.06
+],
+"hæløft med bøjede knæ (soleus). knæene bøjede hele tiden · 3 sek. op · hold 2 sek. · 3 sek. ned. mærkes dybt i læggen": [
+"kvinde/18dd43df00.mp3",
+12.26
 ],
 "hæløft med håndklæde på trappetrin, begge ben. 3 sek. op · 2 sek. hold · 3 sek. ned. følg hælen i dit eget tempo": [
 "kvinde/ca77e7c5e8.mp3",
@@ -640,6 +648,10 @@ const VOICE_SETS = {
 "knævip liggende. lig på ryggen med bøjede knæ og fødderne i underlaget. lad knæene falde roligt til den ene side og så til den anden – kun så langt, det er rart. 10 gange til hver side": [
 "kvinde/529356aeb5.mp3",
 12.74
+],
+"kort fod (løft svangen). træk fodballen mod hælen, så svangen løfter sig (ca. 2 sek.) · hold 5–10 sek. · slip langsomt. tæerne ligger lange og flade": [
+"kvinde/7592dfa1ce.mp3",
+14.74
 ],
 "kort fod. sid eller stå med foden fladt. træk forfoden mod hælen, så svangen løfter sig – uden at krølle tæerne (2 sek.). hold 5 sek., og slap af. 10 gange": [
 "kvinde/3b6fa82cda.mp3",
@@ -921,10 +933,6 @@ const VOICE_SETS = {
 "kvinde/9d86f1625e.mp3",
 11.06
 ],
-"rul foden over en bold eller en frossen flaske. rul roligt frem og tilbage fra hælen til forfoden (ca. 2 sek. hver vej) i 1–2 minutter. tryk, så det føles behageligt": [
-"kvinde/8789a69232.mp3",
-11.93
-],
 "rund ryggen": [
 "kvinde/8c1b123cc0.mp3",
 1.03
@@ -976,6 +984,10 @@ const VOICE_SETS = {
 "sideplanke på knæ. lig på siden på underarmen med albuen lige under skulderen og knæene bøjet. løft hoften, så du er lige fra knæ til skulder (2 sek.), hold 10 sek., og sænk roligt. 3–5 gange til hver side": [
 "kvinde/5871e3a145.mp3",
 15.22
+],
+"skift": [
+"kvinde/020c987696.mp3",
+0.84
 ],
 "skift ben": [
 "kvinde/468ed60161.mp3",
@@ -1041,6 +1053,10 @@ const VOICE_SETS = {
 "kvinde/0a470c067f.mp3",
 11.86
 ],
+"små tæer op": [
+"kvinde/0d99493559.mp3",
+1.44
+],
 "spred": [
 "kvinde/5195f6a43c.mp3",
 0.67
@@ -1084,6 +1100,10 @@ const VOICE_SETS = {
 "stil dig": [
 "kvinde/99d0b55afb.mp3",
 1.06
+],
+"storetå op": [
+"kvinde/0140118c16.mp3",
+1.44
 ],
 "storetåen op": [
 "kvinde/4b9d7e83a7.mp3",
@@ -1249,6 +1269,10 @@ const VOICE_SETS = {
 "kvinde/ae89569f86.mp3",
 7.68
 ],
+"tå-yoga (storetå og små tæer skiftevis). storetåen op, de små tæer i gulvet · hold 3 sek. · skift: storetåen ned, de små tæer op · hold 3 sek. foden står stille": [
+"kvinde/c1b6e14ba0.mp3",
+15.86
+],
 "tå-yoga. løft storetåen, mens de små tæer bliver i gulvet (hold 3 sek.). skift: pres storetåen ned, og løft de små tæer (hold 3 sek.). 10 gange": [
 "kvinde/2d0fb87d6c.mp3",
 15.74
@@ -1272,6 +1296,10 @@ const VOICE_SETS = {
 "udfaldsskridt fremad. skridt frem · ca. 2 sek. ned · 2 sek. op · træd tilbage. hold let i køkkenbordet": [
 "kvinde/54b260bfcd.mp3",
 11.74
+],
+"valgfri lindring: rul foden over en bold eller en frossen flaske. rul roligt frem og tilbage fra hælen til forfoden (ca. 2 sek. hver vej) i 1–2 minutter. tryk, så det føles behageligt": [
+"kvinde/669ee7625e.mp3",
+16.18
 ],
 "vejrtrækning ud i ribbenene. sid ret, og læg hænderne på siden af de nederste ribben. træk vejret ind gennem næsen, så ribbenene skubber hænderne ud (4 sek.), og pust langsomt ud (6 sek.). 6–8 gange": [
 "kvinde/d9516ce90f.mp3",
@@ -1851,6 +1879,10 @@ const VOICE_SETS = {
 "mand/398d473b8a.mp3",
 1.44
 ],
+"hold hælene oppe (til dårlige dage). løft hælene 3–5 cm · hold stille 30–45 sek. · sænk langsomt. 1 minuts pause mellem gentagelserne": [
+"mand/0448bcdb18.mp3",
+14.83
+],
 "hold lidt længere": [
 "mand/9a48df66d8.mp3",
 1.22
@@ -1886,6 +1918,10 @@ const VOICE_SETS = {
 "hånden bagud": [
 "mand/e4497d46a1.mp3",
 1.15
+],
+"hæløft med bøjede knæ (soleus). knæene bøjede hele tiden · 3 sek. op · hold 2 sek. · 3 sek. ned. mærkes dybt i læggen": [
+"mand/4a2bedab3b.mp3",
+12.14
 ],
 "hæløft med håndklæde på trappetrin, begge ben. 3 sek. op · 2 sek. hold · 3 sek. ned. følg hælen i dit eget tempo": [
 "mand/29d2a0d3e4.mp3",
@@ -1974,6 +2010,10 @@ const VOICE_SETS = {
 "knævip liggende. lig på ryggen med bøjede knæ og fødderne i underlaget. lad knæene falde roligt til den ene side og så til den anden – kun så langt, det er rart. 10 gange til hver side": [
 "mand/fc640378de.mp3",
 12.94
+],
+"kort fod (løft svangen). træk fodballen mod hælen, så svangen løfter sig (ca. 2 sek.) · hold 5–10 sek. · slip langsomt. tæerne ligger lange og flade": [
+"mand/1a017f0e8a.mp3",
+15.46
 ],
 "kort fod. sid eller stå med foden fladt. træk forfoden mod hælen, så svangen løfter sig – uden at krølle tæerne (2 sek.). hold 5 sek., og slap af. 10 gange": [
 "mand/55a55dc1da.mp3",
@@ -2255,10 +2295,6 @@ const VOICE_SETS = {
 "mand/0bcfd99266.mp3",
 10.94
 ],
-"rul foden over en bold eller en frossen flaske. rul roligt frem og tilbage fra hælen til forfoden (ca. 2 sek. hver vej) i 1–2 minutter. tryk, så det føles behageligt": [
-"mand/fbef1f367a.mp3",
-12.14
-],
 "rund ryggen": [
 "mand/8d4192817a.mp3",
 0.96
@@ -2310,6 +2346,10 @@ const VOICE_SETS = {
 "sideplanke på knæ. lig på siden på underarmen med albuen lige under skulderen og knæene bøjet. løft hoften, så du er lige fra knæ til skulder (2 sek.), hold 10 sek., og sænk roligt. 3–5 gange til hver side": [
 "mand/6c95762ae2.mp3",
 14.98
+],
+"skift": [
+"mand/37085c279d.mp3",
+0.84
 ],
 "skift ben": [
 "mand/5e2f4d527e.mp3",
@@ -2375,6 +2415,10 @@ const VOICE_SETS = {
 "mand/79fba1c0af.mp3",
 12.0
 ],
+"små tæer op": [
+"mand/1507dd02e8.mp3",
+1.25
+],
 "spred": [
 "mand/4871c3efd6.mp3",
 0.77
@@ -2418,6 +2462,10 @@ const VOICE_SETS = {
 "stil dig": [
 "mand/090886e128.mp3",
 1.01
+],
+"storetå op": [
+"mand/31700c55c3.mp3",
+1.25
 ],
 "storetåen op": [
 "mand/65c55a215e.mp3",
@@ -2583,6 +2631,10 @@ const VOICE_SETS = {
 "mand/de6eaee540.mp3",
 7.82
 ],
+"tå-yoga (storetå og små tæer skiftevis). storetåen op, de små tæer i gulvet · hold 3 sek. · skift: storetåen ned, de små tæer op · hold 3 sek. foden står stille": [
+"mand/a32b6acba5.mp3",
+15.86
+],
 "tå-yoga. løft storetåen, mens de små tæer bliver i gulvet (hold 3 sek.). skift: pres storetåen ned, og løft de små tæer (hold 3 sek.). 10 gange": [
 "mand/8dfed5c9a0.mp3",
 15.0
@@ -2606,6 +2658,10 @@ const VOICE_SETS = {
 "udfaldsskridt fremad. skridt frem · ca. 2 sek. ned · 2 sek. op · træd tilbage. hold let i køkkenbordet": [
 "mand/272b21a37c.mp3",
 10.82
+],
+"valgfri lindring: rul foden over en bold eller en frossen flaske. rul roligt frem og tilbage fra hælen til forfoden (ca. 2 sek. hver vej) i 1–2 minutter. tryk, så det føles behageligt": [
+"mand/9fac962245.mp3",
+16.54
 ],
 "vejrtrækning ud i ribbenene. sid ret, og læg hænderne på siden af de nederste ribben. træk vejret ind gennem næsen, så ribbenene skubber hænderne ud (4 sek.), og pust langsomt ud (6 sek.). 6–8 gange": [
 "mand/afe5fb198b.mp3",

@@ -110,6 +110,7 @@ const CoachRules = (() => {
     'hael-1-fascie-straek': pres('close', 100, 'strækket af fodsålen'), 'hael-1-rul-under-foden': pres('close', 90, 'rulningen under foden'),
     'hael-1-laeg-straek-strakt': R.calfStretch, 'hael-1-laeg-straek-boejet': R.calfStretch, 'hael-1-isometrisk-pres': pres('side', 45, 'presset mod væggen'),
     'hael-2-haandklaede-kroel': pres('close', 60, 'tæerne'), 'hael-2-haeloeft-begge': R.heelRaise, 'hael-2-haeloeft-trin-begge': R.heelRaise,
+    'hael-2-kort-fod': pres('close', 10, 'svangen'), 'hael-2-taa-yoga': pres('close', 30, 'tæerne'), 'hael-2-isometrisk-haeloeft': pres('side', 45, 'hælene oppe'), 'hael-3-soleus-haeloeft': R.heelRaise,
     'hael-3-tungt-haeloeft-et-ben': R.heelRaise, 'hael-4-smaa-hop': R.hop,
     'laend-h-knaevip': pres('lying', 120, 'knævippet'), 'laend-h-baekkenvip': pres('lying', 90, 'det lille vip i bækkenet'), 'laend-h-kat-ko': pres('side', 90, 'rygbøjningen'),
     'laend-h-hvilestilling': pres('lying', 180, 'hvilestillingen'), 'laend-1-bro': R.bridge, 'laend-1-dead-bug': pres('lying', 90, 'arm- og benstrækket liggende'),

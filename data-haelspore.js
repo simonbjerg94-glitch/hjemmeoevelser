@@ -57,7 +57,7 @@ const HAEL_PHASES = [
       'Aflastning: gode sko, indlæg eller hælkop, evt. tape, færre lange gåture på hårdt underlag',
       'Hold formen ved lige med cykling eller svømning'
     ],
-    exercises: ['hael-1-fascie-straek', 'hael-1-rul-under-foden', 'hael-1-laeg-straek-strakt', 'hael-1-laeg-straek-boejet', 'hael-1-isometrisk-pres'],
+    exercises: ['hael-1-fascie-straek', 'hael-1-laeg-straek-strakt', 'hael-1-laeg-straek-boejet', 'hael-1-isometrisk-pres', 'hael-1-rul-under-foden'],
     criteria: [
       'De første skridt om morgenen er højst 5 ud af 10 og ikke længere stigende',
       'Du kan gå 15–20 minutter i hverdagen, og smerten er faldet til ro igen næste morgen',
@@ -75,7 +75,7 @@ const HAEL_PHASES = [
       'Fortsæt morgenrutine og stræk dagligt',
       'Øg gåturene lidt ad gangen, når morgensmerten tillader det'
     ],
-    exercises: ['hael-1-fascie-straek', 'hael-1-laeg-straek-strakt', 'hael-1-laeg-straek-boejet', 'hael-2-haandklaede-kroel', 'hael-2-haeloeft-begge', 'hael-2-haeloeft-trin-begge', 'hael-1-isometrisk-pres'],
+    exercises: ['hael-1-fascie-straek', 'hael-1-laeg-straek-strakt', 'hael-1-laeg-straek-boejet', 'hael-2-kort-fod', 'hael-2-haeloeft-begge', 'hael-2-haeloeft-trin-begge', 'hael-2-taa-yoga', 'hael-2-isometrisk-haeloeft'],
     criteria: [
       'Du kan lave 3 × 15 langsomme hæløft på begge ben med håndklæde på trin med højst 3–4 ud af 10 i smerte',
       'De første skridt om morgenen er højst 3 ud af 10, eller tydeligt bedre end i starten',
@@ -92,7 +92,7 @@ const HAEL_PHASES = [
       'Stræk fortsat om morgenen og efter behov',
       'Længere gåture: øg med ca. 10 % om ugen, så længe morgensmerten er stabil'
     ],
-    exercises: ['hael-1-fascie-straek', 'hael-1-laeg-straek-strakt', 'hael-1-laeg-straek-boejet', 'hael-3-tungt-haeloeft-et-ben', 'hael-2-haandklaede-kroel'],
+    exercises: ['hael-1-fascie-straek', 'hael-1-laeg-straek-strakt', 'hael-1-laeg-straek-boejet', 'hael-3-tungt-haeloeft-et-ben', 'hael-3-soleus-haeloeft', 'hael-2-kort-fod', 'hael-2-haandklaede-kroel', 'hael-2-isometrisk-haeloeft'],
     criteria: [
       'Du kan lave 5 × 8 tunge hæløft på ét ben med rygsæk, og morgensmerten bliver ikke værre dagen efter',
       'Du kan lave 20–25 hæløft på ét ben (uden vægt) på det dårlige ben, næsten lige så mange som på det gode',
@@ -110,7 +110,7 @@ const HAEL_PHASES = [
       'Gå-/løbeprogram i små trin',
       'Fortsæt mindst 4 uger, efter at du er tilfreds, og hold derefter 1–2 styrketræninger om ugen'
     ],
-    exercises: ['hael-3-tungt-haeloeft-et-ben', 'hael-4-smaa-hop', 'hael-1-laeg-straek-strakt', 'hael-1-fascie-straek'],
+    exercises: ['hael-3-tungt-haeloeft-et-ben', 'hael-3-soleus-haeloeft', 'hael-4-smaa-hop', 'hael-1-laeg-straek-strakt', 'hael-1-fascie-straek'],
     criteria: [
       'Du kan gå så langt, som du har brug for i hverdagen, uden at det gør ondt dagen efter',
       'Løbere: 30 minutters roligt løb 3 gange om ugen uden at morgensmerten stiger',
@@ -151,12 +151,12 @@ const HAEL_EXERCISES = [
       { url: 'https://www.youtube.com/watch?v=rlAjIXb-8BM', source: 'NHS Ayrshire & Arran (engelsk): "Plantar Fascia Towel stretch" (0:47). Den lette variant med håndklæde.', lang: 'en' },
       { url: 'https://www.youtube.com/watch?v=ex82U6NvBZM', source: 'NHS Ayrshire & Arran (engelsk): "Plantar Fascia Wall Stretch" (0:48). Den svære variant ved væg.', lang: 'en' }
     ],
-    evidence: 'DiGiovanni 2003/2006 (JBJS): plantarfascie-specifikt stræk 10 × 10 s, 3 gange dagligt, før første skridt. JOSPT CPG 2023: grad A for fascie- og lægstræk.'
+    evidence: 'DiGiovanni 2003/2006 (JBJS): plantarfascie-specifikt stræk 10 × 10 s, 3 gange dagligt, før første skridt. JOSPT CPG 2023: grad A for fascie- og lægstræk. CPG\'ens oversigt fandt fasciestræk bedre end lægstræk alene.'
   },
   {
     id: 'hael-1-rul-under-foden', category: 'haelspore', level: 1, phases: [1, 2],
     images: [{"src": "images/hael-1-rul-under-foden/1.webp", "caption": "1. Sid på en stol med foden på en frossen flaske eller en bold", "w": 844, "h": 1440}, {"src": "images/hael-1-rul-under-foden/2.webp", "caption": "2. Rul langsomt frem og tilbage fra hæl til forfod", "w": 844, "h": 1440}, {"src": "images/hael-1-rul-under-foden/3.webp", "caption": "3. En tennisbold eller massagebold virker også", "w": 846, "h": 1440}], /* auto: tools/sync_images.py */
-    name: 'Rul foden over en bold eller en frossen flaske',
+    name: 'Valgfri lindring: rul foden over en bold eller en frossen flaske',
     equipment: 'En tennisbold, massagebold eller en frossen vandflaske (0,5 l) og et viskestykke.',
     dose: '1–2 minutter ad gangen, 1–3 gange om dagen efter behov. Med frossen flaske: højst 10 minutter.',
     steps: [
@@ -178,7 +178,7 @@ const HAEL_EXERCISES = [
     videoAltOld: [
       { url: 'https://www.youtube.com/watch?v=bWkMZcca-KU', source: 'NHS Ayrshire & Arran (engelsk): "Plantar Fascia Cold Therapy" (0:44). Viser frossen flaske.', lang: 'en' }
     ],
-    evidence: 'Lindring og velvære (NHS-råd om is). Lav evidens for effekt på forløbet. Bruges som supplement.'
+    evidence: 'Valgfri lindring. Ingen forsøg viser, at selvmassage med bold alene ændrer forløbet (CPG 2023 grad A for manuel terapi gælder behandlerudført behandling). Brug den, hvis den letter, men den erstatter ikke stræk og styrke.'
   },
   {
     id: 'hael-1-laeg-straek-strakt', category: 'haelspore', level: 1, phases: [1, 2, 3, 4],
@@ -255,14 +255,14 @@ const HAEL_EXERCISES = [
     videoSourceOld: 'NHS Ayrshire & Arran (engelsk): "Seated Isometric Holds Plantarflexion" (1:14)',
     videoLang: 'en',
     videoAltOld: [],
-    evidence: 'Blid belastning i den smertefulde fase, inspireret af isometrisk træning ved senesmerter. Ikke selvstændigt testet ved plantar fasciitis. Bruges som "trin 0" før hæløft (CPG 2023 grad B for styrketræning af fod/ankel).'
+    evidence: 'Trin 0 på stigen: blid belastning, når hælen er mest øm. Inspireret af isometrisk træning ved senesmerter, hvor den smertelindrende effekt er usikker. Ikke selvstændigt testet ved plantar fasciitis (svag evidens). CPG 2023: styrketræning af fod/ankel anbefales.'
   },
   {
     id: 'hael-2-haandklaede-kroel', category: 'haelspore', level: 2, phases: [2, 3],
     images: [{"src": "images/hael-2-haandklaede-kroel/1.webp", "caption": "1. Sid med den bare fod på et håndklæde", "w": 850, "h": 1440}, {"src": "images/hael-2-haandklaede-kroel/2.webp", "caption": "2. Krøl tæerne, og træk håndklædet ind under foden", "w": 846, "h": 1440}, {"src": "images/hael-2-haandklaede-kroel/3.webp", "caption": "3. Spred tæerne, og grib efter mere. Hælen bliver nede", "w": 852, "h": 1440}], /* auto: tools/sync_images.py */
     name: 'Krøl håndklædet med tæerne',
     equipment: 'Et lille håndklæde på et glat gulv. En stol.',
-    dose: '3 sæt × 10–15 gentagelser (eller 3 × 30 sekunder). Hver 2. dag, eller dagligt hvis det føles godt.',
+    dose: '3 sæt × 15 gentagelser. Hver 2. dag, eller dagligt hvis det føles godt. Når det er let: læg 1–2 kg (fx en pose ris) på enden af håndklædet.',
     steps: [
       'Sid på en stol med ret ryg og knæet bøjet ca. 90 grader. Sæt den bare fod på et håndklæde.',
       'Hold hælen i gulvet. Krøl tæerne og træk håndklædet ind under foden.',
@@ -280,7 +280,7 @@ const HAEL_EXERCISES = [
     videoSourceOld: 'NHS Ayrshire & Arran (engelsk): "Plantar Fascia Intrinsic Towel Strengthening Exercise" (0:58)',
     videoLang: 'en',
     videoAltOld: [],
-    evidence: 'JOSPT CPG 2023: grad B for styrketræning af fodens og ankelens muskler.'
+    evidence: 'Kamonseki 2016 (RCT): håndklædekrøl 3 × 15 med 1–2 kg + kort fod + stræk virkede, men ikke bedre end stræk alene. JOSPT CPG 2023 anbefaler styrketræning af fod/ankel. Ingen styrkeform er vist bedst.'
   },
   {
     id: 'hael-2-haeloeft-begge', category: 'haelspore', level: 2, phases: [2],
@@ -360,7 +360,95 @@ const HAEL_EXERCISES = [
       { url: 'https://www.youtube.com/watch?v=ja_y_Pi1oK0', source: 'The Irish Physios (engelsk): "Plantar Fasciitis Exercises | Rathleff Protocol" (0:38). Ét ben på trin med håndklæde.', lang: 'en' },
       { url: 'https://www.youtube.com/watch?v=GHgEgPGiExU', source: 'NHS Ayrshire & Arran (engelsk): "Plantar Fascia Loading Exercise (High Load Exercise)" (1:04). Samme øvelse på gulvet, uden trin.', lang: 'en' }
     ],
-    evidence: 'Rathleff 2015: 3 × 12RM → 4 × 10RM (rygsæk efter 2 uger) → 5 × 8RM (efter 4 uger), hver 2. dag i 3 mdr. Bedre FFI efter 3 mdr. end stræk alene, ingen forskel efter 6–12 mdr. Riel 2019/2023: selvdoseret ≤ 8RM lige så godt.'
+    evidence: 'Rathleff 2015: 3 × 12RM → 4 × 10RM (rygsæk efter 2 uger) → 5 × 8RM (efter 4 uger), hver 2. dag i 3 mdr. Bedre FFI efter 3 mdr. end stræk alene, ingen forskel efter 6–12 mdr. Riel 2019: selvdoseret ≤ 8RM lige så godt. Riel 2023 (BJSM): råd + hælkop gav lige så godt resultat med og uden hæløft, så øvelsen er et godt tilbud, men ikke et must.'
+  },
+  {
+    id: 'hael-2-kort-fod', category: 'haelspore', level: 2, phases: [2, 3],
+    images: [{"src": "images/hael-2-kort-fod/1.webp", "caption": "1. Sid på en stol med den bare fod fladt på gulvet og knæet over anklen.", "w": 720, "h": 518}, {"src": "images/hael-2-kort-fod/2.webp", "caption": "2. Træk fodballen langsomt hen mod hælen, så svangen løfter sig som en lille kuppel. Tæerne bliver lange og afslappede.", "w": 720, "h": 518}, {"src": "images/hael-2-kort-fod/3.webp", "caption": "3. Hælen og fodballen bliver i gulvet. Krøl ikke tæerne.", "w": 720, "h": 518}], /* auto: tools/sync_images.py */
+    name: 'Kort fod (løft svangen)',
+    equipment: 'Bare fødder og en stol. Senere stående.',
+    dose: '10 gentagelser × hold 5–10 sekunder. 1–2 gange dagligt. Byg op til 3 × 1 minut i alt.',
+    steps: [
+      'Sid på en stol med den bare fod fladt på gulvet og knæet over anklen.',
+      'Træk fodballen langsomt hen mod hælen, så svangen løfter sig som en lille kuppel. Tæerne bliver lange og afslappede.',
+      'Hælen og fodballen bliver i gulvet. Krøl ikke tæerne.',
+      'Hold 5–10 sekunder, og slip langsomt.'
+    ],
+    tips: [
+      'Bevægelsen er lille. Tænk "gør foden kortere" uden at bøje tæerne.',
+      'Kig efter: der kommer luft under svangen.',
+      'Det er de små muskler under foden, der arbejder.'
+    ],
+    progression: 'Siddende → stående på begge ben → stående på ét ben → på ét ben med let knæbøj.',
+    stop: HAEL_PAIN_RULE + ' Får du krampe i foden, så hold pause og stræk tæerne.',
+    videoLang: 'da',
+    evidence: 'Kamonseki 2016 (RCT): kort fod 3 × 1 min sammen med stræk forbedrede smerte og funktion, men ikke mere end stræk alene. JOSPT CPG 2023 anbefaler styrketræning af fod/ankel (svag-moderat evidens).'
+  },
+  {
+    id: 'hael-2-taa-yoga', category: 'haelspore', level: 2, phases: [2],
+    images: [{"src": "images/hael-2-taa-yoga/1.webp", "caption": "1. Sid på en stol med den bare fod fladt på gulvet.", "w": 720, "h": 518}, {"src": "images/hael-2-taa-yoga/2.webp", "caption": "2. Løft storetåen, mens de fire små tæer presser ned i gulvet. Hold 3 sekunder.", "w": 720, "h": 518}, {"src": "images/hael-2-taa-yoga/3.webp", "caption": "3. Skift: pres storetåen ned, og løft de fire små tæer. Hold 3 sekunder.", "w": 720, "h": 518}], /* auto: tools/sync_images.py */
+    name: 'Tå-yoga (storetå og små tæer skiftevis)',
+    equipment: 'Bare fødder og en stol.',
+    dose: '2–3 sæt × 10 skift. Hold hver stilling 3 sekunder. Dagligt eller hver 2. dag.',
+    steps: [
+      'Sid på en stol med den bare fod fladt på gulvet.',
+      'Løft storetåen, mens de fire små tæer presser ned i gulvet. Hold 3 sekunder.',
+      'Skift: pres storetåen ned, og løft de fire små tæer. Hold 3 sekunder.',
+      'Skift roligt frem og tilbage. Foden og anklen bliver stille.'
+    ],
+    tips: [
+      'Det er svært i starten. Hjælp gerne med en finger.',
+      'Øvelsen træner kontrol over tæerne og de små fodmuskler.',
+      'Lav den med begge fødder.'
+    ],
+    progression: 'Sværere: stående på begge ben, derefter på ét ben.',
+    stop: HAEL_PAIN_RULE,
+    videoLang: 'da',
+    evidence: 'Supplement til fodstyrke. Tå-styrke stiger med 8 ugers fodøvelser (FRAMES, Clin Biomech 2026), men tå-yoga er ikke testet alene ved plantar fasciitis (svag evidens). Valgfri.'
+  },
+  {
+    id: 'hael-2-isometrisk-haeloeft', category: 'haelspore', level: 2, phases: [2, 3, 4],
+    images: [{"src": "images/hael-2-isometrisk-haeloeft/1.webp", "caption": "1. Stå med fødderne i hoftebredde og hænderne let mod en væg.", "w": 480, "h": 660}, {"src": "images/hael-2-isometrisk-haeloeft/2.webp", "caption": "2. Løft hælene ca. 3–5 centimeter fra gulvet.", "w": 480, "h": 660}, {"src": "images/hael-2-isometrisk-haeloeft/3.webp", "caption": "3. Hold stille i 30–45 sekunder. Træk vejret roligt.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
+    name: 'Hold hælene oppe (til dårlige dage)',
+    equipment: 'En væg eller et køkkenbord at holde i.',
+    dose: '5 gentagelser × hold 30–45 sekunder. 1 minuts pause. Bruges i stedet for hæløft på dage med gul eller rød morgensmerte.',
+    steps: [
+      'Stå med fødderne i hoftebredde og hænderne let mod en væg.',
+      'Løft hælene ca. 3–5 centimeter fra gulvet.',
+      'Hold stille i 30–45 sekunder. Træk vejret roligt.',
+      'Sænk langsomt, og hold 1 minuts pause.'
+    ],
+    tips: [
+      'Ingen bevægelse. Musklerne arbejder, mens foden står stille.',
+      'Smerten må gerne være op til 3–4 af 10 og skal være faldet igen næste morgen.',
+      'Hold vægten over storetåen.'
+    ],
+    progression: 'Lettere: "Pres foden mod væggen" siddende. Sværere: på ét ben. Når morgensmerten er grøn igen, så tilbage til de tunge hæløft.',
+    stop: HAEL_PAIN_RULE,
+    videoLang: 'da',
+    evidence: 'Holder belastningen i gang på dårlige dage, i stedet for at holde helt pause (belastningsstyring, Morrissey 2021). Selve den isometriske øvelse er ikke testet ved plantar fasciitis (svag evidens).'
+  },
+  {
+    id: 'hael-3-soleus-haeloeft', category: 'haelspore', level: 3, phases: [3, 4],
+    images: [{"src": "images/hael-3-soleus-haeloeft/1.webp", "caption": "1. Stå med fødderne i hoftebredde og hænderne let mod en væg.", "w": 480, "h": 660}, {"src": "images/hael-3-soleus-haeloeft/2.webp", "caption": "2. Bøj knæene ca. 20–30 grader, og hold dem bøjede hele tiden.", "w": 480, "h": 660}, {"src": "images/hael-3-soleus-haeloeft/3.webp", "caption": "3. Løft hælene langsomt så højt, du kan (3 sekunder), og hold 2 sekunder.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
+    name: 'Hæløft med bøjede knæ (soleus)',
+    equipment: 'En væg eller et køkkenbord. Senere et trappetrin og en rygsæk.',
+    dose: '3 sæt × 12–15 gentagelser. Tempo: 3 sekunder op, hold 2 sekunder, 3 sekunder ned. Hver 2. dag sammen med det tunge hæløft.',
+    steps: [
+      'Stå med fødderne i hoftebredde og hænderne let mod en væg.',
+      'Bøj knæene ca. 20–30 grader, og hold dem bøjede hele tiden.',
+      'Løft hælene langsomt så højt, du kan (3 sekunder), og hold 2 sekunder.',
+      'Sænk langsomt (3 sekunder). Knæene bliver bøjede.'
+    ],
+    tips: [
+      'Med bøjede knæ arbejder den dybe lægmuskel (soleus), som hæfter på hælen.',
+      'Knæene må ikke strække sig, når du går op.',
+      'Mærkes det mest dybt i læggen, gør du det rigtigt.'
+    ],
+    progression: 'Begge ben → ét ben → ét ben med rygsæk → på trappetrin med håndklæde under tæerne.',
+    stop: HAEL_PAIN_RULE,
+    videoLang: 'da',
+    evidence: 'Supplement til Rathleff-hæløftet, så både gastrocnemius og soleus trænes. JOSPT CPG 2023 anbefaler styrketræning af fod/ankel. Ingen styrkeform er vist bedst (svag evidens for netop denne).'
   },
   {
     id: 'hael-4-smaa-hop', category: 'haelspore', level: 4, phases: [4],
@@ -694,6 +782,8 @@ const HAEL_SOURCES = [
   { label: 'Hansen L m.fl. Long-term prognosis of plantar fasciitis: 5- to 15-year follow-up. OJSM 2018', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5844527/' },
   { label: 'sundhed.dk, Patienthåndbogen: Plantar fasciitis og hælspore', url: 'https://www.sundhed.dk/borger/patienthaandbogen/knogler-muskler-og-led/sygdomme/laeg-ankel-fod/plantar-fasciitis-og-haelspore/' },
   { label: 'sundhed.dk, Lægehåndbogen: Hælsporesyndrom (fasciitis plantaris)', url: 'https://www.sundhed.dk/sundhedsfaglig/laegehaandbogen/fysmed-og-rehab/tilstande-og-sygdomme/laeg-ankel-og-fod/plantar-fasciitis/' },
+  { label: 'Kamonseki DH m.fl. Effect of stretching with and without muscle strengthening exercises for the foot and hip in patients with plantar fasciitis: a randomized controlled single-blind clinical trial. Man Ther 2016', url: 'https://pubmed.ncbi.nlm.nih.gov/27083390/' },
+  { label: 'Thong-On S m.fl. Effects of strengthening and stretching exercises on the temporospatial gait parameters in patients with plantar fasciitis. J Exerc Rehabil 2019', url: 'https://pubmed.ncbi.nlm.nih.gov/30899745/' },
   { label: 'NHS: Plantar fasciitis og Heel pain', url: 'https://www.nhs.uk/conditions/plantar-fasciitis/' }
 ];
 

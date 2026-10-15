@@ -460,6 +460,123 @@
     }));
   })();
 
+  // 7b) Hold hælene oppe (isometrisk, til dårlige dage): op · hold 30 sek. · ned
+  // 7c) Hæløft med bøjede knæ (soleus): 3 op · hold 2 · 3 ned
+  (() => {
+    const wall = 252, bx = 214;
+    const P = (fa, drop) => { const a = onBallBare(bx, fa), b = onBallBare(bx - 6, fa); return { hip: [a[0] - (drop ? 14 : -4), a[1] - 176 + (drop || 0)], trunk: drop ? 12 : 3, legF: { ank: b, fa, toe: -fa }, legN: { ank: a, fa, toe: -fa }, armF: { hand: [wall - 4, 196 - (ANK - a[1]) + (drop || 0) * 0.6] }, armN: { hand: [wall - 2, 202 - (ANK - a[1]) + (drop || 0) * 0.6] } }; };
+    define('hael-2-isometrisk-haeloeft', Object.assign(S(), {
+      tempo: 'Løft hælene 3–5 cm · hold stille 30–45 sek. · sænk langsomt. 1 minuts pause mellem gentagelserne.',
+      poses: { down: P(0), up: P(22) }, start: 'down',
+      seq: [{ to: 'up', d: 1.5, k: 'op', l: 'Op', count: false }, { d: 30, k: 'hold', l: 'Hold' }, { to: 'down', d: 2, k: 'ned', l: 'Ned', count: false }, { d: 2.5, k: 'pause', l: 'Pause', count: false }],
+      still: 10, ghost: 'down', shots: [0.9, 9, 24],
+      figOpt: (P, c) => ({ bare: true, tenseCalf: c.key === 'hold' ? 'N' : null }),
+      back: () => R.wall(wall + 6, 320, 0, FLOOR),
+      over: (P, J, c) => {
+        const heel = Math.max(0, ANK - J.legs.N.ank[1]), hy = FLOOR - heel * 1.2, X = J.legs.N.ank[0] - 30;
+        let o = '';
+        if (heel > 3 && false) o += '<path stroke="#e8663c" stroke-width="3" d="M' + X + ',' + FLOOR + ' V' + FF.f1(hy) + ' M' + (X - 8) + ',' + FLOOR + ' h16 M' + (X - 8) + ',' + FF.f1(hy) + ' h16"/><text x="' + (X - 12) + '" y="' + FF.f1(hy + 6) + '" text-anchor="end" font-size="14" font-weight="700" fill="#e8663c">3–5 cm</text>';
+        const done = c.key === 'hold' ? c.u : c.key === 'ned' || c.key === 'pause' ? 1 : 0, left = c.key === 'hold' ? Math.ceil(30 * (1 - c.u)) : c.key === 'op' ? 30 : 0;
+        const a = done * 2 * Math.PI, cx = 60, cy = 60, r = 34, ex = cx + r * Math.sin(a), ey = cy - r * Math.cos(a);
+        o += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="#fff" stroke="#dfe5e2" stroke-width="8"/>';
+        if (done > 0.001 && done < 0.999) o += '<path fill="none" stroke="' + C.guide + '" stroke-width="8" d="M' + cx + ',' + (cy - r) + ' A' + r + ',' + r + ' 0 ' + (done > 0.5 ? 1 : 0) + ' 1 ' + FF.f1(ex) + ',' + FF.f1(ey) + '"/>';
+        else if (done >= 0.999) o += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + C.guide + '" stroke-width="8"/>';
+        o += '<text x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle" font-size="' + (left ? 22 : 13) + '" font-weight="700" fill="' + C.guide + '">' + (left ? left + ' s' : 'Pause') + '</text>' +
+          '<text x="' + cx + '" y="' + (cy + 54) + '" text-anchor="middle" font-size="13" font-weight="700" fill="' + C.guide + '">' + (c.key === 'hold' ? 'Hold stille' : c.key === 'op' ? 'Løft' : 'Sænk') + '</text>';
+        // lupe: foden tæt på, så hælens højde kan ses
+        const fa = P.legN.fa || 0, S2 = 1.8, gy = 392, ball = [98, gy], a2 = sub(ball, rot([BALL_BARE[0] * S2, BALL_BARE[1] * S2], fa));
+        o += '<g><rect x="8" y="300" width="124" height="104" rx="10" fill="#fff" stroke="' + C.guide + '" stroke-width="2"/><rect x="10" y="' + gy + '" width="120" height="10" fill="' + C.floor + '"/>' +
+          '<g transform="translate(' + FF.P2(a2) + ') rotate(' + FF.f1(fa) + ') scale(' + S2 + ')">' + FF.footSide(false, -fa) + '</g>';
+        const hh = Math.max(0, gy - (a2[1] + 16 * S2 * Math.cos(fa * Math.PI / 180) - 14 * S2 * Math.sin(fa * Math.PI / 180)));
+        if (hh > 3) o += '<path stroke="#e8663c" stroke-width="2.5" d="M26,' + gy + ' V' + FF.f1(gy - hh) + ' M20,' + gy + ' h12 M20,' + FF.f1(gy - hh) + ' h12"/>';
+        o += '<text x="70" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="' + C.guide + '">Hælen 3–5 cm oppe</text></g>';
+        return o;
+      }
+    }));
+    define('hael-3-soleus-haeloeft', Object.assign(S(), {
+      tempo: 'Knæene bøjede hele tiden · 3 sek. op · hold 2 sek. · 3 sek. ned. Mærkes dybt i læggen.',
+      poses: { down: P(0, 22), up: P(38, 22) }, start: 'down',
+      seq: [{ to: 'up', d: 3, k: 'op', l: 'Op' }, { d: 2, k: 'hold', l: 'Hold' }, { to: 'down', d: 3, k: 'ned', l: 'Ned' }, { d: 1, k: 'pause', l: 'Hvil', count: false }],
+      still: 4, ghost: 'down',
+      figOpt: (P, c) => ({ bare: true, tenseCalf: c.key === 'hold' || c.key === 'op' ? 'N' : null }),
+      back: () => R.wall(wall + 6, 320, 0, FLOOR),
+      over: (P, J) => { const k = J.legs.N.knee; return '<path fill="none" stroke="' + C.guide + '" stroke-width="3" stroke-dasharray="5 4" d="M' + FF.P2(add(k, [26, -12])) + ' A30,30 0 0 1 ' + FF.P2(add(k, [30, 16])) + '"/>'; }
+    }));
+  })();
+
+  // 7d) Kort fod (nærbillede fra indersiden): fodballen glider mod hælen, svangen løfter sig, tæerne ligger fladt
+  (() => {
+    const fl = 205, ank = [124, fl - 16 * K - 4], hx = ank[0] - 14 * K, bx0 = ank[0] + 31 * K;
+    const P = s => ({ s });
+    define('hael-2-kort-fod', Object.assign(CLOSE(230), {
+      tempo: 'Træk fodballen mod hælen, så svangen løfter sig (ca. 2 sek.) · hold 5–10 sek. · slip langsomt. Tæerne ligger lange og flade.',
+      poses: { a: P(0), b: P(1) }, start: 'a',
+      seq: [{ to: 'b', d: 2, k: 'op', l: 'Løft svangen', count: false }, { d: 8, k: 'hold', l: 'Hold' }, { to: 'a', d: 2, k: 'ned', l: 'Slip', count: false }, { d: 1, k: 'pause', l: 'Hvil', count: false }],
+      still: 6, ghost: null, shots: [0, 1.6, 6],
+      draw: P => {
+        const s = P.s, h = 5.5 * s, sx = 1 - 0.07 * s, bx = hx + (bx0 - hx) * sx;
+        let g = bg2(320, 230, fl) + shinK(ank, [ank[0] - 10, -20], 0.6);
+        const arch = '<path fill="#cfd8d4" d="M-4,16.8 C2,' + FF.f1(16.8 - h) + ' 15,' + FF.f1(16.6 - h) + ' 23,16.6 Z"/>' +
+          '<path fill="none" stroke="#e8663c" stroke-width="1.4" stroke-linecap="round" opacity="' + FF.f1(Math.min(1, s * 1.5)) + '" d="M-4,16.4 C2,' + FF.f1(16.4 - h) + ' 15,' + FF.f1(16.2 - h) + ' 23,16.2"/>';
+        g += '<g transform="translate(' + FF.f1(hx) + ',0) scale(' + FF.f1(sx) + ',1) translate(' + FF.f1(-hx) + ',0)">' + footK(ank, 0, 0, '', arch) + '</g>';
+        // målestok: hæl → fodballe bliver kortere
+        g += '<path stroke="' + C.guide + '" stroke-width="2" d="M' + FF.f1(hx) + ',' + (fl + 12) + ' L' + FF.f1(bx) + ',' + (fl + 12) + ' M' + FF.f1(hx) + ',' + (fl + 6) + ' v12 M' + FF.f1(bx) + ',' + (fl + 6) + ' v12"/>';
+        if (s > 0.05) g += '<path stroke="#e8663c" stroke-width="3" d="M' + FF.f1(bx) + ',' + (fl + 12) + ' L' + FF.f1(bx0) + ',' + (fl + 12) + '"/>';
+        return g;
+      },
+      over: (P, J, c) => {
+        let o = '<text x="314" y="' + (fl - 40) + '" text-anchor="end" font-size="13" font-weight="700" fill="' + C.guide + '">Tæerne flade ✓</text>';
+        if (P.s > 0.2) o += R.arrow([262, 120], [212, 120]) + R.arrow([150, 226], [150, 199]) +
+          '<text x="12" y="24" font-size="13" font-weight="700" fill="#e8663c">Svangen op</text>';
+        return o;
+      }
+    }));
+  })();
+
+  // 7e) Tå-yoga: nærbillede fra indersiden + lille billede forfra (3/4)
+  (() => {
+    const fl = 205, ank = [96, fl - 16 * K - 4];
+    const toes = [[96, 30, 34], [134, 22, 28], [162, 20, 25], [186, 18, 22], [207, 16, 19]];
+    const front = (b, t, y0) => {
+      let g = '<path fill="' + C.skin + '" stroke="' + C.skinDark + '" stroke-width="1.5" d="M110,' + y0 + ' L200,' + y0 + ' C206,' + (y0 + 50) + ' 222,' + (y0 + 100) + ' 224,178 L80,178 C84,' + (y0 + 100) + ' 100,' + (y0 + 50) + ' 110,' + y0 + ' Z"/>';
+      toes.forEach(([x, w, l], i) => {
+        const up = i === 0 ? b : t, lift = up * 22, y = 176 - lift;
+        g += '<rect x="' + FF.f1(x - w / 2) + '" y="' + FF.f1(y) + '" width="' + w + '" height="' + FF.f1(l - up * 8) + '" rx="' + FF.f1(w / 2) + '" fill="' + C.skin + '" stroke="' + C.skinDark + '" stroke-width="1.5"/>' +
+          '<rect x="' + FF.f1(x - w * 0.3) + '" y="' + FF.f1(y + 3) + '" width="' + FF.f1(w * 0.6) + '" height="' + FF.f1(w * 0.45) + '" rx="3" fill="' + C.nail + '"/>';
+      });
+      return g + '<rect x="40" y="200" width="230" height="6" fill="' + C.floorLine + '"/>';
+    };
+    const smallToes = t => { // de små tæer bag storetåen (fjern side, mørkere)
+      let g = '';
+      [[-1.2, 0], [-2.2, 1.6], [-3.4, 3]].forEach(([dx, dy], i) => {
+        g += '<g transform="translate(' + (29 + dx - i * 1.5) + ',' + (10.6 - dy * 0.3) + ') rotate(' + FF.f1(-t * 40) + ')"><path fill="' + (i ? C.skinMid : C.skin) + '" stroke="' + C.skinDark + '" stroke-width=".5" d="M-3,-3.4 L' + (7 - i * 1.5) + ',-3 C' + (10 - i * 1.5) + ',-2.6 ' + (10 - i * 1.5) + ',3.6 ' + (7 - i * 1.5) + ',4 L-3,4 Z"/></g>';
+      });
+      return g;
+    };
+    const P = (b, t) => ({ b, t });
+    define('hael-2-taa-yoga', Object.assign(CLOSE(230), {
+      tempo: 'Storetåen op, de små tæer i gulvet · hold 3 sek. · skift: storetåen ned, de små tæer op · hold 3 sek. Foden står stille.',
+      repLabel: 'Skift', poses: { r: P(0, 0), big: P(1, 0), small: P(0, 1) }, start: 'r',
+      seq: [{ to: 'big', d: 1, k: 'op', l: 'Storetå op' }, { d: 3, k: 'hold', l: 'Hold', count: false }, { to: 'r', d: 0.6, k: 'ned', l: 'Skift', count: false },
+        { to: 'small', d: 1, k: 'op', l: 'Små tæer op', count: false }, { d: 3, k: 'hold', l: 'Hold', count: false }, { to: 'r', d: 0.6, k: 'ned', l: 'Skift', count: false }],
+      still: 2.5, ghost: null, shots: [0, 2.5, 7.1],
+      draw: P => {
+        let g = bg2(320, 230, fl) + shinK(ank, [ank[0] - 10, -20], 0.6);
+        g += footK(ank, 0, -P.b * 38);
+        if (P.t > 0.02) g += '<g transform="translate(' + FF.P2(ank) + ') scale(' + K + ')">' + smallToes(P.t) + '</g>';
+        // lille billede forfra
+        g += '<g transform="translate(200,8)"><rect width="114" height="100" rx="10" fill="#fff" stroke="' + C.guide + '" stroke-width="2"/>' +
+          '<g transform="translate(-22,-34) scale(0.6)">' + front(P.b, P.t, 70) + '</g>' +
+          '<text x="55" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="' + C.guide + '">Forfra</text></g>';
+        return g;
+      },
+      over: P => {
+        const t = P.b > 0.5 ? 'Storetåen op' : P.t > 0.5 ? 'Små tæer op' : '';
+        return t ? '<text x="12" y="26" font-size="15" font-weight="700" fill="#e8663c">' + t + '</text>' : '';
+      }
+    }));
+  })();
+
   // 8) Små hop på stedet (med sko)
   (() => {
     const bx = 196;
