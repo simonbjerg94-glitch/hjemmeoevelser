@@ -49,7 +49,7 @@ function slug(s) {
 /* ---------- Lager ---------- */
 const KEY_STD_SEEN = 'hjo_std_flettet_v1';
 /* Alle standardøvelser: artrose/balance (data.js) + hælspore (data-haelspore.js). */
-function allDefaults() { return DEFAULT_EXERCISES.concat(typeof HAEL_EXERCISES !== 'undefined' ? HAEL_EXERCISES : [], typeof RYG_EXERCISES !== 'undefined' ? RYG_EXERCISES : [], typeof LED_EXERCISES !== 'undefined' ? LED_EXERCISES : []); }
+function allDefaults() { return DEFAULT_EXERCISES.concat(typeof HAEL_EXERCISES !== 'undefined' ? HAEL_EXERCISES : [], typeof RYG_EXERCISES !== 'undefined' ? RYG_EXERCISES : [], typeof LED_EXERCISES !== 'undefined' ? LED_EXERCISES : [], typeof PT_EXERCISES !== 'undefined' ? PT_EXERCISES : []); }
 /* Gemte lister flettes med nye standardøvelser (fx hælsporet), uden at slettede eller rettede øvelser kommer tilbage. */
 function loadExercises() {
   let arr = null;
@@ -550,7 +550,7 @@ function viewOnboarding(then) {
   $app.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => {
     setMode(b.dataset.mode);
     toast(MODE_INFO[b.dataset.mode].name + ' er valgt.');
-    if (typeof Voice !== 'undefined' && Voice.WHO) viewOnboardingVoice(); else if (typeof QS !== 'undefined') QS.choice(); else finishOnboarding();
+    if (typeof Voice !== 'undefined' && Voice.WHO) viewOnboardingVoice(); else afterOnboardingVoice();
   });
 }
 function finishOnboarding() {
@@ -575,7 +575,12 @@ function viewOnboardingVoice() {
   h += voiceChoiceHtml(null) + '<button type="button" class="btn secondary" data-who="fra">Uden stemme</button>';
   h += '<p class="hint" style="text-align:center">Du kan altid skifte under <b>☰ Mere</b> › Stemme.</p>';
   $app.innerHTML = h;
-  bindVoiceChoice($app, () => (typeof QS !== 'undefined' ? QS.choice() : finishOnboarding()));
+  bindVoiceChoice($app, afterOnboardingVoice);
+}
+/* Efter stemmen: PT-klienter får de korte træningsspørgsmål, ellers genoptrænings-spørgeskemaet */
+function afterOnboardingVoice() {
+  if (typeof PT !== 'undefined' && PT.on()) { document.body.classList.remove('onboarding'); location.hash = '#/pt/velkommen/0'; return; }
+  if (typeof QS !== 'undefined') QS.choice(); else finishOnboarding();
 }
 
 /* ---------- I dag (forside): én stor knap + "Hvad skal jeg gøre nu?" ---------- */
@@ -694,9 +699,13 @@ function viewArea(id) {
 /* ---------- Mere: indstillinger og alt det, man ikke bruger hver dag ---------- */
 function viewMore() {
   setHeader('Mere'); setTab('mere');
+  const ptOn = typeof PT !== 'undefined' && PT.on();
   const row = (href, icon, title, sub, id) => '<a class="card more-row" href="' + href + '"' + (id ? ' id="' + id + '"' : '') + '><span class="mi" aria-hidden="true">' + icon + '</span><span><b>' + title + '</b>' + (sub ? '<small>' + sub + '</small>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>';
   const rs = typeof remindSettings === 'function' ? remindSettings() : { on: false };
-  let h = '<h2>Visning</h2><div class="seg" role="radiogroup" aria-label="Visning">' + ['enkel', 'fuld'].map(m =>
+  let h = typeof PT === 'undefined' ? '' : '<h2>Appen er til</h2><div class="seg" role="radiogroup" aria-label="Appen er til">' + [['pt', 'Træning (PT)'], ['patient', 'Genoptræning']].map(([k, n]) =>
+    '<button type="button" role="radio" class="seg-b' + ((ptOn ? 'pt' : 'patient') === k ? ' sel' : '') + '" aria-checked="' + ((ptOn ? 'pt' : 'patient') === k) + '" data-target="' + k + '"><b>' + n + '</b></button>').join('') + '</div>';
+  if (ptOn) h += '<h2>Din træning</h2>' + row('#/pt/velkommen/' + (PT.answers() ? 'resultat' : '0'), icon('clipboard'), 'Mine træningssvar', PT.answers() ? 'Se dit forslag, eller ret svarene' : 'Svar på 9 korte spørgsmål', 'ptSvar') + '<button type="button" class="btn small secondary" id="ptDelSvar"' + (PT.answers() ? '' : ' hidden') + '>Slet mine træningssvar</button>';
+  h += '<h2>Visning</h2><div class="seg" role="radiogroup" aria-label="Visning">' + ['enkel', 'fuld'].map(m =>
     '<button type="button" role="radio" class="seg-b' + ((isSimple() ? 'enkel' : 'fuld') === m ? ' sel' : '') + '" aria-checked="' + ((isSimple() ? 'enkel' : 'fuld') === m) + '" data-mode="' + m + '"><b>' + MODE_INFO[m].name + '</b></button>').join('') + '</div>';
   h += '<h2>Tekststørrelse</h2><div class="seg three" role="radiogroup" aria-label="Tekststørrelse">' + [['normal', 'Normal'], ['stor', 'Stor'], ['xl', 'Meget stor']].map(([k, n]) =>
     '<button type="button" role="radio" class="seg-b ts-b-' + k + (textSize() === k ? ' sel' : '') + '" aria-checked="' + (textSize() === k) + '" data-ts="' + k + '"><b>' + n + '</b></button>').join('') + '</div>';
@@ -722,6 +731,8 @@ function viewMore() {
     $app.querySelectorAll('[data-vchoice]').forEach(b => b.onclick = () => { const c = b.dataset.vchoice; Voice.setChoice(c); toast(c === 'fra' ? 'Stemmen er slået fra.' : Voice.WHO[c] + ' er valgt.'); if (c !== 'fra') Voice.say('Stemmen er slået til.', null); const y = window.scrollY; viewMore(); window.scrollTo(0, y); });
   }
   $app.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => { setMode(b.dataset.mode); toast(MODE_INFO[b.dataset.mode].name + ' er valgt.'); viewMore(); });
+  $app.querySelectorAll('[data-target]').forEach(b => b.onclick = () => { PT.setTarget(b.dataset.target); PT.chrome(); toast(b.dataset.target === 'pt' ? 'Appen viser nu træning (PT).' : 'Appen viser nu genoptræning.'); viewMore(); });
+  const pds = document.getElementById('ptDelSvar'); if (pds) pds.onclick = () => { if (!confirm('Slet dine træningssvar?')) return; PT.deleteAnswers(); toast('Dine træningssvar er slettet.'); viewMore(); };
   $app.querySelectorAll('[data-ts]').forEach(b => b.onclick = () => { localStorage.setItem(KEY_TEXT, b.dataset.ts); applyDisplay(); viewMore(); });
 }
 
@@ -773,7 +784,8 @@ function viewExercise(id) {
   const e = exercises.find(x => x.id === id);
   if (!e) { location.hash = '#/'; return; }
   const ctx = exCtx(e), cat = CATEGORIES.find(c => c.id === ctx);
-  setHeader(cat ? cat.name : 'Øvelse', '#/kategori/' + ctx); setTab('prog');
+  const ptEx = e.category === 'styrke';
+  setHeader(cat ? cat.name : (ptEx ? 'Træning' : 'Øvelse'), ptEx ? '#/pt/program/helkrop' : '#/kategori/' + ctx); setTab('prog');
   const d = doneToday(e.id, ctx), lv = Number(e.level) || 1, L = LEVELS.find(x => x.n === lv) || LEVELS[0];
   const isHael = e.category === 'haelspore' && HAEL_ON, ryg = typeof isRyg === 'function' && isRyg(e.category);
   const nav = programNav(e), simple = isSimple();
@@ -820,7 +832,7 @@ function viewExercise(id) {
     else checkBadges();
   };
   // Stor og enkel: smerte spørges kun én gang – når man trykker "Start dagens træning" (samme før-måling som i Fuld oversigt)
-  if (!d && !beforeAsked(ctx) && !isSimple()) painBefore(ctx);
+  if (!d && !ptEx && !beforeAsked(ctx) && !isSimple()) painBefore(ctx);
 }
 
 function viewWeek() {
@@ -1368,7 +1380,10 @@ function route() {
   closeOverlays();
   if (!uiMode()) return viewOnboarding();
   document.body.classList.remove('onboarding');
+  const pt = typeof PT !== 'undefined' && PT.on(); if (typeof PT !== 'undefined') PT.chrome();
+  if (pt && (parts[0] === '' || parts[0] === 'programmer' || parts[0] === 'uge')) return parts[0] === 'programmer' ? PT.programs() : parts[0] === 'uge' ? PT.progress() : PT.home();
   switch (parts[0]) {
+    case 'pt': return PT.route(parts);
     case '': return viewHome();
     case 'velkommen': return viewOnboarding();
     case 'programmer': return viewPrograms();

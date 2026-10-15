@@ -249,6 +249,14 @@ const VOICE_SETS = {
 "kvinde/23ef245fa4.mp3",
 16.13
 ],
+"armstrækninger på knæene. knæene i gulvet, hænderne lidt bredere end skuldrene. lige linje fra knæ til hoved. sænk brystet mod gulvet (2 sek.), og pres op igen (1 sek.)": [
+"kvinde/1902747110.mp3",
+16.8
+],
+"armstrækninger. på tæerne med hænderne under skuldrene. hele kroppen er lige som en planke. sænk brystet næsten til gulvet (2 sek.), og pres op igen (1 sek.)": [
+"kvinde/2909992f1c.mp3",
+15.62
+],
 "bagud": [
 "kvinde/01d081556e.mp3",
 0.67
@@ -849,6 +857,10 @@ const VOICE_SETS = {
 "kvinde/86d637c74b.mp3",
 13.32
 ],
+"planke på underarmene. underarmene i gulvet med albuerne under skuldrene. løft hoften, så kroppen er lige fra hæle til hoved. spænd i maven og ballerne, og træk vejret roligt. sænk knæene, når tiden er gået": [
+"kvinde/fe1d4d7520.mp3",
+19.15
+],
 "pres": [
 "kvinde/e66e2fb9b5.mp3",
 0.7
@@ -880,6 +892,10 @@ const VOICE_SETS = {
 "pres ned": [
 "kvinde/a333b68a93.mp3",
 1.13
+],
+"pres op": [
+"kvinde/97c5d769bf.mp3",
+1.01
 ],
 "pres storetåen ned mod elastikken. sid med foden i gulvet og en elastik om storetåen. hold elastikken op med hånden. pres storetåen ned mod gulvet (2 sek.), og lad den langsomt komme op (3 sek.). 3 sæt × 10–15": [
 "kvinde/9f36d138c6.mp3",
@@ -1611,6 +1627,14 @@ const VOICE_SETS = {
 "mand/08a614ed78.mp3",
 15.98
 ],
+"armstrækninger på knæene. knæene i gulvet, hænderne lidt bredere end skuldrene. lige linje fra knæ til hoved. sænk brystet mod gulvet (2 sek.), og pres op igen (1 sek.)": [
+"mand/d3e3a68a39.mp3",
+16.7
+],
+"armstrækninger. på tæerne med hænderne under skuldrene. hele kroppen er lige som en planke. sænk brystet næsten til gulvet (2 sek.), og pres op igen (1 sek.)": [
+"mand/14a524b2e7.mp3",
+16.01
+],
 "bagud": [
 "mand/102863f70f.mp3",
 0.72
@@ -2211,6 +2235,10 @@ const VOICE_SETS = {
 "mand/d403c5d801.mp3",
 13.54
 ],
+"planke på underarmene. underarmene i gulvet med albuerne under skuldrene. løft hoften, så kroppen er lige fra hæle til hoved. spænd i maven og ballerne, og træk vejret roligt. sænk knæene, når tiden er gået": [
+"mand/5769636069.mp3",
+19.08
+],
 "pres": [
 "mand/c1fd815052.mp3",
 0.62
@@ -2242,6 +2270,10 @@ const VOICE_SETS = {
 "pres ned": [
 "mand/0a57741d79.mp3",
 1.1
+],
+"pres op": [
+"mand/262035fead.mp3",
+0.84
 ],
 "pres storetåen ned mod elastikken. sid med foden i gulvet og en elastik om storetåen. hold elastikken op med hånden. pres storetåen ned mod gulvet (2 sek.), og lad den langsomt komme op (3 sek.). 3 sæt × 10–15": [
 "mand/e824bdb597.mp3",
