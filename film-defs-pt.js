@@ -341,7 +341,7 @@
   })();
 })();
 
-/* ---- v33: Copenhagen adduktion, kort vægtstang (knæet på en stol) – samme geometri som sideplanken på knæ ---- */
+/* ---- v33: Copenhagen-øvelsen, kort vægtarm (knæet på en stol) – samme geometri som sideplanken på knæ ---- */
 (() => {
   const FF = typeof FigFilm !== 'undefined' ? FigFilm : require('./film-engine.js');
   const { R, C, add, sub, define } = FF;

@@ -867,3 +867,39 @@ a.ob-choice { display: flex; text-decoration: none; }
 .pt-cur { margin: 6px 0 -4px; }
 .evid p { font-size: 15px; color: var(--muted, #5f6b66); }
 .op-note { border-left: 5px solid #e0913a; }
+
+/* ---------- v35: brugervenlighed ---------- */
+/* Bedre kontrast på de orange start-knapper (hvid tekst ≥ 4,5:1) */
+:root { --energy: linear-gradient(135deg, #d2462f 0%, #c2410c 100%); --energy-solid: #c2410c; }
+/* Faner på smalle telefoner (360 px): teksten må ikke flyde sammen */
+@media (max-width: 374px) {
+  .tabbar a { font-size: 13px !important; letter-spacing: -0.2px; padding: 0 2px; }
+  html.mode-enkel .tabbar a { font-size: 14px !important; }
+  html.mode-enkel .tabbar a span, .tabbar a svg { font-size: 24px; }
+}
+/* Sæt-rækker: feltet til gentagelser må ikke klemmes */
+.pt-set { grid-template-columns: auto 1fr 64px auto; }
+html.mode-enkel .pt-set { grid-template-columns: auto minmax(120px, 1fr) auto; }
+.pt-set label:first-of-type { white-space: nowrap; }
+.pt-set .pt-reps { min-width: 56px; }
+.pt-set .pt-fill { padding: 0 8px; }
+.pt-fill { min-width: 56px; }
+.pt-rpe-seg .seg-b small { font-size: 14px; }
+html.mode-enkel .pt-rpe-seg .seg-b small { font-size: 15px; }
+.btn.pt-howto { display: flex; justify-content: center; margin: 4px 0 14px; }
+button.more-row.pt-to-rehab { width: 100%; text-align: left; font: inherit; color: var(--ink); cursor: pointer; border: 2px dashed var(--line); margin-top: 14px; }
+.link-btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; background: none; border: 0; font: inherit; font-size: 16px; color: #a23b20; text-decoration: underline; cursor: pointer; }
+.pt-empty { border: 2px dashed var(--line); }
+.pt-empty .btn { margin-bottom: 0; }
+/* "Stor og enkel" på PT-skærmene: større tekst og knapper */
+html.mode-enkel .pt-today .start-main { font-size: 26px; }
+html.mode-enkel .pt-set input { font-size: 26px; min-height: 60px; }
+html.mode-enkel .pt-fill { min-height: 60px; font-size: 20px; }
+html.mode-enkel .pt-nav .btn { min-height: 68px; font-size: 20px; }
+html.mode-enkel .pt-item .txt strong { font-size: 20px; }
+/* Billed-pile skal altid være 46 px – prikkerne må hellere blive smallere */
+.gal-arrow { flex-shrink: 0; }
+.gal-dots { min-width: 0; }
+@media (max-width: 374px) { .gal-dot { width: 30px; } .pain-grid { gap: 4px !important; } }
+@media (max-width: 374px) { html.mode-enkel .pt-today .start-main { font-size: 22px; } }
+.pt-sn { white-space: nowrap; }

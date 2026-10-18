@@ -421,7 +421,7 @@
     }));
   })();
 
-  // Brystsræk i døråbningen: underarmen mod dørkarmen, tag et lille skridt frem
+  // Bryststræk i døråbningen: underarmen mod dørkarmen, tag et lille skridt frem
   (() => {
     const POST = 124, HAND = [POST + 2, 86], EL = [POST + 6, 138];
     const P = (hip, trunk, fn) => fix({ hip, trunk, nod: -2, legF: { ank: [150, ANK] }, legN: { ank: [fn, ANK] }, armN: { el: EL, hand: HAND }, armF: { sa: 4, ef: 10 } });

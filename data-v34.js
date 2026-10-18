@@ -120,7 +120,7 @@ const V34_PT = [
     evidence: 'Ekspertanbefaling. Liggende armløft over hovedet aktiverer nedre trapezius (Ekstrom 2003).' },
   // ---------- Core ----------
   {
-    id: 'pt-hul-krop', category: 'styrke', level: 2, area: 'core', name: 'Hul krop (hold)',
+    id: 'pt-hul-krop', category: 'styrke', level: 2, area: 'core', name: 'Hul krop (mave-hold på ryggen)',
     images: [{"src": "images/pt-hul-krop/1.webp", "caption": "1. Lig på ryggen, og pres lænden ned i gulvet.", "w": 720, "h": 327}, {"src": "images/pt-hul-krop/2.webp", "caption": "2. Løft hoved og skuldre lidt, og stræk benene skråt op med armene frem mod fødderne.", "w": 720, "h": 327}, {"src": "images/pt-hul-krop/3.webp", "caption": "3. Hold, og træk vejret roligt.", "w": 720, "h": 327}], /* auto: tools/sync_images.py */
     dose: '3 × 15–40 sekunder.',
     steps: ['Lig på ryggen, og pres lænden ned i gulvet.', 'Løft hoved og skuldre lidt, og stræk benene skråt op med armene frem mod fødderne.', 'Hold, og træk vejret roligt.'],
@@ -128,7 +128,7 @@ const V34_PT = [
     progression: 'Lettere: bøjede knæ. Sværere: benene lavere, eller armene over hovedet.',
     evidence: 'Ekspertanbefaling: øvelse for den forreste del af kroppen, hvor lænden holdes stille (core-træning, McGill 2010).' },
   {
-    id: 'pt-omvendt-crunch', category: 'styrke', level: 1, area: 'core', name: 'Omvendt crunch',
+    id: 'pt-omvendt-crunch', category: 'styrke', level: 1, area: 'core', name: 'Omvendt mavebøjning (knæene mod brystet)',
     images: [{"src": "images/pt-omvendt-crunch/1.webp", "caption": "1. Lig på ryggen med knæene bøjet i vejret og armene langs siden.", "w": 720, "h": 396}, {"src": "images/pt-omvendt-crunch/2.webp", "caption": "2. Rul knæene op mod brystet, så hoften løfter sig lidt fra gulvet.", "w": 720, "h": 396}, {"src": "images/pt-omvendt-crunch/3.webp", "caption": "3. Sænk langsomt tilbage uden at fødderne rører gulvet.", "w": 720, "h": 396}], /* auto: tools/sync_images.py */
     dose: '3 sæt × 8–15.',
     steps: ['Lig på ryggen med knæene bøjet i vejret og armene langs siden.', 'Rul knæene op mod brystet, så hoften løfter sig lidt fra gulvet.', 'Sænk langsomt tilbage uden at fødderne rører gulvet.'],
@@ -226,7 +226,7 @@ const V34_PT = [
     progression: 'Lettere: hold i en dørkarm, eller sæt dig på en lav skammel. Sværere: længere tid, og skift vægten fra side til side.',
     evidence: 'Ekspertanbefaling: bevægelighed i ankel, hofte og knæ. Udspænding øger bevægeligheden på sigt (Konrad 2024).' },
   {
-    id: 'pt-bryst-doer', category: 'styrke', level: 1, area: 'mobilitet', name: 'Brystsræk i døråbningen',
+    id: 'pt-bryst-doer', category: 'styrke', level: 1, area: 'mobilitet', name: 'Bryststræk i døråbningen',
     images: [{"src": "images/pt-bryst-doer/1.webp", "caption": "1. Stå i en døråbning, og læg underarmen mod dørkarmen med albuen i skulderhøjde.", "w": 480, "h": 660}, {"src": "images/pt-bryst-doer/2.webp", "caption": "2. Tag et lille skridt frem, til du mærker et stræk foran i brystet og skulderen.", "w": 480, "h": 660}, {"src": "images/pt-bryst-doer/3.webp", "caption": "3. Hold, og skift side.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
     dose: '2 × 30–45 sek. pr. side.',
     steps: ['Stå i en døråbning, og læg underarmen mod dørkarmen med albuen i skulderhøjde.', 'Tag et lille skridt frem, til du mærker et stræk foran i brystet og skulderen.', 'Hold, og skift side.'],
@@ -276,7 +276,7 @@ if (typeof PT_PROGRAMS !== 'undefined') {
         { id: 'pt-split-squat', sets: 4, reps: [10, 15], side: true }, { id: 'pt-armstraek-fodder-hoej', sets: 4, reps: [10, 20] }, { id: 'pt-bordroning', sets: 4, reps: [12, 20] },
         { id: 'pt-nordic', sets: 3, reps: [5, 8] }, { id: 'pt-pike', sets: 4, reps: [10, 15] }, { id: 'pt-burpee', sets: 3, reps: [8, 12] }, { id: 'pt-hul-krop', sets: 3, hold: [20, 40] } ] }
     ] });
-  addP({ id: 'core', name: 'Core og mobilitet', short: 'Core',
+  addP({ id: 'core', name: 'Mave, ryg og bevægelighed', short: 'Mave og ryg',
     about: 'Mave, ryg og bevægelighed i ét program. Godt som et let træningspas, på hviledage eller som opvarmning. 2–4 gange om ugen.',
     equipment: 'Måtte, en lav stol og en døråbning', minutes: '20–30 min',
     levels: [

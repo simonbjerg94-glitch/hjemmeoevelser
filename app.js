@@ -704,7 +704,7 @@ function viewMore() {
   const rs = typeof remindSettings === 'function' ? remindSettings() : { on: false };
   let h = typeof PT === 'undefined' ? '' : '<h2>Appen er til</h2><div class="seg" role="radiogroup" aria-label="Appen er til">' + [['pt', 'Træning (PT)'], ['patient', 'Genoptræning']].map(([k, n]) =>
     '<button type="button" role="radio" class="seg-b' + ((ptOn ? 'pt' : 'patient') === k ? ' sel' : '') + '" aria-checked="' + ((ptOn ? 'pt' : 'patient') === k) + '" data-target="' + k + '"><b>' + n + '</b></button>').join('') + '</div>';
-  if (ptOn) h += '<h2>Din træning</h2>' + row('#/pt/velkommen/' + (PT.answers() ? 'resultat' : '0'), icon('clipboard'), 'Mine træningssvar', PT.answers() ? 'Se dit forslag, eller ret svarene' : 'Svar på 9 korte spørgsmål', 'ptSvar') + '<button type="button" class="btn small secondary" id="ptDelSvar"' + (PT.answers() ? '' : ' hidden') + '>Slet mine træningssvar</button>';
+  if (ptOn) h += '<h2>Din træning</h2>' + row('#/pt/velkommen/' + (PT.answers() ? 'resultat' : '0'), icon('clipboard'), 'Mine træningssvar', PT.answers() ? 'Se dit forslag, eller ret svarene' : 'Svar på 9 korte spørgsmål', 'ptSvar') + '<button type="button" class="link-btn" id="ptDelSvar"' + (PT.answers() ? '' : ' hidden') + '>Slet mine træningssvar</button>';
   h += '<h2>Visning</h2><div class="seg" role="radiogroup" aria-label="Visning">' + ['enkel', 'fuld'].map(m =>
     '<button type="button" role="radio" class="seg-b' + ((isSimple() ? 'enkel' : 'fuld') === m ? ' sel' : '') + '" aria-checked="' + ((isSimple() ? 'enkel' : 'fuld') === m) + '" data-mode="' + m + '"><b>' + MODE_INFO[m].name + '</b></button>').join('') + '</div>';
   h += '<h2>Tekststørrelse</h2><div class="seg three" role="radiogroup" aria-label="Tekststørrelse">' + [['normal', 'Normal'], ['stor', 'Stor'], ['xl', 'Meget stor']].map(([k, n]) =>
@@ -755,7 +755,7 @@ function viewCategory(id) {
     const d = doneToday(e.id, id);
     html += '<a class="ex-item' + (d ? ' done' : '') + '" href="#/oevelse/' + encodeURIComponent(e.id) + '">' + thumbHtml(e) +
       '<div class="txt"><strong>' + esc(e.name) + '</strong><span>' + esc(shortDose(e.dose)) + '</span></div>' +
-      (d ? '<span class="check" aria-label="Lavet i dag">✓</span>' : '<span class="check" aria-hidden="true" style="color:#b9b4a8">›</span>') + '</a>';
+      (d ? '<span class="check" aria-label="Lavet i dag">✓</span>' : '<span class="check" aria-hidden="true" style="color:#8a857a">›</span>') + '</a>';
   });
   if (needsAfter(id) && list.some(e => doneToday(e.id, id))) html += '<button type="button" class="btn finish" id="finishBtn">✓ ' + esc(PAIN_CHECK.finishButton) + '</button>';
   const hasNext = all.some(e => (Number(e.level) || 1) === lv + 1);
@@ -784,8 +784,10 @@ function viewExercise(id) {
   const e = exercises.find(x => x.id === id);
   if (!e) { location.hash = '#/'; return; }
   const ctx = exCtx(e), cat = CATEGORIES.find(c => c.id === ctx);
-  const ptEx = e.category === 'styrke';
-  setHeader(cat ? cat.name : (ptEx ? 'Træning' : 'Øvelse'), ptEx ? '#/pt/program/' + (typeof PT !== 'undefined' && PT.active ? PT.active() : 'helkrop') : '#/kategori/' + ctx); setTab('prog');
+  const ptEx = e.category === 'styrke', ptOnNow = typeof PT !== 'undefined' && PT.on();
+  // v35: åbnet fra "Sådan gør du" i en PT-træning → "Øvelse" og tilbage til træningen (ikke til en genoptræningskategori)
+  let ptBack = null; try { const m = JSON.parse(sessionStorage.getItem('hjo_pt_back') || 'null'); if (ptOnNow && m && m.id === e.id) ptBack = m.hash; } catch (er) {}
+  if (ptBack) setHeader('Øvelse', ptBack); else setHeader(cat && !(ptOnNow && ptEx) ? cat.name : 'Øvelse', ptEx ? '#/pt/program/' + (typeof PT !== 'undefined' && PT.active ? PT.active() : 'helkrop') : '#/kategori/' + ctx); setTab('prog');
   const d = doneToday(e.id, ctx), lv = Number(e.level) || 1, L = LEVELS.find(x => x.n === lv) || LEVELS[0];
   const isHael = e.category === 'haelspore' && HAEL_ON, ryg = typeof isRyg === 'function' && isRyg(e.category);
   const nav = programNav(e), simple = isSimple();
@@ -793,7 +795,7 @@ function viewExercise(id) {
     ? '<span class="badge phase" style="--pc:' + (HAEL_PHASES[Math.min(lv, 4) - 1] || HAEL_PHASES[0]).color + '">' + (Array.isArray(e.phases) && e.phases.length ? 'Fase ' + e.phases.join(', ') : 'Fase ' + lv) + '</span>'
     : ryg ? '<span class="badge lv' + lv + '">' + (e.track === 'hold' ? holdLabel(rygProg(e.category)) : fbLabel(rygProg(e.category)) + ' · ' + pWord(rygProg(e.category)) + ' ' + (Array.isArray(e.phases) ? e.phases.join(', ') : lv)) + '</span>'
     : '<span class="badge lv' + lv + '">' + L.name + ' · ' + L.sub + '</span>') +
-    (nav ? '<span class="ex-pos">Øvelse ' + nav.i + ' af ' + nav.n + '</span>' : '') + '</div>';
+    (nav && !ptEx && !ptOnNow ? '<span class="ex-pos">Øvelse ' + nav.i + ' af ' + nav.n + '</span>' : '') + '</div>';
   html += '<h2 class="ex-title">' + esc(e.name) + '</h2>';
   const hasFilm = (typeof FigFilm !== 'undefined' && FigFilm.has(e.id)) || (typeof HAEL_TRIN_FILM !== 'undefined' && !!HAEL_TRIN_FILM[e.id]);
   if (!hasFilm && !imagesFor(e).length && !(e.photos && e.photos.length)) html += galleryHtml(e); // pladsholder
@@ -802,6 +804,7 @@ function viewExercise(id) {
   html += videoHtml(e);
   if (typeof Coach !== 'undefined') html += Coach.btnHtml(e);
   html += '<div class="dose"><span aria-hidden="true">🔁</span><span>' + esc(e.dose) + '</span></div>';
+  if (ptBack) html += '<a class="btn pt-backtotrain" href="' + esc(ptBack) + '">‹ Tilbage til træningen</a>';
   html += '<button id="doneBtn" class="btn ' + (d ? 'done' : '') + '" type="button">' + (d ? '✓ Lavet i dag – tryk for at fortryde' : 'Markér som lavet i dag') + '</button>';
   if (d && nav && nav.next) html += '<a class="btn next-btn" id="nextBtn" href="#/oevelse/' + encodeURIComponent(nav.next.id) + '">Næste øvelse: ' + esc(nav.next.name) + ' ›</a>';
   if (needsAfter(ctx) && d && !nav) html += '<button type="button" class="btn secondary" id="finishBtn">' + esc(PAIN_CHECK.finishButton) + '</button>';
@@ -833,7 +836,7 @@ function viewExercise(id) {
     else checkBadges();
   };
   // Stor og enkel: smerte spørges kun én gang – når man trykker "Start dagens træning" (samme før-måling som i Fuld oversigt)
-  if (!d && !ptEx && !beforeAsked(ctx) && !isSimple()) painBefore(ctx);
+  if (!d && !ptEx && !ptBack && !beforeAsked(ctx) && !isSimple()) painBefore(ctx);
 }
 
 function viewWeek() {

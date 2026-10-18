@@ -89,7 +89,7 @@ const LED_PROGRAMS = [
     about: [
       ['Slidgigt (artrose) i skulderen', 'Brusken i leddet er blevet tyndere. Skulderen kan være stiv og knase. Øvelser, der holder bevægeligheden og styrken, mindsker smerten for de fleste. Hvis smerten bliver meget slem trods træning, kan en operation (ny skulder) komme på tale – tal med din læge.'],
       ['Frossen skulder', 'Ledkapslen bliver betændt og stram, så armen bliver meget stiv – især når du drejer den udad og løfter den. Det kommer i faser: først mest smerte, så mest stivhed, og til sidst bliver det langsomt bedre. Blide øvelser hver dag hjælper. Pres ikke igennem smerten. Har du sukkersyge, er det ekstra almindeligt.'],
-      ['Klemt sene (subakromiale smerter)', 'Det gør ondt på ydersiden af skulderen, når du løfter armen ud til siden eller op, og ofte om natten. Senerne er irriterede. Gradvis styrketræning er den bedste behandling – lige så god som operation for de fleste.'],
+      ['Klemt sene i skulderen', 'Det gør ondt på ydersiden af skulderen, når du løfter armen ud til siden eller op, og ofte om natten. Senerne er irriterede. Gradvis styrketræning er den bedste behandling – lige så god som operation for de fleste.'],
       ['Må det gøre ondt?', 'Ja, lidt. Det er normalt, at skulderen gør lidt ondt under træningen. Det vigtige er, at smerten er faldet til ro igen næste morgen. Se smertereglen nederst.'],
       ['Søvn', 'Mange med ondt i skulderen sover dårligt. Lig med en pude i armen, og tag evt. smertestillende om aftenen. Søvnen bliver som regel bedre, når træningen begynder at virke.']
     ],
@@ -566,7 +566,7 @@ const LED_EXERCISES = [
   {
     id: 'haand-h-senegled', category: 'haand', track: 'hold', level: 1, phases: [1],
     images: [{"src": "images/haand-h-senegled/1.webp", "caption": "1. Hold hånden lige op med strakte fingre. Bøj fingrene til en krog, og hold 3 sekunder.", "w": 480, "h": 510}, {"src": "images/haand-h-senegled/2.webp", "caption": "2. Ret ud, knyt hånden blødt, og hold 3 sekunder.", "w": 480, "h": 510}, {"src": "images/haand-h-senegled/3.webp", "caption": "3. Ret ud, bøj kun i knoerne, så fingrene er lige som en bordplade, og hold 3 sekunder.", "w": 480, "h": 510}], /* auto: tools/sync_images.py */
-    name: 'Senegled – krog, knytnæve og bordplade',
+    name: 'Seneglid – krog, knytnæve og bordplade',
     equipment: 'Ingen.',
     dose: '5 gange hele rækken. 2–3 gange om dagen.',
     steps: ['Hold hånden lige op med strakte fingre. Bøj fingrene til en krog, og hold 3 sekunder.', 'Ret ud, knyt hånden blødt, og hold 3 sekunder.', 'Ret ud, bøj kun i knoerne, så fingrene er lige som en bordplade, og hold 3 sekunder.'],

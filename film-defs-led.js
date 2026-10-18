@@ -406,7 +406,7 @@
     still: 2.3, ghost: 'open',
     over: () => tag(12, 70, 'Blødt – uden at klemme')
   }));
-  // Senegled-øvelser: lige – krog – lige – knytnæve – lige – bordplade
+  // Seneglid-øvelser: lige – krog – lige – knytnæve – lige – bordplade
   define('haand-h-senegled', hvFilm(handSideV, {
     tempo: 'Hold hånden lige op. Bøj fingrene til en krog, og hold 3 sek. Ret ud. Knyt hånden, og hold 3 sek. Ret ud. Bøj kun i knoerne, så fingrene er lige som en bordplade, og hold 3 sek. 5 gange.',
     poses: { open: OPEN, hook: HOOK, fist: FIST, table: TABLE }, start: 'open',

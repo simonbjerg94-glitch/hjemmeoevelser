@@ -73,7 +73,7 @@ const PT_PROGRAMS = [
         { id: 'laend-1-dead-bug', sets: 2, reps: [6, 10], side: true, name: 'Dead bug' }
       ] },
       { n: 2, name: 'Trin 2', sub: 'Mere kraft', items: [
-        { id: 'knae-2-minisquat', sets: 3, reps: [10, 15], name: 'Squat' },
+        { id: 'knae-2-minisquat', sets: 3, reps: [10, 15], name: 'Squat (knæbøj)' },
         { id: 'pt-armstraek-knae', sets: 3, reps: [6, 12] },
         { id: 'hofte-3-udfald-bagud', sets: 3, reps: [6, 10], side: true, name: 'Udfald bagud' },
         { id: 'hofte-3-broen-et-ben', sets: 3, reps: [6, 12], side: true, name: 'Bro på ét ben' },
@@ -105,7 +105,7 @@ const PT_QUESTIONS = [
     ['hjerte', 'En læge har sagt, at jeg har en hjertesygdom eller kun må træne under opsyn'], ['bryst', 'Jeg får smerter i brystet, når jeg er fysisk aktiv'],
     ['svimmel', 'Jeg er blevet svimmel, så jeg mistede balancen, eller jeg er besvimet inden for det sidste år'], ['blodtryk', 'Jeg tager medicin for blodtryk eller hjerte'],
     ['gravid', 'Jeg er gravid eller har født inden for det sidste halve år'], ['led', 'Jeg har et led- eller knogleproblem, der bliver værre af aktivitet'] ] },
-  { id: 'smerte', type: 'multi', t: 'Har du ondt et sted lige nu?', h: 'Så kan vi finde et "Prehab"-program, der passer til.', none: 'Nej', opts: [
+  { id: 'smerte', type: 'multi', t: 'Har du ondt et sted lige nu?', h: 'Så kan vi foreslå genoptræningsøvelser, der passer til.', none: 'Nej', opts: [
     ['knae', 'Knæ'], ['hofte', 'Hofte'], ['laend', 'Lænd'], ['nakke', 'Nakke'], ['skulder', 'Skulder'], ['ankel', 'Ankel'], ['fod', 'Fod eller hæl'] ] },
   { id: 'tryghed', type: 'scale', t: 'Hvor tryg er du ved at træne på egen hånd?', min: 0, max: 10, lo: 'Slet ikke tryg', hi: 'Helt tryg' },
   { id: 'frygt', type: 'one', t: 'Er du bekymret for at få ondt eller skade dig, når du træner?', opts: [['0', 'Slet ikke'], ['1', 'Lidt'], ['2', 'En del'], ['3', 'Meget']] },

@@ -10,6 +10,7 @@ const PT = (() => {
   const today = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
 
   /* ---------- tilstand ---------- */
+  const simple = () => typeof isSimple === 'function' && isSimple();   // "Stor og enkel": færre valg på PT-skærmene
   const on = () => localStorage.getItem(KEY_TARGET) !== 'patient';   // PT er standard; "patient" = den gamle genoptræningsapp
   const setTarget = t => { localStorage.setItem(KEY_TARGET, t === 'patient' ? 'patient' : 'pt'); };
   const program = id => PT_PROGRAMS.find(p => p.id === id) || PT_PROGRAMS[0];
@@ -76,13 +77,14 @@ const PT = (() => {
 
   /* ---------- fælles ---------- */
   const chrome = () => {
-    const lab = { home: on() ? 'Træning' : 'I dag', prog: on() ? 'Programmer' : 'Øvelser', uge: on() ? 'Fremskridt' : 'Fremgang' };
+    const lab = { home: on() ? 'Træning' : 'I dag', prog: on() ? 'Programmer' : 'Øvelser', uge: 'Fremgang' };
     document.querySelectorAll('.tabbar a').forEach(a => { const t = lab[a.dataset.tab]; if (!t) return; const svg = a.querySelector('svg'); a.textContent = ''; if (svg) a.appendChild(svg); a.appendChild(document.createTextNode(t)); });
     document.documentElement.classList.toggle('pt-mode', on());
   };
   const card = (href, ico, title, sub, extra) => '<a class="card more-row' + (extra || '') + '" href="' + href + '"><span class="mi" aria-hidden="true">' + ico + '</span><span><b>' + title + '</b>' + (sub ? '<small>' + sub + '</small>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>';
 
   /* ---------- Forside: Dagens træning ---------- */
+  function toRehab() { setTarget('patient'); chrome(); toast('Appen viser nu genoptræning. Du kan skifte tilbage under Mere.'); if (location.hash === '#/' || location.hash === '') { if (typeof window.route === 'function') window.route(); } else location.hash = '#/'; }
   function home() {
     setHeader('Træning'); setTab('home');
     const now = new Date(), P = program(active()), n = levelOf(P.id), L = P.levels[n - 1], done = trainedToday();
@@ -100,8 +102,10 @@ const PT = (() => {
         : '<p class="now-next">Første øvelse: <b>' + H(itemName(L.items[0])) + '</b></p>') + '</div>';
     if (readyForNext(P.id)) h += '<div class="card pt-levelup"><h3>🎯 Klar til ' + P.levels[n].name + '?</h3><p>Du har nået toppen i alle øvelser to gange i træk. Det er tid til mere udfordring.</p><button type="button" class="btn" id="ptLevelUp">Gå til ' + P.levels[n].name + '</button></div>';
     h += '<a class="card status-strip" href="#/uge"><span>📅 <b>' + wk + ' af ' + g + '</b> træninger denne uge</span><span>🔥 <b>' + weekStreak() + '</b> ' + (weekStreak() === 1 ? 'uge' : 'uger') + ' i træk</span><span class="chev" aria-hidden="true">›</span></a>';
-    h += '<a class="btn secondary" href="#/programmer">🔄 Skift program · Prehab</a>';
+    h += '<a class="btn secondary" href="#/programmer">🔄 Skift program</a>';
+    if (!logAll().length) h += '<button type="button" class="card more-row pt-to-rehab" id="ptToRehab"><span class="mi" aria-hidden="true">🩹</span><span><b>Har du ondt, eller skal du genoptræne?</b><small>Skift til genoptræning: øvelser til knæ, hofte, ryg, skulder, hånd og fod</small></span><span class="chev" aria-hidden="true">›</span></button>';
     $app.innerHTML = h;
+    const tr = document.getElementById('ptToRehab'); if (tr) tr.onclick = toRehab;
     if (typeof bindRemindBanner === 'function') bindRemindBanner();
     const up = document.getElementById('ptLevelUp'); if (up) up.onclick = () => { setLevel(P.id, n + 1); toast('Du er nu på ' + P.levels[n].name + '. Godt gået!'); home(); };
   }
@@ -115,7 +119,7 @@ const PT = (() => {
     PT_PROGRAMS.forEach(P => { const n = levelOf(P.id), cur = P.id === active();
       h += '<a class="card more-row pt-prog' + (cur ? ' cur' : '') + '" href="#/pt/program/' + P.id + '" data-ptprog="' + P.id + '"><span class="mi" aria-hidden="true">' + (ICO[P.id] || '💪') + '</span><span><b>' + H(P.name) + '</b><small>' + P.levels[n - 1].name + ' · ' + P.levels[n - 1].sub + ' · ' + H(P.minutes) + '</small>' + (cur ? '<span class="cur-tag">Dit program nu</span>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>'; });
     if (typeof PT_LIBRARY !== 'undefined') h += card('#/pt/bibliotek', '📚', 'Øvelsesbibliotek', 'Alle kropsvægtsøvelser – underkrop, skub, ryg, core, kondition og mobilitet', ' pt-lib-link');
-    h += '<h2 class="pt-h">Prehab – hold kroppen sund</h2><p class="muted small">Øvelser til knæ, hofte, ryg, skuldre og fødder. Brug dem som opvarmning, hvis noget driller, eller efter aftale med din træner.</p>';
+    h += '<h2 class="pt-h">Ondt et sted? Genoptræning og forebyggelse</h2><p class="muted small">Øvelser til knæ, hofte, ryg, skuldre og fødder. Brug dem som opvarmning, hvis noget driller, eller efter aftale med din træner.</p>';
     $app.insertAdjacentHTML('afterbegin', '<div class="pt-progs">' + h + '</div>');
   }
   function programView(pid) {
@@ -125,7 +129,7 @@ const PT = (() => {
     h += '<div class="levels" role="radiogroup" aria-label="Vælg trin">' + P.levels.map(L => '<button type="button" role="radio" aria-checked="' + (L.n === n) + '" class="lvl' + (L.n === n ? ' sel' : '') + '" data-ptlvl="' + L.n + '"><b>' + L.name + '</b><span>' + L.sub + '</span></button>').join('') + '</div>';
     const L = P.levels[n - 1];
     L.items.forEach((it, i) => { const e = ex(it.id);
-      h += '<a class="ex-item pt-item" href="#/oevelse/' + encodeURIComponent(it.id) + '">' + (e ? thumbHtml(e) : '') + '<div class="txt"><strong>' + (i + 1) + '. ' + H(itemName(it)) + '</strong><span>' + doseText(it) + '</span></div><span class="check" aria-hidden="true" style="color:#b9b4a8">›</span></a>'; });
+      h += '<a class="ex-item pt-item" href="#/oevelse/' + encodeURIComponent(it.id) + '">' + (e ? thumbHtml(e) : '') + '<div class="txt"><strong>' + (i + 1) + '. ' + H(itemName(it)) + '</strong><span>' + doseText(it) + '</span></div><span class="check" aria-hidden="true" style="color:#8a857a">›</span></a>'; });
     const isCur = P.id === active();
     h += isCur ? '<p class="pt-cur"><span class="cur-tag">Dit program nu</span></p><a class="btn start" href="#/pt/traening"><span class="start-main">' + icon('play') + 'Start ' + L.name + '</span></a>'
       : '<button type="button" class="btn start" id="ptChoose"><span class="start-main">' + icon('check') + 'Vælg som mit program</span></button>';
@@ -160,23 +164,24 @@ const PT = (() => {
     for (let s = 0; s < it.sets; s++) { const v = rec.sets[s] || {};
       h += '<div class="pt-set" data-set="' + s + '"><span class="pt-sn">Sæt ' + (s + 1) + '</span>' +
         '<label><span class="vh">' + unit + '</span><input type="number" inputmode="numeric" min="0" max="300" class="pt-reps" aria-label="Sæt ' + (s + 1) + ': ' + unit + '" placeholder="' + adv.goal + '" value="' + (v.reps != null ? H(v.reps) : '') + '"> ' + (it.hold ? 'sek.' : 'stk.') + '</label>' +
-        '<label class="pt-kg-l"><input type="number" inputmode="decimal" min="0" max="300" step="0.5" class="pt-kg" aria-label="Sæt ' + (s + 1) + ': ekstra kg (valgfrit)" placeholder="+kg" value="' + (v.kg != null ? H(v.kg) : '') + '"></label>' +
+        (simple() ? '' : '<label class="pt-kg-l"><input type="number" inputmode="decimal" min="0" max="300" step="0.5" class="pt-kg" aria-label="Sæt ' + (s + 1) + ': ekstra kg (valgfrit)" placeholder="+kg" value="' + (v.kg != null ? H(v.kg) : '') + '"></label>') +
         '<button type="button" class="pt-fill" data-fill="' + s + '" aria-label="Sæt ' + (s + 1) + ': lavet som foreslået">✓ ' + adv.goal + '</button></div>';
     }
-    h += '<p class="hint">Kg er valgfrit – kun hvis du har ekstra vægt på (fx en rygsæk).</p></div>';
+    h += (simple() ? '<p class="hint">Tryk på ✓ når et sæt er lavet – eller skriv, hvor mange du nåede.</p>' : '<p class="hint">Tryk på ✓ når et sæt er lavet som foreslået. Kg er valgfrit – kun hvis du har ekstra vægt på (fx en rygsæk).</p>') + '</div>';
     h += '<div class="card pt-rpe"><h3>Hvor hårdt var det?</h3><div class="seg pt-rpe-seg" role="radiogroup" aria-label="Anstrengelse">' + RPE.map(([v, t]) =>
       '<button type="button" role="radio" class="seg-b' + (rec.rpe === v ? ' sel' : '') + '" aria-checked="' + (rec.rpe === v) + '" data-rpe="' + v + '"><b>' + v + '</b><small>' + t + '</small></button>').join('') + '</div>' +
-      '<p class="hint">0 = ingen anstrengelse, 10 = det hårdeste du kan. Sigt efter 7–8: de sidste gentagelser er hårde, men teknikken holder.</p></div>';
+      '<p class="hint">' + (simple() ? 'Sigt efter 7–8: hårdt, men du kan stadig gøre det pænt.' : '0 = ingen anstrengelse, 10 = det hårdeste du kan. Sigt efter 7–8: de sidste gentagelser er hårde, men teknikken holder.') + '</p></div>';
     const last = i === L.items.length - 1;
     h += '<div class="pt-nav">' + (i > 0 ? '<a class="btn secondary" href="#/pt/traening/' + (i - 1) + '">‹ Forrige</a>' : '') +
       (last ? '<button type="button" class="btn" id="ptFinish">✓ Gem træningen</button>' : '<a class="btn" id="ptNext" href="#/pt/traening/' + (i + 1) + '">Næste: ' + H(itemName(L.items[i + 1])) + ' ›</a>') + '</div>';
-    h += '<p class="muted small"><a href="#/oevelse/' + encodeURIComponent(it.id) + '">Sådan gør du – trin for trin ›</a></p>';
+    h += '<a class="btn secondary pt-howto" href="#/oevelse/' + encodeURIComponent(it.id) + '" data-ptback="' + H(it.id) + '">📋 Sådan gør du – trin for trin</a>';
     h += '<details class="card fold stop"><summary>⚠️ Det må gerne være hårdt – men ikke gøre ondt</summary><p>' + H(PT_RULE) + '</p></details>';
     $app.innerHTML = h;
     if (typeof initFigFilm === 'function') initFigFilm($app);
+    const hw = $app.querySelector('[data-ptback]'); if (hw) hw.onclick = () => { try { sessionStorage.setItem('hjo_pt_back', JSON.stringify({ id: hw.dataset.ptback, hash: location.hash })); } catch (er) {} };
     const read = () => { rec.sets = [];
-      $app.querySelectorAll('.pt-set').forEach(r => { const reps = r.querySelector('.pt-reps').value, kg = r.querySelector('.pt-kg').value;
-        if (reps !== '') { const o = { reps: Math.max(0, Math.min(300, Math.round(Number(reps)) || 0)) }; if (kg !== '' && Number(kg) > 0) o.kg = Math.min(300, Math.round(Number(kg) * 2) / 2); rec.sets.push(o); } });
+      $app.querySelectorAll('.pt-set').forEach(r => { const reps = r.querySelector('.pt-reps').value, kgEl = r.querySelector('.pt-kg'), kg = kgEl ? kgEl.value : null;
+        if (reps !== '') { const o = { reps: Math.max(0, Math.min(300, Math.round(Number(reps)) || 0)) }; if (kg != null && kg !== '' && Number(kg) > 0) o.kg = Math.min(300, Math.round(Number(kg) * 2) / 2); rec.sets.push(o); } });
       draftSave(d); };
     $app.querySelectorAll('input').forEach(x => x.addEventListener('change', read));
     $app.querySelectorAll('[data-fill]').forEach(b => b.onclick = () => { const r = $app.querySelector('.pt-set[data-set="' + b.dataset.fill + '"] .pt-reps'); r.value = adv.goal; read(); });
@@ -206,15 +211,16 @@ const PT = (() => {
 
   /* ---------- Fremskridt ---------- */
   function progress() {
-    setHeader('Fremskridt'); setTab('uge');
+    setHeader('Fremgang'); setTab('uge');
     const all = logAll(), g = weekGoal(), mon = mondayOf(new Date());
-    let h = '<div class="card pt-week"><h3>Denne uge</h3><p class="pt-big"><b>' + sessionsThisWeek() + '</b> af ' + g + ' træninger</p><p class="muted">🔥 ' + weekStreak() + ' ' + (weekStreak() === 1 ? 'uge' : 'uger') + ' i træk med ugemålet nået · ' + all.length + ' træninger i alt</p></div>';
+    let h = all.length ? '' : '<div class="card pt-empty"><h3>Her kan du følge med</h3><p>Når du har gemt din første træning, ser du her, hvor mange gange du har trænet, og hvordan du bliver stærkere i hver øvelse.</p><a class="btn" href="#/pt/traening">▶ Start din første træning</a></div>';
+    h += '<div class="card pt-week"><h3>Denne uge</h3><p class="pt-big"><b>' + sessionsThisWeek() + '</b> af ' + g + ' træninger</p><p class="muted">🔥 ' + weekStreak() + ' ' + (weekStreak() === 1 ? 'uge' : 'uger') + ' i træk med ugemålet nået · ' + all.length + ' træninger i alt</p></div>';
     // søjler: træninger pr. uge, seneste 8 uger
     const weeks = []; for (let w = 7; w >= 0; w--) { const m = addDays(mon, -7 * w), a = dateKey(m), b = dateKey(addDays(m, 7)); weeks.push({ m, n: all.filter(s => s.dato >= a && s.dato < b).length }); }
     const mx = Math.max(g, ...weeks.map(w => w.n));
     h += '<div class="card"><h3>Træninger pr. uge</h3><svg class="pt-bars" viewBox="0 0 320 130" role="img" aria-label="Træninger pr. uge de sidste 8 uger">' +
       '<line x1="0" x2="320" y1="' + (110 - 100 * g / mx) + '" y2="' + (110 - 100 * g / mx) + '" stroke="#f08c3a" stroke-dasharray="4 4"/>' +
-      weeks.map((w, i) => '<rect x="' + (i * 40 + 8) + '" y="' + (110 - 100 * w.n / mx) + '" width="24" height="' + (100 * w.n / mx) + '" rx="4" fill="#2f8a6a"/><text x="' + (i * 40 + 20) + '" y="125" font-size="11" text-anchor="middle" fill="#5f6b66">u' + weekNumber(w.m) + '</text>').join('') + '</svg><p class="hint">Den stiplede linje er dit ugemål (' + g + ').</p></div>';
+      weeks.map((w, i) => '<rect x="' + (i * 40 + 8) + '" y="' + (110 - 100 * w.n / mx) + '" width="24" height="' + (100 * w.n / mx) + '" rx="4" fill="#2f8a6a"/><text x="' + (i * 40 + 20) + '" y="125" font-size="13" text-anchor="middle" fill="#4f5a55">u' + weekNumber(w.m) + '</text>').join('') + '</svg><p class="hint">Den stiplede linje er dit ugemål (' + g + ').</p></div>';
     // pr. øvelse: bedste sæt og udvikling
     const ids = []; all.forEach(s => s.ex.forEach(e => { if (!ids.includes(e.id)) ids.push(e.id); }));
     if (ids.length) {
@@ -255,7 +261,7 @@ const PT = (() => {
       h += '<div class="pt-opts">' + q.opts.map(([k, t]) => '<button type="button" class="card pt-opt' + (sel.includes(k) ? ' sel' : '') + '" aria-pressed="' + sel.includes(k) + '" data-opt="' + k + '">' + H(t) + '</button>').join('') +
         (q.none ? '<button type="button" class="card pt-opt' + (sel.includes('none') ? ' sel' : '') + '" aria-pressed="' + sel.includes('none') + '" data-opt="none">' + H(q.none) + '</button>' : '') + '</div>'; }
     h += '<button type="button" class="btn" id="ptQNext"' + (cur == null || (Array.isArray(cur) && !cur.length) ? ' disabled' : '') + '>' + (i === Q.length - 1 ? 'Se mit forslag' : 'Næste') + '</button>';
-    if (!i) h += '<button type="button" class="btn secondary" id="ptQSkip">Spring over</button>';
+    if (!i) h += '<button type="button" class="btn secondary" id="ptQSkip">Spring over</button><button type="button" class="card more-row pt-to-rehab" id="ptQRehab"><span class="mi" aria-hidden="true">🩹</span><span><b>Har du ondt, eller skal du genoptræne?</b><small>Vis genoptræning i stedet</small></span><span class="chev" aria-hidden="true">›</span></button>';
     h += '<p class="hint" style="text-align:center">Ingen navn. Svarene gemmes kun på denne telefon.</p>';
     $app.innerHTML = h;
     const nextB = document.getElementById('ptQNext'), setA = v => { a[q.id] = v; wj(KEY_ANS + '_kladde', a); nextB.disabled = v == null || (Array.isArray(v) && !v.length); };
@@ -266,6 +272,7 @@ const PT = (() => {
       setA(v); $app.querySelectorAll('[data-opt]').forEach(x => { const s = v.includes(x.dataset.opt); x.classList.toggle('sel', s); x.setAttribute('aria-pressed', s); });
     });
     nextB.onclick = () => { location.hash = i === Q.length - 1 ? '#/pt/velkommen/resultat' : '#/pt/velkommen/' + (i + 1); };
+    const qr = document.getElementById('ptQRehab'); if (qr) qr.onclick = () => { localStorage.setItem(KEY_SKIP, '1'); toRehab(); };
     const sk = document.getElementById('ptQSkip'); if (sk) sk.onclick = () => { localStorage.setItem(KEY_SKIP, '1'); location.hash = '#/'; };
   }
   function result() {
@@ -276,7 +283,7 @@ const PT = (() => {
     setHeader('Dit forslag', '#/'); setTab('home');
     let h = '<div class="card pt-result"><h2>Din start: ' + H(P.name) + ', ' + P.levels[R.trin - 1].name + '</h2><p>' + P.levels[R.trin - 1].items.map(itemName).map(H).join(' · ') + '</p><p><b>Ugemål:</b> ' + R.days + ' træninger om ugen.</p></div>';
     R.notes.forEach(n => { h += '<div class="card pt-note pt-note-' + n.k + '"><p style="margin:0">' + (n.k === 'flag' ? '⚠️ ' : '💬 ') + H(n.t) + '</p></div>'; });
-    if (R.prehab.length) h += '<div class="card"><h3>Prehab til det, der driller</h3><p>Lav gerne disse øvelser som opvarmning eller på hviledage:</p>' + R.prehab.map(c => { const C = CATEGORIES.find(x => x.id === c); return C ? '<a class="btn secondary small" href="#/kategori/' + c + '">' + H(C.name) + '</a>' : ''; }).join('') + '</div>';
+    if (R.prehab.length) h += '<div class="card"><h3>Øvelser til det, der driller</h3><p>Lav gerne disse øvelser som opvarmning eller på hviledage:</p>' + R.prehab.map(c => { const C = CATEGORIES.find(x => x.id === c); return C ? '<a class="btn secondary small" href="#/kategori/' + c + '">' + H(C.name) + '</a>' : ''; }).join('') + '</div>';
     h += '<button type="button" class="btn" id="ptAccept">Start med ' + P.levels[R.trin - 1].name + '</button><a class="btn secondary" href="#/pt/velkommen/0">Ret mine svar</a>';
     h += '<p class="hint">Forslaget er en vejledning, ikke en lægelig vurdering. Din træner kan altid justere det.</p>';
     $app.innerHTML = h;
@@ -291,7 +298,7 @@ const PT = (() => {
     G.forEach(g => {
       h += '<h2 class="pt-h" data-ptlib="' + g.id + '">' + g.icon + ' ' + H(g.name) + '</h2>';
       g.ids.forEach(id => { const e = ex(id); if (!e) return;
-        h += '<a class="ex-item pt-item" href="#/oevelse/' + encodeURIComponent(id) + '" data-ptlibex="' + H(id) + '">' + thumbHtml(e) + '<div class="txt"><strong>' + H(e.name) + '</strong><span>' + H(e.dose || '') + '</span></div><span class="check" aria-hidden="true" style="color:#b9b4a8">›</span></a>'; });
+        h += '<a class="ex-item pt-item" href="#/oevelse/' + encodeURIComponent(id) + '" data-ptlibex="' + H(id) + '">' + thumbHtml(e) + '<div class="txt"><strong>' + H(e.name) + '</strong><span>' + H(e.dose || '') + '</span></div><span class="check" aria-hidden="true" style="color:#8a857a">›</span></a>'; });
     });
     $app.innerHTML = h; hydrateMedia($app);
   }

@@ -6,7 +6,7 @@
 /* ================= PT: nye øvelser (kropsvægt). area = område i øvelsesbiblioteket ================= */
 const V33_PT = [
   {
-    id: 'pt-squat', category: 'styrke', level: 1, area: 'underkrop', name: 'Squat',
+    id: 'pt-squat', category: 'styrke', level: 1, area: 'underkrop', name: 'Squat (knæbøj)',
     images: [{"src": "images/pt-squat/1.webp", "caption": "1. Stå med fødderne lidt bredere end hofterne og tæerne let udad.", "w": 480, "h": 660}, {"src": "images/pt-squat/2.webp", "caption": "2. Sæt dig ned og bagud, som mod en lav stol. Armene går frem som modvægt.", "w": 480, "h": 660}, {"src": "images/pt-squat/3.webp", "caption": "3. Gå så dybt, du kan med ret ryg og hælene i gulvet.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
     dose: '3 sæt × 10–20 gentagelser. 2–3 sek. ned, 1–2 sek. op.',
     steps: ['Stå med fødderne lidt bredere end hofterne og tæerne let udad.', 'Sæt dig ned og bagud, som mod en lav stol. Armene går frem som modvægt.', 'Gå så dybt, du kan med ret ryg og hælene i gulvet.', 'Pres op gennem hele foden, til du står helt oprejst.'],
@@ -28,7 +28,7 @@ const V33_PT = [
     steps: ['Stil dig med ryggen mod en væg og fødderne et godt stykke frem.', 'Glid ned ad væggen, til knæene er bøjet ca. 90° – eller så langt, det er rart.', 'Hold stille, og træk vejret roligt. Glid op igen.'],
     tips: ['Knæene skal være over anklerne – ikke foran tæerne.', 'Hele ryggen mod væggen.'],
     progression: 'Lettere: højere position (mindre bøjning) eller kortere tid. Sværere: længere tid, eller løft den ene fod lidt.',
-    evidence: 'Isometrisk quadriceps-træning. Rio 2015 (BJSM): 5 × 45 sek. isometrisk belastning gav straks smertelindring ved patellasene-smerter – et lille studie med 6 volleyspillere.' },
+    evidence: 'Isometrisk quadriceps-træning. Rio 2015 (BJSM): 5 × 45 sek. isometrisk belastning gav straks smertelindring ved patellasene-smerter – et lille studie med 6 volleyballspillere.' },
   {
     id: 'pt-etben-doedloeft', category: 'styrke', level: 2, area: 'underkrop', name: 'Dødløft på ét ben (uden vægt)',
     images: [{"src": "images/pt-etben-doedloeft/1.webp", "caption": "1. Stå på ét ben med let bøjet knæ.", "w": 480, "h": 528}, {"src": "images/pt-etben-doedloeft/2.webp", "caption": "2. Bøj frem i hoften med ret ryg, mens det andet ben går lige bagud.", "w": 480, "h": 528}, {"src": "images/pt-etben-doedloeft/3.webp", "caption": "3. Stop, når kroppen er næsten vandret – eller før, hvis ryggen bliver rund.", "w": 480, "h": 528}], /* auto: tools/sync_images.py */
@@ -110,7 +110,7 @@ const V33_PT = [
     progression: 'Lettere: kortere tid. Sværere: løft armen over hovedet på samme side.',
     evidence: 'Udspænding øger bevægeligheden på sigt (Konrad 2024, meta-analyse af 77 studier). ACSM anbefaler at holde hvert stræk 10–30 sek., i alt ca. 60 sek. pr. øvelse (Garber 2011).' },
   {
-    id: 'pt-nordic', category: 'styrke', level: 3, area: 'underkrop', name: 'Nordic hamstring (baglår)',
+    id: 'pt-nordic', category: 'styrke', level: 3, area: 'underkrop', name: 'Nordic hamstring (langsomt fald frem – baglår)',
     images: [{"src": "images/pt-nordic/1.webp", "caption": "1. Sæt dig på knæ på en pude, og få hælene holdt fast – fx under en tung sofa.", "w": 720, "h": 402}, {"src": "images/pt-nordic/2.webp", "caption": "2. Lige linje fra knæ til hoved, armene klar foran brystet.", "w": 720, "h": 402}, {"src": "images/pt-nordic/3.webp", "caption": "3. Fald langsomt frem, og brems med baglårene så længe, du kan.", "w": 720, "h": 402}], /* auto: tools/sync_images.py */
     dose: '2–3 sæt × 3–6. 2 gange om ugen. Start med 1 sæt × 3.',
     steps: ['Sæt dig på knæ på en pude, og få hælene holdt fast – fx under en tung sofa.', 'Lige linje fra knæ til hoved, armene klar foran brystet.', 'Fald langsomt frem, og brems med baglårene så længe, du kan.', 'Tag fra med hænderne, og skub dig op igen.'],
@@ -118,12 +118,12 @@ const V33_PT = [
     progression: 'Lettere: fald kun et lille stykke frem, og tag tidligt fra med hænderne. Sværere: langsommere og længere ned.',
     evidence: 'van Dyk 2019 (BJSM, meta-analyse): programmer med Nordic hamstring halverer baglårsskader. Petersen 2011 (AJSM, RCT i dansk fodbold). van der Horst 2015.' },
   {
-    id: 'pt-copenhagen', category: 'styrke', level: 3, area: 'core', name: 'Copenhagen adduktion (kort vægtstang)',
+    id: 'pt-copenhagen', category: 'styrke', level: 3, area: 'core', name: 'Copenhagen-øvelsen for inderlåret (kort vægtarm)',
     images: [{"src": "images/pt-copenhagen/1.webp", "caption": "1. Lig på siden på underarmen med det øverste knæ på sædet af en stol.", "w": 720, "h": 360}, {"src": "images/pt-copenhagen/2.webp", "caption": "2. Løft hoften, så du er lige fra knæ til skulder.", "w": 720, "h": 360}, {"src": "images/pt-copenhagen/3.webp", "caption": "3. Løft samtidig det nederste ben op mod stolen. Hold 3–5 sek., og sænk roligt.", "w": 720, "h": 360}], /* auto: tools/sync_images.py */
     dose: '2–3 sæt × 3–8 pr. side (eller 10–20 sek. hold). 2 gange om ugen.',
     steps: ['Lig på siden på underarmen med det øverste knæ på sædet af en stol.', 'Løft hoften, så du er lige fra knæ til skulder.', 'Løft samtidig det nederste ben op mod stolen. Hold 3–5 sek., og sænk roligt.'],
     tips: ['Du skal mærke det på indersiden af det øverste lår.', 'Albuen lige under skulderen.'],
-    progression: 'Lettere: kun hold (ingen gentagelser), eller kortere tid. Sværere: lang vægtstang – foden på stolen i stedet for knæet (kun når den korte er let).',
+    progression: 'Lettere: kun hold (ingen gentagelser), eller kortere tid. Sværere: lang vægtarm – foden på stolen i stedet for knæet (kun når den korte er let).',
     evidence: 'Harøy 2019 (BJSM, RCT): Copenhagen-programmet gav 41 % færre lyskeproblemer i fodbold. Ishøi 2016: øger adduktorstyrken.' }
 ];
 
@@ -148,7 +148,7 @@ const V33_REHAB = [
     stop: 'Stop øvelsen, hvis smerten flytter sig længere ned i benet, eller hvis du får snurren eller følelsesløshed. Se "Hvornår skal du til læge?".',
     evidence: 'JOSPT CPG lændesmerter 2021 (George m.fl.): retningsspecifikke øvelser til personer med retningspræference. Long 2004 (Spine, RCT): bedre effekt, når øvelsen matcher retningspræferencen.' },
   {
-    id: 'ankel-3-alfredson', category: 'ankel', track: 'forebyg', level: 3, phases: [3], name: 'Excentrisk hælsænk på trappe (Alfredson)',
+    id: 'ankel-3-alfredson', category: 'ankel', track: 'forebyg', level: 3, phases: [3], name: 'Langsom hælsænkning på trappe (Alfredson)',
     images: [{"src": "images/ankel-3-alfredson/1.webp", "caption": "1. Stå med forfoden på kanten af et trin og en hånd på væggen.", "w": 480, "h": 660}, {"src": "images/ankel-3-alfredson/2.webp", "caption": "2. Gå op på tæerne på begge ben.", "w": 480, "h": 660}, {"src": "images/ankel-3-alfredson/3.webp", "caption": "3. Løft det raske ben, og sænk langsomt hælen under trinnet på det onde ben (3 sek.).", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
     dose: '3 sæt × 15 med strakt knæ (+ evt. 3 × 15 med bøjet knæ). Hver dag i 12 uger.',
     steps: ['Stå med forfoden på kanten af et trin og en hånd på væggen.', 'Gå op på tæerne på begge ben.', 'Løft det raske ben, og sænk langsomt hælen under trinnet på det onde ben (3 sek.).', 'Sæt den raske fod ned igen, og gå op på begge ben.'],
@@ -167,7 +167,7 @@ const V33_REHAB = [
     evidence: 'Liggende armløft: overhead-løft (Y) giver højest aktivitet i nedre trapezius (Ekstrom 2003, JOSPT); vandret løft med udadrotation (T) har lav øvre/nedre trapezius-ratio (Cools 2007, AJSM). Træning er førstevalg ved skuldersmerter under skulderhøjden (Pieters 2020, JOSPT).' },
   // Senesmerter
   {
-    id: 'sene-h-iso-hofte', category: 'sene', track: 'hold', level: 1, phases: [1], name: 'Pres benet ud mod væggen (isometrisk)',
+    id: 'sene-h-iso-hofte', category: 'sene', track: 'hold', level: 1, phases: [1], name: 'Pres benet ud mod væggen (stille pres)',
     images: [{"src": "images/sene-h-iso-hofte/1.webp", "caption": "1. Stå med siden mod en væg og det onde ben inderst.", "w": 480, "h": 660}, {"src": "images/sene-h-iso-hofte/2.webp", "caption": "2. Bøj det inderste knæ lidt.", "w": 480, "h": 660}, {"src": "images/sene-h-iso-hofte/3.webp", "caption": "3. Pres ydersiden af knæet ud mod væggen med ca. halv kraft, og hold.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
     dose: '5 × 30–45 sek. med ca. halv kraft. 1 minuts pause. Gerne 1–2 gange om dagen.',
     steps: ['Stå med siden mod en væg og det onde ben inderst.', 'Bøj det inderste knæ lidt.', 'Pres ydersiden af knæet ud mod væggen med ca. halv kraft, og hold.', 'Slip roligt, og hvil.'],
@@ -333,7 +333,7 @@ if (typeof PT_PROGRAMS !== 'undefined') {
     hk.v33 = true; hk.minutes = '30–40 min';
     hk.about = 'Styrketræning for hele kroppen med din egen kropsvægt – plus lidt puls og bevægelighed til sidst. Intet udstyr – kun en måtte og en stol. 2–3 gange om ugen med mindst én hviledag imellem.';
     hk.levels[0].items.push({ id: 'pt-knaeloeft', sets: 3, hold: [20, 40], name: 'Høje knæløft (puls)' }, { id: 'pt-hoftebojer', sets: 2, hold: [30, 45], side: true, name: 'Hoftebøjerstræk' });
-    hk.levels[1].items[0] = { id: 'pt-squat', sets: 3, reps: [10, 15], name: 'Squat' };
+    hk.levels[1].items[0] = { id: 'pt-squat', sets: 3, reps: [10, 15], name: 'Squat (knæbøj)' };
     hk.levels[1].items.push({ id: 'pt-spraellemand', sets: 3, hold: [20, 40], name: 'Sprællemand (puls)' }, { id: 'pt-hoftebojer', sets: 2, hold: [30, 45], side: true, name: 'Hoftebøjerstræk' });
     hk.levels[2].items.push({ id: 'pt-bjergbestiger', sets: 3, hold: [20, 40], name: 'Bjergbestiger (puls)' }, { id: 'pt-hoftebojer', sets: 2, hold: [30, 45], side: true, name: 'Hoftebøjerstræk' });
   }
@@ -387,7 +387,7 @@ const PT_LIBRARY = [
   { id: 'underkrop', name: 'Underkrop', icon: '🦵', ids: ['knae-2-rejse-uden-arme', 'pt-squat', 'pt-vaegsid', 'hofte-3-udfald-bagud', 'knae-3-udfald-frem', 'pt-split-squat', 'knae-3-rejse-et-ben', 'hofte-1-broen', 'hofte-3-broen-et-ben', 'pt-etben-doedloeft', 'pt-nordic', 'hael-2-haeloeft-begge', 'ankel-2-haeloeft-et-ben'] },
   { id: 'skub', name: 'Overkrop – skub', icon: '💪', ids: ['skulder-3-vaegpres', 'pt-armstraek-hoej', 'pt-armstraek-knae', 'pt-armstraek', 'pt-dips'] },
   { id: 'ryg', name: 'Ryg og træk (uden udstyr)', icon: '🧍', ids: ['pt-rygloeft', 'pt-ytl', 'nakke-3-y-loeft', 'laend-2-fuglehund'] },
-  { id: 'core', name: 'Core', icon: '🎯', ids: ['pt-planke', 'laend-1-dead-bug', 'laend-2-sideplanke-knae', 'pt-bjergbestiger', 'pt-copenhagen'] },
+  { id: 'core', name: 'Mave og ryg (core)', icon: '🎯', ids: ['pt-planke', 'laend-1-dead-bug', 'laend-2-sideplanke-knae', 'pt-bjergbestiger', 'pt-copenhagen'] },
   { id: 'kondition', name: 'Kondition og hop', icon: '❤️', ids: ['pt-knaeloeft', 'pt-spraellemand', 'pt-squat-hop', 'ankel-3-sidehop'] },
-  { id: 'mobilitet', name: 'Mobilitet og balance', icon: '🧘', ids: ['pt-hoftebojer', 'hael-1-laeg-straek-strakt', 'bryst-h-aaben-bog', 'laend-h-kat-ko', 'balance-3-et-ben', 'ankel-2-et-ben-raek'] }
+  { id: 'mobilitet', name: 'Bevægelighed og balance', icon: '🧘', ids: ['pt-hoftebojer', 'hael-1-laeg-straek-strakt', 'bryst-h-aaben-bog', 'laend-h-kat-ko', 'balance-3-et-ben', 'ankel-2-et-ben-raek'] }
 ];

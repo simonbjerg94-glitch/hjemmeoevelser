@@ -41,7 +41,7 @@ const HAEL_PAIN_CHECK = {
   morningTrend: [
     { diffMax: -1, tone: 'green', text: 'Morgensmerten er på vej ned. Godt gået!' },
     { diffMax: 1, tone: 'green', text: 'Morgensmerten er stabil. Fortsæt som planlagt.' },
-    { diffMax: 10, tone: 'yellow', text: 'De første skridt var værre end normalt i dag. Tag en lettere dag: færre skridt, kun stræk og isometrisk øvelse, og prøv igen i morgen.' }
+    { diffMax: 10, tone: 'yellow', text: 'De første skridt var værre end normalt i dag. Tag en lettere dag: færre skridt, kun stræk og stille pres-øvelsen, og prøv igen i morgen.' }
   ]
 };
 
@@ -127,9 +127,9 @@ const HAEL_EXERCISES = [
   {
     id: 'hael-1-fascie-straek', category: 'haelspore', level: 1, phases: [1, 2, 3, 4],
     images: [{"src": "images/hael-1-fascie-straek/1.webp", "caption": "1. Sid på sengekanten, og læg den ømme fod over knæet", "w": 848, "h": 1440}, {"src": "images/hael-1-fascie-straek/2.webp", "caption": "2. Bøj tæerne op mod dig, til du mærker et stræk i fodsålen", "w": 838, "h": 1440}, {"src": "images/hael-1-fascie-straek/3.webp", "caption": "3. Mærk svangen: den skal føles stram. Hold 10 sekunder", "w": 848, "h": 1440}], /* auto: tools/sync_images.py */
-    name: 'Stræk fodsålen siddende (plantarfascie-stræk)',
+    name: 'Stræk fodsålen siddende',
     equipment: 'Ingen. En stol eller sengekanten.',
-    dose: '10 gentagelser × hold 10 sekunder. 3 gange om dagen. Altid før de første skridt om morgenen og før du rejser dig efter længere tids siddning.',
+    dose: '10 gentagelser × hold 10 sekunder. 3 gange om dagen. Altid før de første skridt om morgenen og før du rejser dig efter at have siddet længe.',
     steps: [
       'Sid på sengekanten eller en stol. Læg den ømme fod over det andet knæ.',
       'Tag fat om tæerne med hånden, og bøj dem op mod skinnebenet, til du mærker et stræk i fodsålen.',
@@ -235,7 +235,7 @@ const HAEL_EXERCISES = [
   {
     id: 'hael-1-isometrisk-pres', category: 'haelspore', level: 1, phases: [1, 2],
     images: [{"src": "images/hael-1-isometrisk-pres/1.webp", "caption": "1. Sid med benet strakt og fodsålen mod væggen", "w": 900, "h": 1440}, {"src": "images/hael-1-isometrisk-pres/2.webp", "caption": "2. Pres forfoden mod væggen med halv kraft. Hold 30–45 sekunder", "w": 792, "h": 1440}, {"src": "images/hael-1-isometrisk-pres/3.webp", "caption": "3. Sværere: stå og hold hælene lidt løftet i 30–45 sekunder", "w": 850, "h": 1440}], /* auto: tools/sync_images.py */
-    name: 'Pres foden mod væggen (isometrisk)',
+    name: 'Pres foden mod væggen (stille pres)',
     equipment: 'En væg, en seng eller gulvet. Evt. en pude under knæet.',
     dose: '5 gentagelser × hold 30–45 sekunder. 1 minuts pause imellem. 1–2 gange om dagen. Kan også bruges på dårlige dage i senere faser.',
     steps: [
@@ -431,7 +431,7 @@ const HAEL_EXERCISES = [
   {
     id: 'hael-3-soleus-haeloeft', category: 'haelspore', level: 3, phases: [3, 4],
     images: [{"src": "images/hael-3-soleus-haeloeft/1.webp", "caption": "1. Stå med fødderne i hoftebredde og hænderne let mod en væg.", "w": 480, "h": 660}, {"src": "images/hael-3-soleus-haeloeft/2.webp", "caption": "2. Bøj knæene ca. 20–30 grader, og hold dem bøjede hele tiden.", "w": 480, "h": 660}, {"src": "images/hael-3-soleus-haeloeft/3.webp", "caption": "3. Løft hælene langsomt så højt, du kan (3 sekunder), og hold 2 sekunder.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
-    name: 'Hæløft med bøjede knæ (soleus)',
+    name: 'Hæløft med bøjede knæ (dyb lægmuskel)',
     equipment: 'En væg eller et køkkenbord. Senere et trappetrin og en rygsæk.',
     dose: '3 sæt × 12–15 gentagelser. Tempo: 3 sekunder op, hold 2 sekunder, 3 sekunder ned. Hver 2. dag sammen med det tunge hæløft.',
     steps: [
@@ -511,11 +511,11 @@ const HAEL_AIDS = [
    Ugen viser et forslag. Appen bør altid tjekke fasens kriterier, før den foreslår næste fase. */
 const HAEL_WEEKS = [
   { week: 1, phase: 1, title: 'Kom i gang – ro på hælen',
-    daily: ['Morgenrutine før første skridt', 'Fascie-stræk 3 × om dagen', 'Lægstræk (strakt og bøjet knæ) 2–3 × om dagen', 'Isometrisk pres 5 × 30 sek. 1–2 × om dagen', 'Rul under foden efter behov'],
+    daily: ['Morgenrutine før første skridt', 'Fascie-stræk 3 × om dagen', 'Lægstræk (strakt og bøjet knæ) 2–3 × om dagen', 'Stille pres mod væggen 5 × 30 sek. 1–2 × om dagen', 'Rul under foden efter behov'],
     load: 'Skær ned på lange gåture og lang tids stående på hårdt gulv. Cykel eller svøm i stedet, hvis du vil holde formen.',
     tip: 'Find dine bedste sko frem, og gå ikke barfodet på hårde gulve.' },
   { week: 2, phase: 1, title: 'Find rytmen',
-    daily: ['Morgenrutine', 'Fascie-stræk 3 × om dagen', 'Lægstræk 2–3 × om dagen', 'Isometrisk pres 5 × 45 sek.'],
+    daily: ['Morgenrutine', 'Fascie-stræk 3 × om dagen', 'Lægstræk 2–3 × om dagen', 'Stille pres mod væggen 5 × 45 sek.'],
     load: 'Gå korte ture på 10–20 minutter i gode sko, hvis morgensmerten tillader det.',
     tip: 'Tjek "Klar til fase 2?" sidst på ugen. Er du ikke klar, så bliv i fase 1 en uge mere. Det er helt normalt.' },
   { week: 3, phase: 2, title: 'Styrke starter',
@@ -629,7 +629,7 @@ const HAEL_INFO = [
       'Sko: brug sko med blød, støddæmpende sål, god pasform og en hæl, der er lidt højere end forfoden. Også indendørs',
       'Undgå at gå barfodet på hårde gulve, og undgå flade klipklappere, slidte sko og høje hæle',
       'Indlæg: en blød hælkop eller et støddæmpende indlæg kan aflaste. Billige virker ofte lige så godt som dyre',
-      'Morgenstræk: stræk fodsålen, før du står ud af sengen, og før du rejser dig efter længere tids siddning',
+      'Morgenstræk: stræk fodsålen, før du står ud af sengen, og før du rejser dig efter at have siddet længe',
       'Aflastning: del lange gåture op i kortere, skift stilling, hvis du står meget, og hold pauser. Cykling og svømning er fine alternativer',
       'Is: rul foden på en frossen flaske i højst 10 minutter efter en lang dag. Det lindrer, men helbreder ikke',
       'Vægt: ved overvægt aflaster et vægttab hælen ved hvert eneste skridt',
@@ -718,7 +718,7 @@ const HAEL_LOAD_GUIDE = {
     { tone: 'yellow', label: 'Gul: 3–5, eller lidt værre end normalt',
       text: 'Hold samme niveau som i går. Del gåturen op i flere korte ture. Brug gode sko hele dagen.' },
     { tone: 'red', label: 'Rød: 6 eller mere, eller tydeligt værre end normalt',
-      text: 'Let dag: skær gang og stående med 20–30 %. Lav kun morgenrutine, stræk og isometrisk pres. Cykel eller svøm, hvis du vil røre dig. Prøv igen i morgen.' }
+      text: 'Let dag: skær gang og stående med 20–30 %. Lav kun morgenrutine, stræk og stille pres mod væggen. Cykel eller svøm, hvis du vil røre dig. Prøv igen i morgen.' }
   ],
   stepsHint: 'Har du en skridttæller på telefonen? Find dit normale skridttal en almindelig dag, og øg med højst 10 % om ugen.'
 };
@@ -728,7 +728,7 @@ const HAEL_FLARE_PLAN = {
   title: 'Dårlig dag? Sådan gør du',
   steps: [
     'Bliv rolig. En dårlig dag betyder ikke, at det går den forkerte vej.',
-    'Gå et trin ned: kun stræk og isometrisk pres i dag.',
+    'Gå et trin ned: kun stræk og stille pres mod væggen i dag.',
     'Brug dine bedste sko, og evt. tape eller hælkop.',
     'Rul foden på en frossen flaske i 5–10 minutter.',
     'Del dagens gang op i korte ture, og sæt dig, når du kan.',

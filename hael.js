@@ -191,7 +191,7 @@ function viewHael() {
     const d = doneToday(e.id);
     h += '<a class="ex-item' + (d ? ' done' : '') + '" href="#/oevelse/' + encodeURIComponent(e.id) + '">' + thumbHtml(e) +
       '<div class="txt"><strong>' + esc(e.name) + '</strong><span>' + esc(shortDose(e.dose)) + '</span></div>' +
-      (d ? '<span class="check" aria-label="Lavet i dag">✓</span>' : '<span class="check" aria-hidden="true" style="color:#b9b4a8">›</span>') + '</a>';
+      (d ? '<span class="check" aria-label="Lavet i dag">✓</span>' : '<span class="check" aria-hidden="true" style="color:#8a857a">›</span>') + '</a>';
   });
   if (needsAfter('haelspore') && list.some(e => doneToday(e.id))) h += '<button type="button" class="btn finish" id="finishBtn">✓ ' + esc(PAIN_CHECK.finishButton) + '</button>';
   h += '<a class="card hint-card ready-card" href="#/hael/klar"><h3>' + (f < 4 ? '🎯 Klar til fase ' + (f + 1) + '?' : '🏁 Har du nået målet?') + '</h3><p class="small" style="margin:0">Tjek kriterierne – hælen bestemmer tempoet, ikke kalenderen. ›</p></a>';

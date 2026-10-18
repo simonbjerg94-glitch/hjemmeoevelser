@@ -445,7 +445,7 @@ const DEFAULT_EXERCISES = [
     ],
     progression: 'Lettere: hold fast, eller lad tåspidsen røre gulvet. Sværere: stå på en pude, drej hovedet, eller sving det frie ben langsomt frem og tilbage.',
     stop: BALANCE_RULE,
-    videoOld: 'https://www.youtube.com/watch?v=QT5d4tTXW6U', videoSourceOld: 'National Institute on Aging (engelsk): "Stand on One Foot Balance Exercise for Older Adults"'
+    videoOld: 'https://www.youtube.com/watch?v=QT5d4tTXW6U', videoSourceOld: 'National Institute on Aging (engelsk): video om at stå på ét ben'
   }
 ];
 
