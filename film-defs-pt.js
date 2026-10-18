@@ -19,11 +19,11 @@
     Object.assign(P, arms(S));
     return P;
   }
-  const handsAt = x => () => ({ armF: { hand: [x - 4, G - 5], elbowFwd: 1 }, armN: { hand: [x, G - 5], elbowFwd: 1 } });
+  const handsAt = x => () => ({ armF: { hand: [x - 4, G - 5] }, armN: { hand: [x, G - 5] } }); // albuerne bøjer bagud mod fødderne
 
   // Armstrækninger på knæene
   (() => {
-    const K = [150, G - 9], A = [64, G - 16], HX = 316;
+    const K = [150, G - 9], A = [64, G - 16], HX = 324;
     const P = b => body(K, b, 88, K, A, 186, handsAt(HX));
     define('pt-armstraek-knae', Object.assign(L(), {
       vb: [20, 60, 420, 200],
@@ -134,7 +134,7 @@
 
   // Høje knæløft på stedet
   (() => {
-    const st = { th: 1, kn: 1, pf: 0 }, lift = { th: 82, kn: 88, pf: 14 };
+    const st = { th: 1, kn: 1, pf: 0 }, lift = { th: 84, kn: 98, pf: 0 };
     const P = (f, n, sw) => ({ hip: [152, 230], trunk: 2, legF: f, legN: n, armF: { sa: 36 * sw, ef: 80 }, armN: { sa: -36 * sw, ef: 80 } });
     define('pt-knaeloeft', Object.assign(S(), {
       tempo: 'Løft knæene skiftevis op til hoftehøjde, og sving armene med. Start i gå-tempo, og sæt farten op, når du er varm. Rank ryg.',
@@ -161,7 +161,7 @@
     const seat = 300, HX = 270, A = [44, FLOOR - 40];
     const P = b => { const r = b * Math.PI / 180, d = [Math.cos(r), -Math.sin(r)], hip = add(A, mul(d, 178));
       return { hip, trunk: 90 - b, nod: -4, legF: { knee: add(lerp(hip, A, 88 / 178), [-3, 2]), ank: add(A, [-3, 1]), fa: 55 }, legN: { knee: lerp(hip, A, 88 / 178), ank: A, fa: 55 },
-        armF: { hand: [HX - 4, seat - 4], elbowFwd: 1 }, armN: { hand: [HX, seat - 4], elbowFwd: 1 } }; };
+        armF: { hand: [HX - 4, seat - 4] }, armN: { hand: [HX, seat - 4] } }; };
     define('pt-armstraek-hoej', Object.assign(W2(), {
       vb: [0, 120, 400, 320],
       tempo: 'Hænderne på kanten af en stabil stol (eller bordet), kroppen lige fra hæle til hoved. Sænk brystet mod kanten (2 sek.), og pres op igen (1 sek.).',
@@ -187,7 +187,7 @@
 
   // Excentrisk hælsænk på trappe (Alfredson): op på to ben, ned på ét
   (() => {
-    const T = FLOOR - 44, bx = 196, WALL = 290, rot = FF.rot;
+    const T = FLOOR - 44, bx = 224, WALL = 296, rot = FF.rot; // forfoden på trinnets kant (bx), hælen hænger frit ud over kanten
     const ankAt = (x, fa) => sub([x, T], rot([24, 16], fa));
     const P = (fa, lift) => { const a = ankAt(bx, fa), b = ankAt(bx - 6, lift ? 10 : fa);
       return { hip: [a[0] - 2, a[1] - 176], trunk: 3, legN: { ank: a, fa }, legF: lift ? { th: 14, kn: 70, pf: 10 } : { ank: b, fa }, armF: { hand: [WALL - 6, 196] }, armN: { hand: [WALL - 4, 200] } }; };
@@ -197,7 +197,9 @@
       seq: [{ to: 'top1', d: 0.8, k: 'hold', l: 'Løft det raske ben', count: false }, { to: 'down', d: 3, k: 'ned', l: 'Langsomt ned' }, { to: 'up', d: 1.2, k: 'op', l: 'Op på begge', count: false }, { d: 0.6, k: 'pause', l: 'Klar', count: false }],
       still: 2.6, ghost: 'up', shots: [0.4, 2.6, 4.4],
       back: () => R.wall(WALL, 320, 0, FLOOR),
-      under: () => '<rect x="-10" y="' + T + '" width="' + (bx + 4) + '" height="' + (FLOOR - T) + '" fill="' + C.step + '"/><rect x="-10" y="' + T + '" width="' + (bx + 4) + '" height="5" fill="' + C.stepTop + '"/>'
+      under: () => R.stepSide(bx - 8, WALL, T, FLOOR),
+      figOpt: () => ({ tenseCalf: 'N' }),
+      over: (P, J) => { const a = J.legs.N.ank, y = a[1] + 30; return R.arrow([a[0] - 22, y - 26], [a[0] - 22, y + 4], C.accent); }
     }));
   })();
 })();
@@ -212,9 +214,11 @@
   const rad = d => d * Math.PI / 180;
   // Liggende på maven (hovedet til højre). lift = brystets løft i grader, legUp = fødderne løftet (px)
   const PH = [196, G - 15];
-  const prone = (lift, legUp, arms) => { const P = { hip: PH, trunk: 90 - (lift || 0), nod: -6 - (lift || 0) * 0.3, curve: 0,
+  const prone = (lift, legUp, arms) => { const P = { hip: PH, trunk: 90 - (lift || 0), nod: -12 - (lift || 0) * 0.3, chin: 7, curve: 0,
       legF: { knee: [106, G - 13 - (legUp || 0) * 0.4], ank: [20, G - 13 - (legUp || 0)], fa: 80 }, legN: { knee: [110, G - 12 - (legUp || 0) * 0.4], ank: [24, G - 12 - (legUp || 0)], fa: 80 } };
     const Sh = FF.sideJoints(Object.assign({}, P, { armF: {}, armN: {} })).S; return Object.assign(P, arms(Sh)); };
+  // Hovedet tegnes oven på den nærmeste arm, så det kan ses (ellers dækker armen det helt)
+  const headOver = () => ({ front: J => '<g transform="translate(' + FF.P2(J.head) + ') rotate(' + FF.f1(J.headA) + ')">' + FF.headSide() + '</g>' });
 
   // Rygløft liggende (superman, let)
   (() => {
@@ -224,7 +228,7 @@
       tempo: 'Lig på maven med armene strakt frem. Løft arme, bryst og ben et par centimeter fra gulvet (2 sek.), hold 2 sek. med blikket ned, og sænk roligt (2 sek.).',
       poses: { down: prone(0, 0, arms(0)), up: prone(12, 14, arms(30)) }, start: 'down',
       seq: [{ to: 'up', d: 2, k: 'op', l: 'Løft' }, { d: 2, k: 'hold', l: 'Hold', count: false }, { to: 'down', d: 2, k: 'ned', l: 'Sænk', count: false }, { d: 1, k: 'pause', l: 'Hvil', count: false }],
-      still: 3, ghost: 'down', under: mat, figOpt: () => ({ bare: false })
+      still: 3, ghost: 'down', under: mat, figOpt: headOver
     }));
   })();
 
@@ -236,15 +240,15 @@
       tempo: 'Lig på maven med panden på et håndklæde og armene skråt frem i et Y, tommelfingrene op. Træk skulderbladene ned og sammen, og løft armene lidt (2 sek.). Hold 3 sek., og sænk (2 sek.).',
       poses: { down: prone(0, 0, arms(0)), up: prone(2, 0, arms(26)) }, start: 'down',
       seq: [{ to: 'up', d: 2, k: 'op', l: 'Løft armene' }, { d: 3, k: 'hold', l: 'Hold', count: false }, { to: 'down', d: 2, k: 'ned', l: 'Sænk', count: false }, { d: 1, k: 'pause', l: 'Hvil', count: false }],
-      still: 3, ghost: 'down', under: mat
+      still: 3, ghost: 'down', under: mat, figOpt: headOver
     }));
   })();
 
   // Armpres på maven (McKenzie): hoften bliver i gulvet, armene presser brystet op
   (() => {
-    const down = prone(0, 0, Sh => ({ armF: { hand: [Sh[0] + 14, G - 6] }, armN: { hand: [Sh[0] + 18, G - 5] } }));
-    const hand = down.armN.hand, handF = down.armF.hand;
-    const up = prone(30, 0, () => ({ armF: { hand: handF }, armN: { hand } }));
+    let hand, handF;
+    const down = prone(0, 0, Sh => { handF = [Sh[0] + 14, G - 6]; hand = [Sh[0] + 18, G - 5]; return { armF: { hand: handF, el: [Sh[0] - 12, Sh[1] - 40] }, armN: { hand, el: [Sh[0] - 8, Sh[1] - 42] } }; });
+    const up = prone(30, 0, Sh => ({ armF: { hand: handF, el: add(lerp(Sh, handF, 0.52), [-4, 0]) }, armN: { hand, el: add(lerp(Sh, hand, 0.52), [-4, 0]) } }));
     up.curve = -6;
     define('laend-h-armpres', Object.assign(L(), {
       vb: [0, 80, 440, 190],
@@ -322,15 +326,17 @@
 
   // Isometrisk hofteabduktion stående mod væggen (bagfra): det ydre ben presser ud mod væggen
   (() => {
-    const hx = 150, WALL = 236, F = () => ({ W: 320, H: 440, floor: FLOOR, view: 'front' });
-    const P = (ab, sh) => ({ hip: [hx - sh, 224], back: true, tilt: -sh * 0.2, legL: { ank: [hx - 16, ANK] }, legR: { ab }, armR: { hand: [WALL - 6, 200] }, armL: { hand: [hx - 34, 300], flat: 0.3 } });
+    const hx = 150, WALL = 192, F = () => ({ W: 320, H: 440, floor: FLOOR, view: 'front' });
+    // Det inderste knæ rører væggen og presser ud (isometrisk – næsten ingen bevægelse); hånden let mod væggen
+    const P = (kx, sh) => ({ hip: [hx - sh, 224], back: true, tilt: -sh * 0.2, legL: { ank: [hx - 16, ANK] }, legR: { knee: [kx, 314], ank: [hx + 20, ANK] }, armR: { hand: [WALL - 7, 196] }, armL: { hand: [hx - 34, 300], flat: 0.3 } });
     define('sene-h-iso-hofte', Object.assign(F(), {
       tempo: 'Stå med siden mod væggen og det onde ben inderst. Bøj det inderste knæ lidt, og pres ydersiden af knæet ud mod væggen med ca. halv kraft. Hold 30–45 sek. uden at læne overkroppen. Slip roligt.',
-      poses: { a: P(4, 0), b: P(9, 2) }, start: 'a',
+      poses: { a: P(WALL - 15, 0), b: P(WALL - 12, 1.5) }, start: 'a',
       seq: [{ to: 'b', d: 1.5, k: 'op', l: 'Pres ud', count: false }, { d: 30, k: 'hold', l: 'Hold' }, { to: 'a', d: 1.5, k: 'ned', l: 'Slip', count: false }, { d: 3, k: 'pause', l: 'Pause', count: false }],
       repLabel: 'Hold', still: 10, ghost: null,
       back: () => R.wall(WALL, 320, 0, FLOOR),
-      over: (P, J) => { const k = J && J.legs && J.legs.R && J.legs.R.knee; const y = k ? k[1] - 34 : 300, x = WALL - 52; return R.arrow([x, y], [WALL - 4, y], C.accent); }
+      over: (P, J) => { const k = J.legs.R.knee, y = k[1] - 40; return R.arrow([WALL - 52, y], [WALL - 3, y], C.accent) +
+        '<circle cx="' + FF.f1(WALL - 1) + '" cy="' + FF.f1(k[1]) + '" r="7" fill="none" stroke="' + C.accent + '" stroke-width="3"/>'; }
     }));
   })();
 })();
@@ -349,8 +355,9 @@
     const hipW = [K[0] - TH * Math.cos(ar), K[1] - TH * Math.sin(ar)], ang = a - 90;
     const v = sub(Sw0, hipW), beta = Math.atan2(v[0], -v[1]) * 180 / Math.PI, tilt = beta - ang;
     const toL = w => rotP(w, -ang, hipW);
-    const low = [K[0] - 20, MAT - 10 - P.lift * 34];                                 // nederste ben: knæet løftes op mod stolen
-    const Q = { hip: hipW, tilt, legL: { knee: toL([K[0] + 4, K[1] - 2]) }, legR: { knee: toL(low) }, armL: { hand: toL(add(hipW, [-6, -30])), side: 1, flat: 0.6 }, headTilt: 0 };
+    // øverste ben: knæet på bænken og underbenet hviler på sædet · nederste ben: strakt, løftes op mod bænken
+    const foot = [K[0] + 50, MAT - 9 - P.lift * (MAT - 9 - SEAT - 20)], lowKnee = add(FF.lerp(hipW, foot, 0.5), [0, 3]);
+    const Q = { hip: hipW, tilt, legL: { knee: toL([K[0] + 4, K[1] - 2]), ank: toL([K[0] + 80, K[1] - 4]) }, legR: { knee: toL(lowKnee), ank: toL(foot) }, armL: { hand: toL(add(hipW, [-6, -30])), side: 1, flat: 0.6 }, headTilt: 0 };
     const Jl = FF.frontJoints(Object.assign({}, Q, { armR: {} })), SR = rotP(Jl.arms.R.S, ang, hipW);
     Q.armR = { el: toL([SR[0] + 2, EL]), hand: toL([SR[0] + 30, EL + 3]) };
     return { Q, ang, hipW };

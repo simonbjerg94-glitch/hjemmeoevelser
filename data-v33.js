@@ -12,7 +12,7 @@ const V33_PT = [
     steps: ['Stå med fødderne lidt bredere end hofterne og tæerne let udad.', 'Sæt dig ned og bagud, som mod en lav stol. Armene går frem som modvægt.', 'Gå så dybt, du kan med ret ryg og hælene i gulvet.', 'Pres op gennem hele foden, til du står helt oprejst.'],
     tips: ['Knæene peger samme vej som tæerne.', 'Brystet op, blikket frem.', 'Pust ud på vej op.'],
     progression: 'Lettere: squat ned til en stol (rejs dig fra stol). Sværere: 3 sek. pause i bunden, langsommere ned (4 sek.), eller squat-hop.',
-    evidence: 'Flerledsøvelse; ACSM-positionen om progressiv modstandstræning (2009): 8–15 gentagelser for begyndere, 2–3 dage/uge. Kropsvægtstræning øger styrke hos utrænede (Kotarsky 2018).' },
+    evidence: 'Flerledsøvelse. ACSM 2009: begyndere 8–12 gentagelser og 2–3 dage om ugen, med gradvis progression. Progressiv kropsvægtstræning (armstrækninger) gav lige så stor styrkefremgang som bænkpres (Kotarsky 2018).' },
   {
     id: 'pt-split-squat', category: 'styrke', level: 2, area: 'underkrop', name: 'Bulgarsk split squat (bagfod på stol)',
     images: [{"src": "images/pt-split-squat/1.webp", "caption": "1. Stil dig et stort skridt foran en stol, og læg vristen af den bagerste fod på sædet.", "w": 480, "h": 528}, {"src": "images/pt-split-squat/2.webp", "caption": "2. Sænk dig lodret ned, til det bagerste knæ næsten rører gulvet.", "w": 480, "h": 528}, {"src": "images/pt-split-squat/3.webp", "caption": "3. Pres op gennem forreste hæl. Skift ben efter sættet.", "w": 480, "h": 528}], /* auto: tools/sync_images.py */
@@ -20,7 +20,7 @@ const V33_PT = [
     steps: ['Stil dig et stort skridt foran en stol, og læg vristen af den bagerste fod på sædet.', 'Sænk dig lodret ned, til det bagerste knæ næsten rører gulvet.', 'Pres op gennem forreste hæl. Skift ben efter sættet.'],
     tips: ['Det forreste knæ peger frem over tæerne.', 'Hold let i en væg, hvis balancen driller.', 'Overkroppen må hælde lidt frem.'],
     progression: 'Lettere: udfald bagud uden stol. Sværere: langsom 3-1-1 (3 sek. ned, 1 sek. pause), eller en rygsæk med bøger.',
-    evidence: 'Unilateral styrkeøvelse med høj belastning af forreste ben (ACSM 2009). Bruges også som tung, langsom belastning ved patellasene (HSR-princippet, Kongsgaard 2009).' },
+    evidence: 'Unilateral styrkeøvelse for forreste ben (ACSM 2009). Tung, langsom belastning (HSR) virkede godt og varigt ved patellasene-smerter (Kongsgaard 2009, med squat og benpres) – split squat uden vægt er en lettere variant af samme princip.' },
   {
     id: 'pt-vaegsid', category: 'styrke', level: 1, area: 'underkrop', name: 'Vægsiddende',
     images: [{"src": "images/pt-vaegsid/1.webp", "caption": "1. Stil dig med ryggen mod en væg og fødderne et godt stykke frem.", "w": 480, "h": 570}, {"src": "images/pt-vaegsid/2.webp", "caption": "2. Glid ned ad væggen, til knæene er bøjet ca. 90° – eller så langt, det er rart.", "w": 480, "h": 570}, {"src": "images/pt-vaegsid/3.webp", "caption": "3. Hold stille, og træk vejret roligt. Glid op igen.", "w": 480, "h": 570}], /* auto: tools/sync_images.py */
@@ -28,7 +28,7 @@ const V33_PT = [
     steps: ['Stil dig med ryggen mod en væg og fødderne et godt stykke frem.', 'Glid ned ad væggen, til knæene er bøjet ca. 90° – eller så langt, det er rart.', 'Hold stille, og træk vejret roligt. Glid op igen.'],
     tips: ['Knæene skal være over anklerne – ikke foran tæerne.', 'Hele ryggen mod væggen.'],
     progression: 'Lettere: højere position (mindre bøjning) eller kortere tid. Sværere: længere tid, eller løft den ene fod lidt.',
-    evidence: 'Isometrisk quadriceps-træning. Rio 2015 (BJSM): 5 × 45 s isometrisk belastning gav smertelindring ved patellasene-smerter.' },
+    evidence: 'Isometrisk quadriceps-træning. Rio 2015 (BJSM): 5 × 45 sek. isometrisk belastning gav straks smertelindring ved patellasene-smerter – et lille studie med 6 volleyspillere.' },
   {
     id: 'pt-etben-doedloeft', category: 'styrke', level: 2, area: 'underkrop', name: 'Dødløft på ét ben (uden vægt)',
     images: [{"src": "images/pt-etben-doedloeft/1.webp", "caption": "1. Stå på ét ben med let bøjet knæ.", "w": 480, "h": 528}, {"src": "images/pt-etben-doedloeft/2.webp", "caption": "2. Bøj frem i hoften med ret ryg, mens det andet ben går lige bagud.", "w": 480, "h": 528}, {"src": "images/pt-etben-doedloeft/3.webp", "caption": "3. Stop, når kroppen er næsten vandret – eller før, hvis ryggen bliver rund.", "w": 480, "h": 528}], /* auto: tools/sync_images.py */
@@ -36,7 +36,7 @@ const V33_PT = [
     steps: ['Stå på ét ben med let bøjet knæ.', 'Bøj frem i hoften med ret ryg, mens det andet ben går lige bagud.', 'Stop, når kroppen er næsten vandret – eller før, hvis ryggen bliver rund.', 'Rejs dig igen ved at spænde ballen på standbenet.'],
     tips: ['Hoften skal pege mod gulvet – drej den ikke op.', 'Hold let i en stol i starten.'],
     progression: 'Lettere: hoftehængsel på to ben, eller hold i en stol. Sværere: langsommere, eller en rygsæk i hånden.',
-    evidence: 'Hoftehængsel på ét ben: balde, baglår og balance. Baglårsstyrke er en del af skadesforebyggelse (van Dyk 2019).' },
+    evidence: 'Ekspertanbefaling: hoftehængsel på ét ben træner balde, baglår og balance. Baglårsstyrke er vigtig for at forebygge skader – programmer med Nordic-øvelsen halverer baglårsskader (van Dyk 2019).' },
   {
     id: 'pt-squat-hop', category: 'styrke', level: 3, area: 'kondition', name: 'Squat-hop med blød landing',
     images: [{"src": "images/pt-squat-hop/1.webp", "caption": "1. Lav en halv squat med armene bagud.", "w": 480, "h": 660}, {"src": "images/pt-squat-hop/2.webp", "caption": "2. Hop lige op, og sving armene frem.", "w": 480, "h": 660}, {"src": "images/pt-squat-hop/3.webp", "caption": "3. Land blødt på forfoden med bøjede knæ, der peger frem over tæerne.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
@@ -52,7 +52,7 @@ const V33_PT = [
     steps: ['Stå rank.', 'Løft knæene skiftevis op mod hoftehøjde, og sving armene med.', 'Start i gå-tempo, og sæt farten op, når du er varm.'],
     tips: ['Land på forfoden.', 'Pust roligt – du skal kunne sige et par ord.'],
     progression: 'Lettere: march på stedet. Sværere: løb på stedet med høje knæ, eller længere arbejdstid.',
-    evidence: 'WHO 2020: 150–300 min moderat eller 75–150 min hård aktivitet pr. uge. Korte intervaller med kropsvægt forbedrer kondition (Gist 2014, Archila 2021).' },
+    evidence: 'WHO 2020: 150–300 min moderat eller 75–150 min hård aktivitet pr. uge. Intervaltræning forbedrer konditionen (Gist 2014, meta-analyse). Et kort kropsvægtsprogram med bl.a. høje knæløft og burpees øgede konditionen hos inaktive voksne (Archila 2021, lille RCT).' },
   {
     id: 'pt-spraellemand', category: 'styrke', level: 2, area: 'kondition', name: 'Sprællemand',
     images: [{"src": "images/pt-spraellemand/1.webp", "caption": "1. Stå med samlede fødder og armene ned langs siden.", "w": 480, "h": 660}, {"src": "images/pt-spraellemand/2.webp", "caption": "2. Hop fødderne ud til siden, mens armene går op over hovedet.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
@@ -60,7 +60,7 @@ const V33_PT = [
     steps: ['Stå med samlede fødder og armene ned langs siden.', 'Hop fødderne ud til siden, mens armene går op over hovedet.', 'Hop samlet igen.'],
     tips: ['Land blødt på forfoden.', 'Lettere variant: tag et skridt ud til siden i stedet for at hoppe.'],
     progression: 'Lettere: step-sprællemand uden hop. Sværere: hurtigere tempo eller længere arbejdstid.',
-    evidence: 'Kondition med kropsvægt (WHO 2020; Gist 2014).' },
+    evidence: 'Kondition med kropsvægt tæller med i WHO 2020-anbefalingerne. Intervaller forbedrer konditionen (Gist 2014; kropsvægtsintervaller: Archila 2021).' },
   {
     id: 'pt-bjergbestiger', category: 'styrke', level: 2, area: 'core', name: 'Bjergbestiger',
     images: [{"src": "images/pt-bjergbestiger/1.webp", "caption": "1. Start i planke på hænderne med skuldrene over hænderne.", "w": 720, "h": 335}, {"src": "images/pt-bjergbestiger/2.webp", "caption": "2. Træk skiftevis det ene knæ frem mod brystet og tilbage igen.", "w": 720, "h": 335}, {"src": "images/pt-bjergbestiger/3.webp", "caption": "3. Hoften er lav og rolig.", "w": 720, "h": 335}], /* auto: tools/sync_images.py */
@@ -68,7 +68,7 @@ const V33_PT = [
     steps: ['Start i planke på hænderne med skuldrene over hænderne.', 'Træk skiftevis det ene knæ frem mod brystet og tilbage igen.', 'Hoften er lav og rolig.'],
     tips: ['Start langsomt med god kontrol.', 'Hænderne kan stå på en stol for at gøre det lettere.'],
     progression: 'Lettere: hænderne på en stol, og langsomt. Sværere: hurtigt tempo (kondition).',
-    evidence: 'Core-stabilitet i planke kombineret med puls (McGill: stabilitetstræning; WHO 2020 for kondition).' },
+    evidence: 'Ekspertanbefaling: planke med knæløft kombinerer core-stabilitet og puls. Core-træning med fokus på en stabil krop (McGill 2010); konditionstræning tæller med i WHO 2020.' },
   {
     id: 'pt-armstraek-hoej', category: 'styrke', level: 1, area: 'skub', name: 'Armstrækninger med hænderne på en stol',
     images: [{"src": "images/pt-armstraek-hoej/1.webp", "caption": "1. Sæt hænderne på kanten af en stabil stol eller et bord, der står mod væggen.", "w": 720, "h": 576}, {"src": "images/pt-armstraek-hoej/2.webp", "caption": "2. Gå tilbage med fødderne, til kroppen er lige fra hæle til hoved.", "w": 720, "h": 576}, {"src": "images/pt-armstraek-hoej/3.webp", "caption": "3. Sænk brystet mod kanten, og pres op igen.", "w": 720, "h": 576}], /* auto: tools/sync_images.py */
@@ -76,7 +76,7 @@ const V33_PT = [
     steps: ['Sæt hænderne på kanten af en stabil stol eller et bord, der står mod væggen.', 'Gå tilbage med fødderne, til kroppen er lige fra hæle til hoved.', 'Sænk brystet mod kanten, og pres op igen.'],
     tips: ['Stolen må ikke kunne skride – sæt den mod væggen.', 'Albuerne peger skråt bagud.'],
     progression: 'Lettere: mod væggen. Sværere: lavere støtte, armstrækninger på knæ og til sidst på tæerne.',
-    evidence: 'Trinvis belastning af armstrækninger (væg → skrå → knæ → gulv) giver progression uden udstyr (ACSM 2009).' },
+    evidence: 'Armstrækninger med hænderne oppe eller på knæene giver mindre belastning end på gulvet, mens fødderne oppe giver mest (Ebben 2011). Det giver en trinvis progression uden udstyr (ACSM 2009).' },
   {
     id: 'pt-dips', category: 'styrke', level: 2, area: 'skub', name: 'Dips på en stol',
     images: [{"src": "images/pt-dips/1.webp", "caption": "1. Sæt dig på kanten af en stabil stol, og tag fat i kanten ved siden af hofterne.", "w": 480, "h": 660}, {"src": "images/pt-dips/2.webp", "caption": "2. Flyt numsen frem fra stolen, fødderne i gulvet foran dig.", "w": 480, "h": 660}, {"src": "images/pt-dips/3.webp", "caption": "3. Bøj albuerne bagud, og sænk hoften, til overarmene er næsten vandrette.", "w": 480, "h": 660}], /* auto: tools/sync_images.py */
@@ -84,7 +84,7 @@ const V33_PT = [
     steps: ['Sæt dig på kanten af en stabil stol, og tag fat i kanten ved siden af hofterne.', 'Flyt numsen frem fra stolen, fødderne i gulvet foran dig.', 'Bøj albuerne bagud, og sænk hoften, til overarmene er næsten vandrette.', 'Pres op igen.'],
     tips: ['Hold skuldrene nede – væk fra ørerne.', 'Gør det ondt foran i skulderen, så gå ikke så dybt.'],
     progression: 'Lettere: fødderne tæt på stolen, kun lille bevægelse. Sværere: strakte ben, eller langsommere ned.',
-    evidence: 'Triceps-styrke uden udstyr. Undgå ved skuldersmerter foran i leddet.' },
+    evidence: 'Ekspertanbefaling: triceps-styrke uden udstyr. Undgå øvelsen ved smerter foran i skulderen.' },
   {
     id: 'pt-rygloeft', category: 'styrke', level: 1, area: 'ryg', name: 'Rygløft liggende (superman)',
     images: [{"src": "images/pt-rygloeft/1.webp", "caption": "1. Lig på maven med armene strakt frem.", "w": 720, "h": 262}, {"src": "images/pt-rygloeft/2.webp", "caption": "2. Løft arme, bryst og ben et par centimeter fra gulvet.", "w": 720, "h": 262}, {"src": "images/pt-rygloeft/3.webp", "caption": "3. Hold 2 sek. med blikket ned mod gulvet, og sænk roligt.", "w": 720, "h": 262}], /* auto: tools/sync_images.py */
@@ -92,7 +92,7 @@ const V33_PT = [
     steps: ['Lig på maven med armene strakt frem.', 'Løft arme, bryst og ben et par centimeter fra gulvet.', 'Hold 2 sek. med blikket ned mod gulvet, og sænk roligt.'],
     tips: ['Små løft er nok – det skal ikke gøre ondt i lænden.', 'Spænd ballerne.'],
     progression: 'Lettere: løft kun armene, eller kun benene. Sværere: hold 5 sek., eller "svøm" med armene.',
-    evidence: 'Styrke i rygstrækkerne; lumbal ekstensionstræning øger styrken og kan mindske lændesmerter (Steele 2015).' },
+    evidence: 'Ekspertanbefaling: rygløft styrker rygstrækkerne. Træning af rygstrækkerne (i studierne i maskine) mindskede smerter og funktionsnedsættelse ved kroniske lændesmerter (Steele 2015, oversigt).' },
   {
     id: 'pt-ytl', category: 'styrke', level: 1, area: 'ryg', name: 'Y-løft liggende på maven',
     images: [{"src": "images/pt-ytl/1.webp", "caption": "1. Lig på maven med panden på et håndklæde og armene skråt frem i et Y, tommelfingrene op.", "w": 720, "h": 262}, {"src": "images/pt-ytl/2.webp", "caption": "2. Træk skulderbladene ned og sammen.", "w": 720, "h": 262}, {"src": "images/pt-ytl/3.webp", "caption": "3. Løft armene lidt fra gulvet, hold 3 sek., og sænk.", "w": 720, "h": 262}], /* auto: tools/sync_images.py */
@@ -100,7 +100,7 @@ const V33_PT = [
     steps: ['Lig på maven med panden på et håndklæde og armene skråt frem i et Y, tommelfingrene op.', 'Træk skulderbladene ned og sammen.', 'Løft armene lidt fra gulvet, hold 3 sek., og sænk.'],
     tips: ['Skuldrene væk fra ørerne.', 'Små løft – kvalitet før højde.'],
     progression: 'Lettere: armene ud til siden (T). Sværere: hold 5 sek., eller lav Y, T og W efter hinanden.',
-    evidence: 'Prone Y/T aktiverer nedre og midterste trapezius mere end øvre (Cools 2007, AJSM). Skulderbladstræning ved skuldersmerter (Littlewood 2016).' },
+    evidence: 'Liggende armløft giver høj aktivitet i nedre og midterste trapezius: overhead-løft (Y) mest i nedre trapezius (Ekstrom 2003), vandret løft med udadrotation (T) god balance mod øvre trapezius (Cools 2007). Træning er førstevalg ved skuldersmerter (Pieters 2020).' },
   {
     id: 'pt-hoftebojer', category: 'styrke', level: 1, area: 'mobilitet', name: 'Hoftebøjerstræk på knæ',
     images: [{"src": "images/pt-hoftebojer/1.webp", "caption": "1. Sæt det ene knæ i gulvet på en pude, den anden fod fremme.", "w": 720, "h": 576}, {"src": "images/pt-hoftebojer/2.webp", "caption": "2. Spænd ballen på det bagerste ben, og vip bækkenet lidt bagud.", "w": 720, "h": 576}, {"src": "images/pt-hoftebojer/3.webp", "caption": "3. Skub hoften lidt frem, til du mærker strækket foran på låret og i hoften.", "w": 720, "h": 576}], /* auto: tools/sync_images.py */
@@ -108,7 +108,7 @@ const V33_PT = [
     steps: ['Sæt det ene knæ i gulvet på en pude, den anden fod fremme.', 'Spænd ballen på det bagerste ben, og vip bækkenet lidt bagud.', 'Skub hoften lidt frem, til du mærker strækket foran på låret og i hoften.'],
     tips: ['Lænden må ikke svaje.', 'Hold i en stol, hvis balancen driller.'],
     progression: 'Lettere: kortere tid. Sværere: løft armen over hovedet på samme side.',
-    evidence: 'Statisk udspænding 30–60 s øger bevægeligheden (ACSM; Behm 2016).' },
+    evidence: 'Udspænding øger bevægeligheden på sigt (Konrad 2024, meta-analyse af 77 studier). ACSM anbefaler at holde hvert stræk 10–30 sek., i alt ca. 60 sek. pr. øvelse (Garber 2011).' },
   {
     id: 'pt-nordic', category: 'styrke', level: 3, area: 'underkrop', name: 'Nordic hamstring (baglår)',
     images: [{"src": "images/pt-nordic/1.webp", "caption": "1. Sæt dig på knæ på en pude, og få hælene holdt fast – fx under en tung sofa.", "w": 720, "h": 402}, {"src": "images/pt-nordic/2.webp", "caption": "2. Lige linje fra knæ til hoved, armene klar foran brystet.", "w": 720, "h": 402}, {"src": "images/pt-nordic/3.webp", "caption": "3. Fald langsomt frem, og brems med baglårene så længe, du kan.", "w": 720, "h": 402}], /* auto: tools/sync_images.py */
@@ -164,7 +164,7 @@ const V33_REHAB = [
     tips: ['Små løft er nok.', 'Skuldrene væk fra ørerne.'],
     progression: 'Lettere: armene ud til siden (T), eller kun den ene arm. Sværere: hold 5 sek.',
     stop: typeof LED_PAIN_RULE !== 'undefined' ? LED_PAIN_RULE.skulder : '',
-    evidence: 'Cools 2007 (AJSM, EMG): prone Y/T giver høj aktivitet i nedre/midterste trapezius med lav øvre trapezius. Littlewood 2016 / Pieters 2020: træning er førstevalg ved rotator cuff-relaterede smerter.' },
+    evidence: 'Liggende armløft: overhead-løft (Y) giver højest aktivitet i nedre trapezius (Ekstrom 2003, JOSPT); vandret løft med udadrotation (T) har lav øvre/nedre trapezius-ratio (Cools 2007, AJSM). Træning er førstevalg ved skuldersmerter under skulderhøjden (Pieters 2020, JOSPT).' },
   // Senesmerter
   {
     id: 'sene-h-iso-hofte', category: 'sene', track: 'hold', level: 1, phases: [1], name: 'Pres benet ud mod væggen (isometrisk)',
@@ -184,7 +184,7 @@ const V33_REHAB = [
     tips: ['Et håndklæde under hælen gør det lettere at glide.', 'Følg den bøjning, dit hospital har givet lov til.'],
     progression: 'Lettere: kun et lille stykke, og brug et håndklæde under hælen. Sværere: hold længere i bunden, eller bøj knæet siddende på en stol.',
     stop: 'Det må gerne stramme og gøre lidt ondt. Stop og kontakt hospitalet, hvis knæet bliver meget hævet, rødt eller varmt, eller hvis noget i "Hvornår skal du til læge?" passer på dig.',
-    evidence: 'Tidlig bevægelighedstræning efter knæprotese og korsbåndsoperation (JOSPT CPG efter TKA 2020, Jette m.fl.; KNGF ACL-guideline 2016, van Melick m.fl.).' },
+    evidence: 'Tidlig mobilisering og træning efter knæprotese (APTA-retningslinje, Jette 2020, Physical Therapy) og kriteriebaseret genoptræning efter korsbåndsoperation med fokus på bevægelighed i første fase (KNGF 2016, van Melick m.fl., BJSM).' },
   {
     id: 'op-h-strakt-benloeft', category: 'operation', track: 'hold', level: 1, phases: [1, 2], name: 'Strakt benløft liggende',
     images: [{"src": "images/op-h-strakt-benloeft/1.webp", "caption": "1. Lig på ryggen med det raske ben bøjet.", "w": 720, "h": 376}, {"src": "images/op-h-strakt-benloeft/2.webp", "caption": "2. Spænd lårmusklen på det strakte ben, så knæet er helt strakt.", "w": 720, "h": 376}, {"src": "images/op-h-strakt-benloeft/3.webp", "caption": "3. Løft benet til samme højde som det bøjede knæ, hold 2 sek., og sænk langsomt.", "w": 720, "h": 376}], /* auto: tools/sync_images.py */
@@ -193,7 +193,7 @@ const V33_REHAB = [
     tips: ['Knæet skal være helt strakt hele vejen – ellers: spænd lårmusklen først.', 'Lænden bliver i gulvet.'],
     progression: 'Lettere: spænd lårmusklen uden at løfte. Sværere: hold 5 sek. i toppen.',
     stop: 'Stop og kontakt hospitalet, hvis du ikke kan strække knæet helt, eller hvis noget i "Hvornår skal du til læge?" passer på dig.',
-    evidence: 'Quadriceps-aktivering og "ingen strækkedefekt" er et tidligt kriterium efter ACL-rekonstruktion (KNGF 2016) og en del af progressiv quadriceps-træning efter knæprotese (Mizner 2005; Bade 2017).' }
+    evidence: 'Efter knæprotese er lårmuskelstyrken det, der hænger tættest sammen med funktion (Mizner 2005), og progressiv quadriceps-træning gav bedre funktion end almindelig genoptræning (Petterson 2009). Løft uden at knæet bøjer sig er et almindeligt tidligt mål efter korsbåndsoperation (ekspertanbefaling).' }
 ];
 V33_REHAB.forEach(e => { if (!e.stop && typeof PT_RULE !== 'undefined') e.stop = PT_RULE; });
 V33_PT.forEach(e => { e.stop = typeof PT_RULE !== 'undefined' ? PT_RULE : ''; });
@@ -243,7 +243,7 @@ const V33_PROGRAMS = [
       ['Akillessenen', 'Smerter i senen bag på hælen, ofte værst om morgenen og i starten af en løbetur. Gradvis styrketræning af læggen (Alfredson eller tung, langsom træning) virker for de fleste (JOSPT 2018).'],
       ['Knæskalssenen (springerknæ)', 'Smerter lige under knæskallen ved hop, squat og trapper. Hold-øvelser kan lindre, og tung, langsom træning (fx langsomme squat) gør senen stærkere (Kongsgaard 2009).'],
       ['Ydersiden af hoften (glutealtendinopati)', 'Smerter på ydersiden af hoften, når du ligger på siden, går på trapper eller står på ét ben. Viden om, hvad der irriterer senen, og gradvis træning af hofte-musklerne virker bedre end blokade (LEAP, Mellor 2018).'],
-      ['Må det gøre ondt?', 'Ja, lidt. Sener tåler godt lidt smerte under træningen (op til 3, højst 5). Det vigtige er, at det er faldet til ro igen næste morgen (Silbernagel 2007).']
+      ['Må det gøre ondt?', 'Ja, lidt. Sener tåler godt lidt smerte under træningen (0–2 er sikkert, op til 5 er acceptabelt). Det vigtige er, at det er faldet til ro igen næste morgen (Silbernagel 2007).']
     ],
     redFlags: {
       now: ['Du hørte et smæld eller fik en følelse af et "spark" bag på hælen, og du kan ikke gå på tæer (mulig overrevet akillessene) – tag på skadestuen.', 'Du kan pludselig ikke strække knæet eller løfte det strakte ben efter et fald eller hop.'],
@@ -288,7 +288,7 @@ const V33_PROGRAMS = [
       'Bliv ved med styrketræningen i mindst et år efter operationen.'
     ],
     about: [
-      ['Ny knæ (knæprotese)', 'Målet de første uger er at kunne strække knæet helt og bøje det mindst 90°. Hævelse er normalt i flere måneder. Progressiv styrketræning af lårmusklen giver bedre funktion (Bade 2017; JOSPT CPG 2020).'],
+      ['Ny knæ (knæprotese)', 'Målet de første uger er at kunne strække knæet helt og bøje det mindst 90°. Hævelse er normalt i flere måneder. Progressiv styrketræning af lårmusklen giver bedre funktion end almindelig genoptræning (Petterson 2009; APTA-retningslinje, Jette 2020).'],
       ['Ny hofte (hofteprotese)', 'De fleste må belaste med det samme. Nogle hospitaler giver bevægerestriktioner de første uger (fx ikke sidde meget lavt eller krydse benene) – følg dem, hvis du har fået dem. Styrke af hofte- og baldemuskler hjælper gangen.'],
       ['Korsbånd (ACL-rekonstruktion)', 'Genoptræningen går i faser og styres af kriterier – ikke kun tid. Tilbage til sport først efter tests af styrke og hop, typisk efter mindst 9 måneder; det mindsker risikoen for en ny skade (Grindem 2016, Delaware-Oslo).'],
       ['Menisk', 'Er menisken fjernet (delvist), må du ofte belaste med det samme. Er den syet, har du ofte begrænset bøjning og belastning i 4–6 uger. Følg kirurgens plan. Ved slidte menisker er træning lige så godt som operation for mange (Kise 2016, BMJ).']

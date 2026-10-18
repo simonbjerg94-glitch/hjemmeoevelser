@@ -111,7 +111,7 @@ const PT = (() => {
     viewPrograms();               // tegner Prehab-delen (de eksisterende programmer)
     setHeader('Programmer'); setTab('prog');
     let h = '<h2 class="pt-h">Træningsprogrammer</h2>';
-    const ICO = { helkrop: '💪', mellem: '🏋️', kondition: '❤️', forebyg: '🛡️' };
+    const ICO = { helkrop: '💪', mellem: '🏋️', avanceret: '🔥', kondition: '❤️', core: '🧘', forebyg: '🛡️' };
     PT_PROGRAMS.forEach(P => { const n = levelOf(P.id), cur = P.id === active();
       h += '<a class="card more-row pt-prog' + (cur ? ' cur' : '') + '" href="#/pt/program/' + P.id + '" data-ptprog="' + P.id + '"><span class="mi" aria-hidden="true">' + (ICO[P.id] || '💪') + '</span><span><b>' + H(P.name) + '</b><small>' + P.levels[n - 1].name + ' · ' + P.levels[n - 1].sub + ' · ' + H(P.minutes) + '</small>' + (cur ? '<span class="cur-tag">Dit program nu</span>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>'; });
     if (typeof PT_LIBRARY !== 'undefined') h += card('#/pt/bibliotek', '📚', 'Øvelsesbibliotek', 'Alle kropsvægtsøvelser – underkrop, skub, ryg, core, kondition og mobilitet', ' pt-lib-link');
