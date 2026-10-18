@@ -245,6 +245,14 @@ const VOICE_SETS = {
 "kvinde/26c315d2e0.mp3",
 15.0
 ],
+"armpres på maven (mckenzie). lig på maven med hænderne under skuldrene. pres overkroppen op med armene, mens hoften og lænden bliver helt afslappede i gulvet (2 sek.). hold 1–2 sek. i toppen, og sænk roligt (2 sek.). gå kun så højt, det føles rart": [
+"kvinde/f39bd45fb7.mp3",
+23.98
+],
+"armstrækninger med hænderne på en stol. hænderne på kanten af en stabil stol (eller bordet), kroppen lige fra hæle til hoved. sænk brystet mod kanten (2 sek.), og pres op igen (1 sek.)": [
+"kvinde/531694f0dc.mp3",
+16.42
+],
 "armstrækninger mod væggen. stå en armlængde fra væggen med hænderne i skulderhøjde. bøj albuerne, så brystet kommer ind mod væggen (2 sek.), og pres dig ud igen (2 sek.). kroppen er lige. 3 sæt × 10": [
 "kvinde/23ef245fa4.mp3",
 16.13
@@ -269,6 +277,10 @@ const VOICE_SETS = {
 "kvinde/55b49bd6da.mp3",
 15.17
 ],
+"bjergbestiger. start i planke på hænderne med skuldrene over hænderne. træk skiftevis det ene knæ frem mod brystet og tilbage igen. hoften er lav og rolig. start langsomt, og sæt tempoet op, når teknikken sidder": [
+"kvinde/83579ce126.mp3",
+19.97
+],
 "bliv i stillingen": [
 "kvinde/bcd807c132.mp3",
 1.18
@@ -288,6 +300,10 @@ const VOICE_SETS = {
 "broen. 2 sek. op · hold 3 sek. · 2 sek. ned. spænd let i maven og ballerne. lige linje fra skuldre til knæ – ikke svaj i lænden": [
 "kvinde/0906050a90.mp3",
 13.15
+],
+"bulgarsk split squat (bagfod på stol). bagerste fod på en stol, forreste fod et godt skridt frem. sænk dig lodret ned, til det bagerste knæ næsten rører gulvet (2–3 sek.), og pres op gennem forreste hæl (1–2 sek.)": [
+"kvinde/f3c335c9cc.mp3",
+19.18
 ],
 "bækkenvip liggende. lig på ryggen med bøjede knæ. pres lænden blidt ned mod underlaget (vip bækkenet), hold 3 sek., og slip igen. 10 gange": [
 "kvinde/cf48a0856e.mp3",
@@ -321,6 +337,10 @@ const VOICE_SETS = {
 "kvinde/6613ac2642.mp3",
 0.98
 ],
+"bøj knæet": [
+"kvinde/6526931830.mp3",
+0.96
+],
 "bøj lidt mere": [
 "kvinde/fc77de479c.mp3",
 1.06
@@ -337,6 +357,10 @@ const VOICE_SETS = {
 "kvinde/0e774ba581.mp3",
 1.01
 ],
+"copenhagen adduktion (kort vægtstang). lig på siden på underarmen med det øverste knæ på en stol. løft hoften og det nederste ben, så du er lige fra knæ til skulder, og mærk det på indersiden af det øverste lår (2 sek.). hold 3–5 sek., og sænk roligt (2 sek.)": [
+"kvinde/e34254547d.mp3",
+23.3
+],
 "de små tæer op": [
 "kvinde/d47bf1b924.mp3",
 1.49
@@ -352,6 +376,10 @@ const VOICE_SETS = {
 "det lille nik liggende. lig på ryggen med et lille håndklæde under hovedet. lav et lille ja-nik med hagen ind mod halsen – baghovedet bliver liggende (2 sek.). hold 10 sek. 10 gange": [
 "kvinde/d029fb2f7d.mp3",
 13.87
+],
+"dips på en stol. hænderne på kanten af en stabil stol, fødderne fremme. bøj albuerne bagud, og sænk hoften (2 sek.), til overarmene er næsten vandrette. pres op igen (1 sek.). hold skuldrene nede": [
+"kvinde/0a130ca8e0.mp3",
+20.26
 ],
 "drej armen udad med elastik. albuen ind til kroppen og bøjet i en ret vinkel. drej hånden roligt ud til siden mod elastikken (2 sek.), og før den langsomt tilbage (3 sek.). 3 sæt × 10–15": [
 "kvinde/b36925ff05.mp3",
@@ -397,9 +425,17 @@ const VOICE_SETS = {
 "kvinde/ac9354766b.mp3",
 20.38
 ],
+"dødløft på ét ben (uden vægt). stå på ét ben med let bøjet knæ. bøj frem i hoften med ret ryg, mens det andet ben går lige bagud (2–3 sek.), til kroppen er næsten vandret. rejs dig igen (2 sek.)": [
+"kvinde/b13ca9491b.mp3",
+18.58
+],
 "en gang til": [
 "kvinde/e963124074.mp3",
 0.98
+],
+"excentrisk hælsænk på trappe (alfredson). stå med forfoden på kanten af et trin og en hånd på væggen. gå op på tæerne på begge ben (1 sek.). løft det raske ben, og sænk langsomt hælen under trinnet på det onde ben (3 sek.). sæt den raske fod ned igen": [
+"kvinde/9f4954dbb0.mp3",
+22.99
 ],
 "flot": [
 "kvinde/94eea0ebdd.mp3",
@@ -448,6 +484,10 @@ const VOICE_SETS = {
 "glid frem": [
 "kvinde/0632b6f64f.mp3",
 0.98
+],
+"glid ned": [
+"kvinde/2b6a55b2e9.mp3",
+1.06
 ],
 "godt": [
 "kvinde/4803aef50b.mp3",
@@ -509,9 +549,17 @@ const VOICE_SETS = {
 "kvinde/b0f9139fea.mp3",
 18.72
 ],
+"hoftebøjerstræk på knæ. sæt det ene knæ i gulvet (læg en pude under), den anden fod fremme. spænd ballen på det bagerste ben, og skub hoften lidt frem, til du mærker strækket foran på låret. hold 30 sek., og skift side": [
+"kvinde/33aa48bd08.mp3",
+19.87
+],
 "hoftehængsel (bøj i hofterne med rank ryg). ca. 2–3 sek. ned · 2 sek. op. skaftet rører baghoved, skulderblade og haleben hele vejen": [
 "kvinde/7dfc0df54f.mp3",
 12.48
+],
+"hoften frem": [
+"kvinde/eb4e0fff33.mp3",
+1.08
 ],
 "hold": [
 "kvinde/9937f714e7.mp3",
@@ -565,6 +613,10 @@ const VOICE_SETS = {
 "kvinde/80bc09fd75.mp3",
 1.06
 ],
+"hælglid liggende (bøj knæet). lig på ryggen med benene strakt. lad hælen glide langsomt op mod numsen, så knæet bøjer (3 sek.), så langt det er rart. hold 2 sek., og lad hælen glide ud igen (3 sek.)": [
+"kvinde/ac2e94e741.mp3",
+19.3
+],
 "hæløft med bøjede knæ (soleus). knæene bøjede hele tiden · 3 sek. op · hold 2 sek. · 3 sek. ned. mærkes dybt i læggen": [
 "kvinde/18dd43df00.mp3",
 12.26
@@ -580,6 +632,10 @@ const VOICE_SETS = {
 "hæløft på ét ben. stå på det onde ben med hænderne let mod væggen. løft hælen roligt op (2 sek.), hold 1 sek., og sænk langsomt (3 sek.). 3 sæt × 10–15": [
 "kvinde/f8f37dfb83.mp3",
 14.28
+],
+"høje knæløft på stedet. løft knæene skiftevis op til hoftehøjde, og sving armene med. start i gå-tempo, og sæt farten op, når du er varm. rank ryg": [
+"kvinde/b4df862925.mp3",
+13.32
 ],
 "ind": [
 "kvinde/6e1b0f004b.mp3",
@@ -641,6 +697,10 @@ const VOICE_SETS = {
 "kvinde/0138df91e9.mp3",
 1.08
 ],
+"knæ frem": [
+"kvinde/3d8f5b3671.mp3",
+0.98
+],
 "knæ mod væggen. stå med den onde fod lidt fra væggen og den anden bagved. bøj knæet frem mod væggen (2 sek.), mens hælen bliver i gulvet. hold 2 sek., og gå tilbage. 10–15 gange. ryk foden lidt længere væk, når det er let": [
 "kvinde/07df360a00.mp3",
 20.59
@@ -701,6 +761,10 @@ const VOICE_SETS = {
 "kvinde/4f377f6975.mp3",
 1.06
 ],
+"langsomt frem": [
+"kvinde/0fff0893fc.mp3",
+1.27
+],
 "langsomt ned": [
 "kvinde/7bcb66d248.mp3",
 1.39
@@ -753,6 +817,10 @@ const VOICE_SETS = {
 "kvinde/bbd8e527c4.mp3",
 1.66
 ],
+"løft armene": [
+"kvinde/06bba0d9e2.mp3",
+1.1
+],
 "løft armene lidt højere": [
 "kvinde/63c9b627e7.mp3",
 1.66
@@ -760,6 +828,10 @@ const VOICE_SETS = {
 "løft armene ud til siden. stå rank med tommelfingrene frem. løft armene roligt ud til siden og lidt frem, til skulderhøjde (2 sek.), og sænk langsomt (3 sek.). 3 sæt × 10–12": [
 "kvinde/0e9531fc4c.mp3",
 13.54
+],
+"løft det raske ben": [
+"kvinde/ab73423cd8.mp3",
+1.44
 ],
 "løft en kasse fra gulvet. stå tæt ved kassen. bøj i hofter og knæ med ret ryg (3 sek.), tag fat, og rejs dig med kassen tæt ind til kroppen (3 sek.). sæt den ned på samme måde. 8–10 gange": [
 "kvinde/f99f540a1b.mp3",
@@ -825,6 +897,10 @@ const VOICE_SETS = {
 "kvinde/0c690b63b9.mp3",
 15.07
 ],
+"nordic hamstring (baglår). sæt dig på knæ med en pude under, og få hælene holdt fast (fx under sofaen). lige linje fra knæ til hoved. fald langsomt frem, og brems med baglårene så længe, du kan (3–5 sek.). tag fra med hænderne, og skub dig op igen": [
+"kvinde/1cb67d29b0.mp3",
+24.34
+],
 "og ned": [
 "kvinde/af9b90a9b5.mp3",
 0.96
@@ -840,6 +916,10 @@ const VOICE_SETS = {
 "op og bagud": [
 "kvinde/b489159a56.mp3",
 1.13
+],
+"op på begge": [
+"kvinde/71b45a175b.mp3",
+1.03
 ],
 "over på foden": [
 "kvinde/a52f0b7fe2.mp3",
@@ -868,6 +948,10 @@ const VOICE_SETS = {
 "pres armene helt op": [
 "kvinde/6a0d50b6e9.mp3",
 1.66
+],
+"pres benet ud mod væggen (isometrisk). stå med siden mod væggen og det onde ben inderst. bøj det inderste knæ lidt, og pres ydersiden af knæet ud mod væggen med ca. halv kraft. hold 30–45 sek. uden at læne overkroppen. slip roligt": [
+"kvinde/a342255eb1.mp3",
+21.98
 ],
 "pres foden mod væggen (isometrisk). pres forfoden mod væggen med ca. halv kraft – foden flytter sig ikke · hold 30–45 sek. · slap af. 1 minuts pause mellem gentagelserne": [
 "kvinde/401c829aaf.mp3",
@@ -961,6 +1045,10 @@ const VOICE_SETS = {
 "kvinde/c8bc8a4ec7.mp3",
 14.3
 ],
+"rygløft liggende (superman). lig på maven med armene strakt frem. løft arme, bryst og ben et par centimeter fra gulvet (2 sek.), hold 2 sek. med blikket ned, og sænk roligt (2 sek.)": [
+"kvinde/a161f5497c.mp3",
+16.82
+],
 "rør let": [
 "kvinde/81cf253bf0.mp3",
 0.89
@@ -1037,6 +1125,10 @@ const VOICE_SETS = {
 "kvinde/7f22e00da3.mp3",
 1.46
 ],
+"skub op": [
+"kvinde/2bacf8da0a.mp3",
+1.1
+],
 "skulderbladsklem. stå eller sid ret med armene ned langs siden. træk skulderbladene sammen og lidt ned (2 sek.), hold 5 sek., og slip. 10 gange": [
 "kvinde/7641a73264.mp3",
 11.76
@@ -1097,6 +1189,10 @@ const VOICE_SETS = {
 "kvinde/3f4e4bc1c9.mp3",
 13.2
 ],
+"sprællemand. hop fødderne ud til siden, mens armene går op over hovedet, og hop samlet igen. land blødt på forfoden. lettere: tag et skridt ud til siden i stedet for at hoppe": [
+"kvinde/4f693f19b9.mp3",
+15.7
+],
 "spænd": [
 "kvinde/c55a1dbb37.mp3",
 0.62
@@ -1104,6 +1200,14 @@ const VOICE_SETS = {
 "spænd lårmusklen (knæstræk med håndklæde). spænd og hold 5 sek. · slap af. pres knæhasen ned i håndklædet, og træk tæerne op": [
 "kvinde/94b7855709.mp3",
 11.52
+],
+"squat-hop med blød landing. lav en halv squat, og hop lige op. land blødt på forfoden med bøjede knæ, der peger frem over tæerne. stå stille et øjeblik, før næste hop": [
+"kvinde/c3c60bd977.mp3",
+15.86
+],
+"squat. fødderne lidt bredere end hofterne. sæt dig ned og bagud, som mod en lav stol (2–3 sek.), så dybt du kan med ret ryg og hælene i gulvet. pres op igen (1–2 sek.)": [
+"kvinde/4f6d416a76.mp3",
+16.87
 ],
 "start": [
 "kvinde/805f798abb.mp3",
@@ -1132,6 +1236,10 @@ const VOICE_SETS = {
 "storetåen væk fra de andre tæer. sid med foden fladt på gulvet. før storetåen væk fra de andre tæer, ind mod den anden fod (2 sek.). hold 3 sek., og slap af. 10 gange. hjælp gerne med en finger i starten": [
 "kvinde/234a0b72ec.mp3",
 18.84
+],
+"strakt benløft liggende. lig på ryggen med det raske ben bøjet. spænd lårmusklen på det strakte ben, så knæet er helt strakt, og løft benet til samme højde som det bøjede knæ (2 sek.). hold 2 sek., og sænk langsomt (2 sek.)": [
+"kvinde/59b3e53e7a.mp3",
+20.62
 ],
 "stræk": [
 "kvinde/a3817bfadb.mp3",
@@ -1193,6 +1301,10 @@ const VOICE_SETS = {
 "kvinde/73d8bf7212.mp3",
 1.03
 ],
+"stå stille": [
+"kvinde/7d3da952f3.mp3",
+1.1
+],
 "svaj let": [
 "kvinde/d3fee247de.mp3",
 1.01
@@ -1216,6 +1328,10 @@ const VOICE_SETS = {
 "tag fat": [
 "kvinde/346a01d243.mp3",
 1.01
+],
+"tag fra": [
+"kvinde/0f3599b648.mp3",
+0.91
 ],
 "tag sko eller gode hjemmesko på, før du går ud på det hårde gulv": [
 "kvinde/b088fb942f.mp3",
@@ -1341,9 +1457,21 @@ const VOICE_SETS = {
 "kvinde/739b8d118e.mp3",
 13.39
 ],
+"vægsiddende (spænd lårmusklerne). ryggen mod væggen, fødderne et godt stykke frem. glid ned, til knæene er bøjet ca. 90° (eller så langt, det er rart), og hold stille. træk vejret roligt. glid op igen": [
+"kvinde/a127d1c423.mp3",
+20.06
+],
+"vægsiddende. ryggen mod væggen, fødderne et godt stykke frem. glid ned, til knæene er bøjet ca. 90° (eller så langt, det er rart), og hold stille. træk vejret roligt. glid op igen": [
+"kvinde/2bb3798a32.mp3",
+18.53
+],
 "y-løft foroverbøjet. bøj let i hofterne med ret ryg og hagen inde. løft armene frem og op i et y med tommelfingrene op (2 sek.), hold 2 sek., og sænk langsomt (2 sek.). 2–3 sæt × 8–10": [
 "kvinde/85d13e69da.mp3",
 15.82
+],
+"y-løft liggende på maven. lig på maven med panden på et håndklæde og armene skråt frem i et y, tommelfingrene op. træk skulderbladene ned og sammen, og løft armene lidt (2 sek.). hold 3 sek., og sænk (2 sek.)": [
+"kvinde/92b830730b.mp3",
+19.78
 ],
 "åben bog liggende på siden. lig på siden med bøjede knæ oven på hinanden og armene strakt frem. før den øverste arm i en stor bue op og over til den anden side, så brystet drejer med, og kig efter hånden (3 sek.). hold 3 sek., og kom tilbage. 8–10 til hver side": [
 "kvinde/d7a7e28d61.mp3",
@@ -1623,6 +1751,14 @@ const VOICE_SETS = {
 "mand/9fb22762f8.mp3",
 15.24
 ],
+"armpres på maven (mckenzie). lig på maven med hænderne under skuldrene. pres overkroppen op med armene, mens hoften og lænden bliver helt afslappede i gulvet (2 sek.). hold 1–2 sek. i toppen, og sænk roligt (2 sek.). gå kun så højt, det føles rart": [
+"mand/b8a3e72aab.mp3",
+24.24
+],
+"armstrækninger med hænderne på en stol. hænderne på kanten af en stabil stol (eller bordet), kroppen lige fra hæle til hoved. sænk brystet mod kanten (2 sek.), og pres op igen (1 sek.)": [
+"mand/94835e60be.mp3",
+16.61
+],
 "armstrækninger mod væggen. stå en armlængde fra væggen med hænderne i skulderhøjde. bøj albuerne, så brystet kommer ind mod væggen (2 sek.), og pres dig ud igen (2 sek.). kroppen er lige. 3 sæt × 10": [
 "mand/08a614ed78.mp3",
 15.98
@@ -1647,6 +1783,10 @@ const VOICE_SETS = {
 "mand/943785a856.mp3",
 14.81
 ],
+"bjergbestiger. start i planke på hænderne med skuldrene over hænderne. træk skiftevis det ene knæ frem mod brystet og tilbage igen. hoften er lav og rolig. start langsomt, og sæt tempoet op, når teknikken sidder": [
+"mand/ee4efe4ec2.mp3",
+20.45
+],
 "bliv i stillingen": [
 "mand/a8cf01a8cc.mp3",
 1.32
@@ -1666,6 +1806,10 @@ const VOICE_SETS = {
 "broen. 2 sek. op · hold 3 sek. · 2 sek. ned. spænd let i maven og ballerne. lige linje fra skuldre til knæ – ikke svaj i lænden": [
 "mand/90a3fe15bd.mp3",
 12.34
+],
+"bulgarsk split squat (bagfod på stol). bagerste fod på en stol, forreste fod et godt skridt frem. sænk dig lodret ned, til det bagerste knæ næsten rører gulvet (2–3 sek.), og pres op gennem forreste hæl (1–2 sek.)": [
+"mand/1defd6563d.mp3",
+19.01
 ],
 "bækkenvip liggende. lig på ryggen med bøjede knæ. pres lænden blidt ned mod underlaget (vip bækkenet), hold 3 sek., og slip igen. 10 gange": [
 "mand/d796e18cbc.mp3",
@@ -1699,6 +1843,10 @@ const VOICE_SETS = {
 "mand/0901a6779f.mp3",
 0.96
 ],
+"bøj knæet": [
+"mand/7bc8744431.mp3",
+0.89
+],
 "bøj lidt mere": [
 "mand/658dd6c27e.mp3",
 1.06
@@ -1715,6 +1863,10 @@ const VOICE_SETS = {
 "mand/a898d1dfe0.mp3",
 0.98
 ],
+"copenhagen adduktion (kort vægtstang). lig på siden på underarmen med det øverste knæ på en stol. løft hoften og det nederste ben, så du er lige fra knæ til skulder, og mærk det på indersiden af det øverste lår (2 sek.). hold 3–5 sek., og sænk roligt (2 sek.)": [
+"mand/9722df7c9d.mp3",
+23.47
+],
 "de små tæer op": [
 "mand/6826b68f9e.mp3",
 1.32
@@ -1730,6 +1882,10 @@ const VOICE_SETS = {
 "det lille nik liggende. lig på ryggen med et lille håndklæde under hovedet. lav et lille ja-nik med hagen ind mod halsen – baghovedet bliver liggende (2 sek.). hold 10 sek. 10 gange": [
 "mand/387e5876f3.mp3",
 14.38
+],
+"dips på en stol. hænderne på kanten af en stabil stol, fødderne fremme. bøj albuerne bagud, og sænk hoften (2 sek.), til overarmene er næsten vandrette. pres op igen (1 sek.). hold skuldrene nede": [
+"mand/e8e3ec78b8.mp3",
+20.23
 ],
 "drej armen udad med elastik. albuen ind til kroppen og bøjet i en ret vinkel. drej hånden roligt ud til siden mod elastikken (2 sek.), og før den langsomt tilbage (3 sek.). 3 sæt × 10–15": [
 "mand/8e9f87b8dc.mp3",
@@ -1775,9 +1931,17 @@ const VOICE_SETS = {
 "mand/b926be3a43.mp3",
 20.57
 ],
+"dødløft på ét ben (uden vægt). stå på ét ben med let bøjet knæ. bøj frem i hoften med ret ryg, mens det andet ben går lige bagud (2–3 sek.), til kroppen er næsten vandret. rejs dig igen (2 sek.)": [
+"mand/01ccce1127.mp3",
+19.03
+],
 "en gang til": [
 "mand/4978d137aa.mp3",
 1.01
+],
+"excentrisk hælsænk på trappe (alfredson). stå med forfoden på kanten af et trin og en hånd på væggen. gå op på tæerne på begge ben (1 sek.). løft det raske ben, og sænk langsomt hælen under trinnet på det onde ben (3 sek.). sæt den raske fod ned igen": [
+"mand/5233e0523b.mp3",
+24.12
 ],
 "flot": [
 "mand/3a972f2d77.mp3",
@@ -1826,6 +1990,10 @@ const VOICE_SETS = {
 "glid frem": [
 "mand/cea7949171.mp3",
 0.84
+],
+"glid ned": [
+"mand/82a941cda8.mp3",
+1.08
 ],
 "godt": [
 "mand/e8a119186d.mp3",
@@ -1887,9 +2055,17 @@ const VOICE_SETS = {
 "mand/266c3549de.mp3",
 18.65
 ],
+"hoftebøjerstræk på knæ. sæt det ene knæ i gulvet (læg en pude under), den anden fod fremme. spænd ballen på det bagerste ben, og skub hoften lidt frem, til du mærker strækket foran på låret. hold 30 sek., og skift side": [
+"mand/befa7c3828.mp3",
+19.37
+],
 "hoftehængsel (bøj i hofterne med rank ryg). ca. 2–3 sek. ned · 2 sek. op. skaftet rører baghoved, skulderblade og haleben hele vejen": [
 "mand/746ecfd2c6.mp3",
 12.6
+],
+"hoften frem": [
+"mand/b5aa417583.mp3",
+0.98
 ],
 "hold": [
 "mand/0688c3bc92.mp3",
@@ -1943,6 +2119,10 @@ const VOICE_SETS = {
 "mand/e4497d46a1.mp3",
 1.15
 ],
+"hælglid liggende (bøj knæet). lig på ryggen med benene strakt. lad hælen glide langsomt op mod numsen, så knæet bøjer (3 sek.), så langt det er rart. hold 2 sek., og lad hælen glide ud igen (3 sek.)": [
+"mand/d3a1907d3a.mp3",
+20.06
+],
 "hæløft med bøjede knæ (soleus). knæene bøjede hele tiden · 3 sek. op · hold 2 sek. · 3 sek. ned. mærkes dybt i læggen": [
 "mand/4a2bedab3b.mp3",
 12.14
@@ -1958,6 +2138,10 @@ const VOICE_SETS = {
 "hæløft på ét ben. stå på det onde ben med hænderne let mod væggen. løft hælen roligt op (2 sek.), hold 1 sek., og sænk langsomt (3 sek.). 3 sæt × 10–15": [
 "mand/42be4f66db.mp3",
 14.26
+],
+"høje knæløft på stedet. løft knæene skiftevis op til hoftehøjde, og sving armene med. start i gå-tempo, og sæt farten op, når du er varm. rank ryg": [
+"mand/15b23b7376.mp3",
+13.32
 ],
 "ind": [
 "mand/3764a942da.mp3",
@@ -2019,6 +2203,10 @@ const VOICE_SETS = {
 "mand/fab1580bb7.mp3",
 1.08
 ],
+"knæ frem": [
+"mand/750efdc8a2.mp3",
+0.94
+],
 "knæ mod væggen. stå med den onde fod lidt fra væggen og den anden bagved. bøj knæet frem mod væggen (2 sek.), mens hælen bliver i gulvet. hold 2 sek., og gå tilbage. 10–15 gange. ryk foden lidt længere væk, når det er let": [
 "mand/a6f35a0014.mp3",
 20.64
@@ -2079,6 +2267,10 @@ const VOICE_SETS = {
 "mand/9e4fd1882f.mp3",
 1.15
 ],
+"langsomt frem": [
+"mand/d883cd4cd8.mp3",
+1.32
+],
 "langsomt ned": [
 "mand/dffbd4a145.mp3",
 1.56
@@ -2131,6 +2323,10 @@ const VOICE_SETS = {
 "mand/cb08a2f46c.mp3",
 1.63
 ],
+"løft armene": [
+"mand/fe93672b8d.mp3",
+1.2
+],
 "løft armene lidt højere": [
 "mand/a1251cbdaf.mp3",
 1.78
@@ -2138,6 +2334,10 @@ const VOICE_SETS = {
 "løft armene ud til siden. stå rank med tommelfingrene frem. løft armene roligt ud til siden og lidt frem, til skulderhøjde (2 sek.), og sænk langsomt (3 sek.). 3 sæt × 10–12": [
 "mand/9e01ec8c6f.mp3",
 13.68
+],
+"løft det raske ben": [
+"mand/e4d954e66a.mp3",
+1.56
 ],
 "løft en kasse fra gulvet. stå tæt ved kassen. bøj i hofter og knæ med ret ryg (3 sek.), tag fat, og rejs dig med kassen tæt ind til kroppen (3 sek.). sæt den ned på samme måde. 8–10 gange": [
 "mand/240f05b034.mp3",
@@ -2203,6 +2403,10 @@ const VOICE_SETS = {
 "mand/7f121e9d21.mp3",
 14.95
 ],
+"nordic hamstring (baglår). sæt dig på knæ med en pude under, og få hælene holdt fast (fx under sofaen). lige linje fra knæ til hoved. fald langsomt frem, og brems med baglårene så længe, du kan (3–5 sek.). tag fra med hænderne, og skub dig op igen": [
+"mand/9c6eec6180.mp3",
+24.62
+],
 "og ned": [
 "mand/a9e259eeef.mp3",
 1.01
@@ -2218,6 +2422,10 @@ const VOICE_SETS = {
 "op og bagud": [
 "mand/f0c8d891af.mp3",
 1.3
+],
+"op på begge": [
+"mand/a1479a58a2.mp3",
+1.06
 ],
 "over på foden": [
 "mand/3001e2f315.mp3",
@@ -2246,6 +2454,10 @@ const VOICE_SETS = {
 "pres armene helt op": [
 "mand/db818b834e.mp3",
 1.68
+],
+"pres benet ud mod væggen (isometrisk). stå med siden mod væggen og det onde ben inderst. bøj det inderste knæ lidt, og pres ydersiden af knæet ud mod væggen med ca. halv kraft. hold 30–45 sek. uden at læne overkroppen. slip roligt": [
+"mand/b362e267c3.mp3",
+22.73
 ],
 "pres foden mod væggen (isometrisk). pres forfoden mod væggen med ca. halv kraft – foden flytter sig ikke · hold 30–45 sek. · slap af. 1 minuts pause mellem gentagelserne": [
 "mand/b5a791789f.mp3",
@@ -2339,6 +2551,10 @@ const VOICE_SETS = {
 "mand/55e01a86ce.mp3",
 14.71
 ],
+"rygløft liggende (superman). lig på maven med armene strakt frem. løft arme, bryst og ben et par centimeter fra gulvet (2 sek.), hold 2 sek. med blikket ned, og sænk roligt (2 sek.)": [
+"mand/ab6d3d501a.mp3",
+17.52
+],
 "rør let": [
 "mand/edd3d79deb.mp3",
 0.84
@@ -2415,6 +2631,10 @@ const VOICE_SETS = {
 "mand/c2d4e2dfa6.mp3",
 1.42
 ],
+"skub op": [
+"mand/c43d71e741.mp3",
+1.06
+],
 "skulderbladsklem. stå eller sid ret med armene ned langs siden. træk skulderbladene sammen og lidt ned (2 sek.), hold 5 sek., og slip. 10 gange": [
 "mand/a3d9f56c6f.mp3",
 12.0
@@ -2475,6 +2695,10 @@ const VOICE_SETS = {
 "mand/959131e0cb.mp3",
 13.08
 ],
+"sprællemand. hop fødderne ud til siden, mens armene går op over hovedet, og hop samlet igen. land blødt på forfoden. lettere: tag et skridt ud til siden i stedet for at hoppe": [
+"mand/17bfeecdc8.mp3",
+15.43
+],
 "spænd": [
 "mand/5864a90bbb.mp3",
 0.72
@@ -2482,6 +2706,14 @@ const VOICE_SETS = {
 "spænd lårmusklen (knæstræk med håndklæde). spænd og hold 5 sek. · slap af. pres knæhasen ned i håndklædet, og træk tæerne op": [
 "mand/4af11800e4.mp3",
 10.78
+],
+"squat-hop med blød landing. lav en halv squat, og hop lige op. land blødt på forfoden med bøjede knæ, der peger frem over tæerne. stå stille et øjeblik, før næste hop": [
+"mand/7f5e630c61.mp3",
+15.65
+],
+"squat. fødderne lidt bredere end hofterne. sæt dig ned og bagud, som mod en lav stol (2–3 sek.), så dybt du kan med ret ryg og hælene i gulvet. pres op igen (1–2 sek.)": [
+"mand/15578d6c9c.mp3",
+17.81
 ],
 "start": [
 "mand/309aaa983b.mp3",
@@ -2510,6 +2742,10 @@ const VOICE_SETS = {
 "storetåen væk fra de andre tæer. sid med foden fladt på gulvet. før storetåen væk fra de andre tæer, ind mod den anden fod (2 sek.). hold 3 sek., og slap af. 10 gange. hjælp gerne med en finger i starten": [
 "mand/b858f7f2d5.mp3",
 19.08
+],
+"strakt benløft liggende. lig på ryggen med det raske ben bøjet. spænd lårmusklen på det strakte ben, så knæet er helt strakt, og løft benet til samme højde som det bøjede knæ (2 sek.). hold 2 sek., og sænk langsomt (2 sek.)": [
+"mand/612cd2229d.mp3",
+20.9
 ],
 "stræk": [
 "mand/05bfc970ee.mp3",
@@ -2571,6 +2807,10 @@ const VOICE_SETS = {
 "mand/856b77c5d8.mp3",
 1.03
 ],
+"stå stille": [
+"mand/0f44e3f113.mp3",
+1.15
+],
 "svaj let": [
 "mand/47da2ab0e3.mp3",
 0.98
@@ -2594,6 +2834,10 @@ const VOICE_SETS = {
 "tag fat": [
 "mand/6fcd678d03.mp3",
 0.98
+],
+"tag fra": [
+"mand/b8c6b08669.mp3",
+0.86
 ],
 "tag sko eller gode hjemmesko på, før du går ud på det hårde gulv": [
 "mand/5d89e1f6db.mp3",
@@ -2719,9 +2963,21 @@ const VOICE_SETS = {
 "mand/f8e5a9649a.mp3",
 13.3
 ],
+"vægsiddende (spænd lårmusklerne). ryggen mod væggen, fødderne et godt stykke frem. glid ned, til knæene er bøjet ca. 90° (eller så langt, det er rart), og hold stille. træk vejret roligt. glid op igen": [
+"mand/408931e463.mp3",
+20.18
+],
+"vægsiddende. ryggen mod væggen, fødderne et godt stykke frem. glid ned, til knæene er bøjet ca. 90° (eller så langt, det er rart), og hold stille. træk vejret roligt. glid op igen": [
+"mand/9a421135de.mp3",
+18.53
+],
 "y-løft foroverbøjet. bøj let i hofterne med ret ryg og hagen inde. løft armene frem og op i et y med tommelfingrene op (2 sek.), hold 2 sek., og sænk langsomt (2 sek.). 2–3 sæt × 8–10": [
 "mand/5a98976873.mp3",
 15.31
+],
+"y-løft liggende på maven. lig på maven med panden på et håndklæde og armene skråt frem i et y, tommelfingrene op. træk skulderbladene ned og sammen, og løft armene lidt (2 sek.). hold 3 sek., og sænk (2 sek.)": [
+"mand/c864ba9530.mp3",
+19.85
 ],
 "åben bog liggende på siden. lig på siden med bøjede knæ oven på hinanden og armene strakt frem. før den øverste arm i en stor bue op og over til den anden side, så brystet drejer med, og kig efter hånden (3 sek.). hold 3 sek., og kom tilbage. 8–10 til hver side": [
 "mand/e100c91333.mp3",

@@ -862,3 +862,8 @@ a.ob-choice { display: flex; text-decoration: none; }
 .pt-hist ul { margin: 6px 0 10px; padding-left: 20px; }
 .pt-levelup { border: 2px solid #f08c3a; }
 .pt-summary h2 { margin-top: 0; }
+/* v33: PT-øvelsesbibliotek og evidens */
+.pt-lib-nav .chip-b { display: inline-flex; align-items: center; text-decoration: none; font-size: 16px; min-height: 48px; padding: 8px 14px; }
+.pt-cur { margin: 6px 0 -4px; }
+.evid p { font-size: 15px; color: var(--muted, #5f6b66); }
+.op-note { border-left: 5px solid #e0913a; }

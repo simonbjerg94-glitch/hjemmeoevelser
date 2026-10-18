@@ -3,7 +3,7 @@
    dobbelt progression, fremskridt og velkomstspørgsmål. Alt gemmes kun i localStorage på telefonen – intet sendes. */
 'use strict';
 const PT = (() => {
-  const KEY_TARGET = 'hjo_maalgruppe_v1', KEY_LOG = 'hjo_pt_log_v1', KEY_LVL = 'hjo_pt_trin_v1', KEY_ANS = 'hjo_pt_svar_v1', KEY_DRAFT = 'hjo_pt_kladde_v1', KEY_SKIP = 'hjo_pt_svar_skip_v1';
+  const KEY_TARGET = 'hjo_maalgruppe_v1', KEY_LOG = 'hjo_pt_log_v1', KEY_LVL = 'hjo_pt_trin_v1', KEY_ANS = 'hjo_pt_svar_v1', KEY_DRAFT = 'hjo_pt_kladde_v1', KEY_SKIP = 'hjo_pt_svar_skip_v1', KEY_PROG = 'hjo_pt_prog_v1';
   const rj = (k, f) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? f : v; } catch (e) { return f; } };
   const wj = (k, v) => localStorage.setItem(k, JSON.stringify(v));
   const H = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -13,6 +13,8 @@ const PT = (() => {
   const on = () => localStorage.getItem(KEY_TARGET) !== 'patient';   // PT er standard; "patient" = den gamle genoptræningsapp
   const setTarget = t => { localStorage.setItem(KEY_TARGET, t === 'patient' ? 'patient' : 'pt'); };
   const program = id => PT_PROGRAMS.find(p => p.id === id) || PT_PROGRAMS[0];
+  const active = () => { const id = localStorage.getItem(KEY_PROG); return PT_PROGRAMS.some(p => p.id === id) ? id : PT_PROGRAMS[0].id; };  // dit valgte program
+  const setActive = id => { if (PT_PROGRAMS.some(p => p.id === id)) localStorage.setItem(KEY_PROG, id); };
   const levelOf = pid => { const n = Number(rj(KEY_LVL, {})[pid]); return n >= 1 && n <= program(pid).levels.length ? n : 1; };
   const setLevel = (pid, n) => { const o = rj(KEY_LVL, {}); o[pid] = n; wj(KEY_LVL, o); };
   const ex = id => (typeof exercises !== 'undefined' && exercises.find(e => e.id === id)) || allDefaults().find(e => e.id === id);
@@ -83,7 +85,7 @@ const PT = (() => {
   /* ---------- Forside: Dagens træning ---------- */
   function home() {
     setHeader('Træning'); setTab('home');
-    const now = new Date(), P = program('helkrop'), n = levelOf(P.id), L = P.levels[n - 1], done = trainedToday();
+    const now = new Date(), P = program(active()), n = levelOf(P.id), L = P.levels[n - 1], done = trainedToday();
     const draft = rj(KEY_DRAFT, null), wk = sessionsThisWeek(), g = weekGoal(), last = lastSession();
     let h = '<section class="hello"><p class="date">' + WEEKDAYS[now.getDay()].replace(/^./, c => c.toUpperCase()) + ' ' + now.getDate() + '. ' + MONTHS_LONG[now.getMonth()] + '</p><h2>' + greeting() + '! 💪</h2></section>';
     if (typeof remindBannerHtml === 'function') h += remindBannerHtml();
@@ -98,7 +100,7 @@ const PT = (() => {
         : '<p class="now-next">Første øvelse: <b>' + H(itemName(L.items[0])) + '</b></p>') + '</div>';
     if (readyForNext(P.id)) h += '<div class="card pt-levelup"><h3>🎯 Klar til ' + P.levels[n].name + '?</h3><p>Du har nået toppen i alle øvelser to gange i træk. Det er tid til mere udfordring.</p><button type="button" class="btn" id="ptLevelUp">Gå til ' + P.levels[n].name + '</button></div>';
     h += '<a class="card status-strip" href="#/uge"><span>📅 <b>' + wk + ' af ' + g + '</b> træninger denne uge</span><span>🔥 <b>' + weekStreak() + '</b> ' + (weekStreak() === 1 ? 'uge' : 'uger') + ' i træk</span><span class="chev" aria-hidden="true">›</span></a>';
-    h += '<a class="btn secondary" href="#/programmer">🔄 Programmer og Prehab</a>';
+    h += '<a class="btn secondary" href="#/programmer">🔄 Skift program · Prehab</a>';
     $app.innerHTML = h;
     if (typeof bindRemindBanner === 'function') bindRemindBanner();
     const up = document.getElementById('ptLevelUp'); if (up) up.onclick = () => { setLevel(P.id, n + 1); toast('Du er nu på ' + P.levels[n].name + '. Godt gået!'); home(); };
@@ -109,8 +111,10 @@ const PT = (() => {
     viewPrograms();               // tegner Prehab-delen (de eksisterende programmer)
     setHeader('Programmer'); setTab('prog');
     let h = '<h2 class="pt-h">Træningsprogrammer</h2>';
-    PT_PROGRAMS.forEach(P => { const n = levelOf(P.id);
-      h += '<a class="card more-row pt-prog" href="#/pt/program/' + P.id + '" data-ptprog="' + P.id + '"><span class="mi" aria-hidden="true">💪</span><span><b>' + H(P.name) + '</b><small>' + P.levels[n - 1].name + ' · ' + P.levels[n - 1].sub + ' · kropsvægt, intet udstyr</small></span><span class="chev" aria-hidden="true">›</span></a>'; });
+    const ICO = { helkrop: '💪', mellem: '🏋️', kondition: '❤️', forebyg: '🛡️' };
+    PT_PROGRAMS.forEach(P => { const n = levelOf(P.id), cur = P.id === active();
+      h += '<a class="card more-row pt-prog' + (cur ? ' cur' : '') + '" href="#/pt/program/' + P.id + '" data-ptprog="' + P.id + '"><span class="mi" aria-hidden="true">' + (ICO[P.id] || '💪') + '</span><span><b>' + H(P.name) + '</b><small>' + P.levels[n - 1].name + ' · ' + P.levels[n - 1].sub + ' · ' + H(P.minutes) + '</small>' + (cur ? '<span class="cur-tag">Dit program nu</span>' : '') + '</span><span class="chev" aria-hidden="true">›</span></a>'; });
+    if (typeof PT_LIBRARY !== 'undefined') h += card('#/pt/bibliotek', '📚', 'Øvelsesbibliotek', 'Alle kropsvægtsøvelser – underkrop, skub, ryg, core, kondition og mobilitet', ' pt-lib-link');
     h += '<h2 class="pt-h">Prehab – hold kroppen sund</h2><p class="muted small">Øvelser til knæ, hofte, ryg, skuldre og fødder. Brug dem som opvarmning, hvis noget driller, eller efter aftale med din træner.</p>';
     $app.insertAdjacentHTML('afterbegin', '<div class="pt-progs">' + h + '</div>');
   }
@@ -122,11 +126,14 @@ const PT = (() => {
     const L = P.levels[n - 1];
     L.items.forEach((it, i) => { const e = ex(it.id);
       h += '<a class="ex-item pt-item" href="#/oevelse/' + encodeURIComponent(it.id) + '">' + (e ? thumbHtml(e) : '') + '<div class="txt"><strong>' + (i + 1) + '. ' + H(itemName(it)) + '</strong><span>' + doseText(it) + '</span></div><span class="check" aria-hidden="true" style="color:#b9b4a8">›</span></a>'; });
-    h += '<a class="btn start" href="#/pt/traening"><span class="start-main">' + icon('play') + 'Start ' + L.name + '</span></a>';
+    const isCur = P.id === active();
+    h += isCur ? '<p class="pt-cur"><span class="cur-tag">Dit program nu</span></p><a class="btn start" href="#/pt/traening"><span class="start-main">' + icon('play') + 'Start ' + L.name + '</span></a>'
+      : '<button type="button" class="btn start" id="ptChoose"><span class="start-main">' + icon('check') + 'Vælg som mit program</span></button>';
     h += '<div class="card hint-card"><h3>📈 Sådan bliver du stærkere</h3><p style="margin:0">Hver øvelse har et interval, fx 8–15. Start i bunden. Når du kan lave toppen i alle sæt, og det føles højst 8 ud af 10 hårdt, lægger appen op til mere næste gang. Når det sker i alle øvelser to gange i træk, er du klar til næste trin.</p></div>';
     h += '<details class="card fold stop"><summary>⚠️ Hvornår skal du skrue ned?</summary><p>' + H(PT_RULE) + '</p></details>';
     $app.innerHTML = h; hydrateMedia($app);
     $app.querySelectorAll('[data-ptlvl]').forEach(b => b.onclick = () => { setLevel(P.id, Number(b.dataset.ptlvl)); programView(pid); });
+    const ch = document.getElementById('ptChoose'); if (ch) ch.onclick = () => { setActive(P.id); localStorage.removeItem(KEY_DRAFT); toast(P.name + ' er nu dit program.'); programView(pid); };
   }
 
   /* ---------- Træning: én øvelse ad gangen med film, sæt-log og anstrengelse ---------- */
@@ -139,7 +146,7 @@ const PT = (() => {
   const draftSave = d => wj(KEY_DRAFT, d);
   const RPE = [[3, 'Let'], [5, 'Til at klare'], [7, 'Hårdt'], [8, 'Meget hårdt'], [10, 'Max']];
   function session(idx) {
-    const pid = 'helkrop', P = program(pid), n = levelOf(pid), L = P.levels[n - 1], d = draftGet(pid);
+    const pid = active(), P = program(pid), n = levelOf(pid), L = P.levels[n - 1], d = draftGet(pid);
     let i = Number(idx); if (!(i >= 0 && i < L.items.length)) i = 0;
     const it = L.items[i], e = ex(it.id), rec = d.ex[i], adv = advice(it);
     setHeader(L.name + ' · ' + (i + 1) + ' af ' + L.items.length, '#/'); setTab('home');
@@ -273,7 +280,20 @@ const PT = (() => {
     h += '<button type="button" class="btn" id="ptAccept">Start med ' + P.levels[R.trin - 1].name + '</button><a class="btn secondary" href="#/pt/velkommen/0">Ret mine svar</a>';
     h += '<p class="hint">Forslaget er en vejledning, ikke en lægelig vurdering. Din træner kan altid justere det.</p>';
     $app.innerHTML = h;
-    document.getElementById('ptAccept').onclick = () => { setLevel(P.id, R.trin); toast('Du starter på ' + P.levels[R.trin - 1].name + '.'); location.hash = '#/'; };
+    document.getElementById('ptAccept').onclick = () => { setLevel(P.id, R.trin); setActive(P.id); toast('Du starter på ' + P.levels[R.trin - 1].name + '.'); location.hash = '#/'; };
+  }
+  /* ---------- Øvelsesbibliotek: alle kropsvægtsøvelser efter område ---------- */
+  function library(gid) {
+    setHeader('Øvelsesbibliotek', '#/programmer'); setTab('prog');
+    const G = PT_LIBRARY.filter(g => !gid || g.id === gid);
+    let h = '<p class="lead">Alle øvelser kan laves med din egen kropsvægt – højst en stol, en væg eller en sofa. Hver øvelse har en film, dosering og en lettere og sværere variant.</p>';
+    h += '<div class="chips pt-lib-nav">' + PT_LIBRARY.map(g => '<a class="chip-b' + (g.id === gid ? ' sel' : '') + '" href="#/pt/bibliotek/' + g.id + '">' + g.icon + ' ' + H(g.name) + '</a>').join('') + (gid ? '<a class="chip-b" href="#/pt/bibliotek">Alle</a>' : '') + '</div>';
+    G.forEach(g => {
+      h += '<h2 class="pt-h" data-ptlib="' + g.id + '">' + g.icon + ' ' + H(g.name) + '</h2>';
+      g.ids.forEach(id => { const e = ex(id); if (!e) return;
+        h += '<a class="ex-item pt-item" href="#/oevelse/' + encodeURIComponent(id) + '" data-ptlibex="' + H(id) + '">' + thumbHtml(e) + '<div class="txt"><strong>' + H(e.name) + '</strong><span>' + H(e.dose || '') + '</span></div><span class="check" aria-hidden="true" style="color:#b9b4a8">›</span></a>'; });
+    });
+    $app.innerHTML = h; hydrateMedia($app);
   }
   function deleteAnswers() { localStorage.removeItem(KEY_ANS); localStorage.removeItem(KEY_ANS + '_kladde'); }
 
@@ -282,8 +302,9 @@ const PT = (() => {
       case 'traening': return session(parts[2]);
       case 'program': return programView(parts[2]);
       case 'velkommen': return questions(parts[2]);
+      case 'bibliotek': return typeof PT_LIBRARY !== 'undefined' ? library(parts[2]) : home();
       default: return home();
     }
   }
-  return { on, setTarget, chrome, home, programs, progress, route, recommend, advice, readyForNext, levelOf, setLevel, answers, deleteAnswers, logAll, KEY_LOG, KEY_ANS, KEY_TARGET };
+  return { on, setTarget, chrome, home, programs, progress, route, recommend, advice, readyForNext, levelOf, setLevel, active, setActive, answers, deleteAnswers, logAll, KEY_LOG, KEY_ANS, KEY_TARGET, KEY_PROG };
 })();

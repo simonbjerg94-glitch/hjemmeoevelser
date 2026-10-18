@@ -785,7 +785,7 @@ function viewExercise(id) {
   if (!e) { location.hash = '#/'; return; }
   const ctx = exCtx(e), cat = CATEGORIES.find(c => c.id === ctx);
   const ptEx = e.category === 'styrke';
-  setHeader(cat ? cat.name : (ptEx ? 'Træning' : 'Øvelse'), ptEx ? '#/pt/program/helkrop' : '#/kategori/' + ctx); setTab('prog');
+  setHeader(cat ? cat.name : (ptEx ? 'Træning' : 'Øvelse'), ptEx ? '#/pt/program/' + (typeof PT !== 'undefined' && PT.active ? PT.active() : 'helkrop') : '#/kategori/' + ctx); setTab('prog');
   const d = doneToday(e.id, ctx), lv = Number(e.level) || 1, L = LEVELS.find(x => x.n === lv) || LEVELS[0];
   const isHael = e.category === 'haelspore' && HAEL_ON, ryg = typeof isRyg === 'function' && isRyg(e.category);
   const nav = programNav(e), simple = isSimple();
@@ -815,6 +815,7 @@ function viewExercise(id) {
   if (e.tips && e.tips.length) html += fold('', '✅ Gør det rigtigt', '<ul class="tips">' + e.tips.map(s => '<li>' + esc(s) + '</li>').join('') + '</ul>', !simple);
   if (e.progression) html += fold('prog', '↕️ Lettere eller sværere', '<p style="margin:0">' + esc(e.progression) + '</p>', !simple);
   if (e.stop) html += fold('stop', '⚠️ Smerteregel – hvornår skal du skrue ned?', '<p>' + esc(e.stop) + '</p>', false);
+  if (e.evidence) html += fold('evid', '📚 Evidens – hvorfor denne øvelse?', '<p style="margin:0">' + esc(e.evidence) + '</p>', false);
   $app.innerHTML = html;
   hydrateMedia($app); initGallery($app, e); initVideo($app);
   if (typeof initHaelTrinFilm === 'function') initHaelTrinFilm($app);

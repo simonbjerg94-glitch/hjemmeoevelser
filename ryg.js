@@ -49,6 +49,7 @@ function viewRyg(id) {
   localStorage.setItem(KEY_LASTCAT, id);
   const st = rygState(id), list = rygExercises(id, st);
   let h = '<p class="lead">' + esc(P.intro) + '</p>';
+  if (P.note) h += '<div class="card op-note" data-note="' + P.id + '"><p style="margin:0"><b>🏥 ' + esc(P.note) + '</b></p></div>';
   const tabs = P.tabs || { hold: ['🆘 Hold – de første dage', 'Når det lige har låst'], forebyg: ['💪 Forebyg', 'Når det er blevet bedre'] };
   h += '<div class="track-switch" role="tablist" aria-label="Vælg spor">' +
     '<button type="button" role="tab" class="track' + (st.spor === 'hold' ? ' sel' : '') + '" aria-selected="' + (st.spor === 'hold') + '" data-spor="hold"><b>' + tabs.hold[0] + '</b><span>' + tabs.hold[1] + '</span></button>' +
