@@ -1,7 +1,7 @@
 /* Service worker: gemmer appen og billedserierne, så de virker offline.
    Tempo-filmene tegnes i appen og virker offline. Egne videoer/fotos ligger i IndexedDB og virker offline.
    Billedlisten og versionen opdateres af tools/sync_images.py. */
-const CACHE = 'hjemmeoevelser-v36';
+const CACHE = 'hjemmeoevelser-v37';
 const VENDOR = 'hjemmeoevelser-vendor-mediapipe-1.1.0';
 const VOICE = 'hjemmeoevelser-stemmer'; // lydklip (navngivet efter indhold) – beholdes på tværs af versioner, ubrugte ryddes op // kamera-træneren – slettes ikke ved nye versioner
 // images-hash: 312bc6c69aa8

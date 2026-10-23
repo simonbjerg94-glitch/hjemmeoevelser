@@ -1,4 +1,4 @@
-/* Træningsplaner (profiler) – v36.
+/* Træningsplaner (profiler) – v36, kompakt planbjælke v37.
    Hver plan har sine egne svar og sit eget program. Fremgang, logs, smertemålinger og mærker er FÆLLES og slettes aldrig her.
    Alt gemmes kun i localStorage på telefonen – intet sendes. Den aktive plans værdier ligger i de normale nøgler;
    de andre planers værdier ligger som en kopi i hjo_profiler_v1. */
@@ -49,15 +49,13 @@ const Profiles = (() => {
   // Planvælgeren på forsiden
   function barHtml() {
     const ps = list();
-    return '<div class="card prof-bar" aria-label="Mine træningsplaner"><p class="prof-h">Mine planer</p><div class="prof-chips" role="tablist">' +
+    return '<div class="card prof-bar" aria-label="Mine træningsplaner"><div class="prof-top"><p class="prof-h">Mine planer</p><a class="prof-manage" href="#/planer" id="profManage" aria-label="Ret eller slet planer">Ret ›</a></div><div class="prof-chips" role="tablist">' +
       ps.map(p => '<button type="button" role="tab" class="prof-chip' + (p.active ? ' sel' : '') + '" aria-selected="' + p.active + '" data-prof="' + p.id + '">' + esc(p.name) + '</button>').join('') +
-      '<a class="prof-chip prof-add" href="#/planer/ny" id="profAdd">＋ Ny plan</a></div>' +
-      '<a class="prof-manage" href="#/planer" id="profManage">Ret eller slet planer ›</a></div>';
+      '<a class="prof-chip prof-add" href="#/planer/ny" id="profAdd">＋ Ny plan</a></div></div>';
   }
   function mount() {
     const app = document.getElementById('app'); if (!app || app.querySelector('.prof-bar')) return;
-    // Stor og enkel: forsiden holdes enkel – vælgeren vises først, når der er mere end én plan (ellers under Mere › Mine planer)
-    if (typeof isSimple === 'function' && isSimple() && list().length < 2) return;
+    // v37: vises altid (også med én plan og i Stor og enkel) – lige under hilsenen, over Dagens træning
     const hello = app.querySelector('section.hello'), tmp = document.createElement('div'); tmp.innerHTML = barHtml();
     const el = tmp.firstChild; if (hello) hello.after(el); else app.prepend(el);
     el.querySelectorAll('[data-prof]').forEach(b => b.onclick = () => switchTo(b.dataset.prof));
