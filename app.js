@@ -615,7 +615,7 @@ function viewHome() {
     h += '<a class="card status-strip" href="#/uge"><span>' + (streak > 0 ? '🔥' : '🌱') + ' <b>' + streak + '</b> ' + (streak === 1 ? 'dag' : 'dage') + ' i træk</span><span>📅 <b>' + week + ' af ' + goal + '</b> dage denne uge</span><span class="chev" aria-hidden="true">›</span></a>';
     h += '<div class="card tip"><p class="tip-h">💬 Dagens tanke</p><p class="tip-t">' + esc(dailyMessage()) + '</p></div>';
   }
-  $app.innerHTML = h;
+  $app.innerHTML = h; if (typeof Profiles !== "undefined") Profiles.mount();
   hydrateMedia($app); bindRemindBanner();
   const hr = document.getElementById('homeRoutine'); if (hr) hr.onclick = haelOpenRoutine;
   if (HAEL_ON) setTimeout(() => { if (location.hash === '' || location.hash === '#/' || location.hash === '#') haelMaybeAskMorning(); }, 350);
@@ -705,6 +705,7 @@ function viewMore() {
   let h = typeof PT === 'undefined' ? '' : '<h2>Appen er til</h2><div class="seg" role="radiogroup" aria-label="Appen er til">' + [['pt', 'Træning (PT)'], ['patient', 'Genoptræning']].map(([k, n]) =>
     '<button type="button" role="radio" class="seg-b' + ((ptOn ? 'pt' : 'patient') === k ? ' sel' : '') + '" aria-checked="' + ((ptOn ? 'pt' : 'patient') === k) + '" data-target="' + k + '"><b>' + n + '</b></button>').join('') + '</div>';
   if (ptOn) h += '<h2>Din træning</h2>' + row('#/pt/velkommen/' + (PT.answers() ? 'resultat' : '0'), icon('clipboard'), 'Mine træningssvar', PT.answers() ? 'Se dit forslag, eller ret svarene' : 'Svar på 9 korte spørgsmål', 'ptSvar') + '<button type="button" class="link-btn" id="ptDelSvar"' + (PT.answers() ? '' : ' hidden') + '>Slet mine træningssvar</button>';
+  if (typeof Profiles !== 'undefined') h += '<h2>Mine planer</h2>' + row('#/planer', '🗂️', 'Mine planer', 'Lav en ny plan, skift eller slet', 'moreProfiles');
   h += '<h2>Visning</h2><div class="seg" role="radiogroup" aria-label="Visning">' + ['enkel', 'fuld'].map(m =>
     '<button type="button" role="radio" class="seg-b' + ((isSimple() ? 'enkel' : 'fuld') === m ? ' sel' : '') + '" aria-checked="' + ((isSimple() ? 'enkel' : 'fuld') === m) + '" data-mode="' + m + '"><b>' + MODE_INFO[m].name + '</b></button>').join('') + '</div>';
   h += '<h2>Tekststørrelse</h2><div class="seg three" role="radiogroup" aria-label="Tekststørrelse">' + [['normal', 'Normal'], ['stor', 'Stor'], ['xl', 'Meget stor']].map(([k, n]) =>
@@ -1392,6 +1393,7 @@ function route() {
     case 'velkommen': return viewOnboarding();
     case 'programmer': return viewPrograms();
     case 'mere': return viewMore();
+    case 'planer': return Profiles.view(parts[1]);
     case 'spoergsmaal': return QS.routeQ(parts);
     case 'mine-svar': return QS.mine();
     case 'analyse': return Analyse.view(parts[1]);

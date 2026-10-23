@@ -104,7 +104,7 @@ const PT = (() => {
     h += '<a class="card status-strip" href="#/uge"><span>📅 <b>' + wk + ' af ' + g + '</b> træninger denne uge</span><span>🔥 <b>' + weekStreak() + '</b> ' + (weekStreak() === 1 ? 'uge' : 'uger') + ' i træk</span><span class="chev" aria-hidden="true">›</span></a>';
     h += '<a class="btn secondary" href="#/programmer">🔄 Skift program</a>';
     if (!logAll().length) h += '<button type="button" class="card more-row pt-to-rehab" id="ptToRehab"><span class="mi" aria-hidden="true">🩹</span><span><b>Har du ondt, eller skal du genoptræne?</b><small>Skift til genoptræning: øvelser til knæ, hofte, ryg, skulder, hånd og fod</small></span><span class="chev" aria-hidden="true">›</span></button>';
-    $app.innerHTML = h;
+    $app.innerHTML = h; if (typeof Profiles !== "undefined") Profiles.mount();
     const tr = document.getElementById('ptToRehab'); if (tr) tr.onclick = toRehab;
     if (typeof bindRemindBanner === 'function') bindRemindBanner();
     const up = document.getElementById('ptLevelUp'); if (up) up.onclick = () => { setLevel(P.id, n + 1); toast('Du er nu på ' + P.levels[n].name + '. Godt gået!'); home(); };

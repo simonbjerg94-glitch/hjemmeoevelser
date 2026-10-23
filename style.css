@@ -903,3 +903,21 @@ html.mode-enkel .pt-item .txt strong { font-size: 20px; }
 @media (max-width: 374px) { .gal-dot { width: 30px; } .pain-grid { gap: 4px !important; } }
 @media (max-width: 374px) { html.mode-enkel .pt-today .start-main { font-size: 22px; } }
 .pt-sn { white-space: nowrap; }
+/* v36: træningsplaner (profiler) */
+.prof-bar { padding: 12px 14px; }
+.prof-h { margin: 0 0 8px; font-weight: 700; color: var(--muted); font-size: 16px; }
+.prof-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.prof-chip { min-height: 44px; padding: 8px 14px; border-radius: 22px; border: 2px solid var(--primary); background: #fff; color: var(--primary-dark); font: inherit; font-size: 17px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
+.prof-chip.sel { background: var(--primary); color: #fff; }
+.prof-chip.prof-add { border-style: dashed; }
+.prof-manage { display: inline-block; margin-top: 10px; min-height: 44px; line-height: 44px; color: var(--primary-dark); font-size: 16px; }
+.prof-row.sel { border: 2px solid var(--primary); }
+.prof-row-top { display: flex; align-items: center; gap: 10px; font-size: 19px; margin-bottom: 10px; }
+.prof-tag { background: var(--primary-soft); color: var(--primary-dark); border-radius: 10px; padding: 2px 8px; font-size: 14px; }
+.prof-acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.prof-label { display: block; margin: 12px 0 6px; }
+.prof-input { width: 100%; box-sizing: border-box; min-height: 52px; font: inherit; font-size: 18px; padding: 10px 12px; border: 2px solid var(--line, #ccc); border-radius: 12px; }
+.prof-go { margin-top: 12px; }
+.prof-confirm { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 50; }
+.prof-confirm[hidden] { display: none; }
+.prof-dialog { max-width: 420px; width: 100%; }
